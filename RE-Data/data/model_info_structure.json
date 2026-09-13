@@ -1,0 +1,84 @@
+{
+  "chapter": "C3",
+  "subject": "Model info system and DFF file format (CBaseModelInfo, CStreamingInfo, RpClump)",
+  "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+
+  "overview": "GTA:SA models are DFF (RenderWare RpClump) files, one per model ID. CBaseModelInfo and its subclasses (CVehicleModelInfo, CPedModelInfo, CAtomicModelInfo, CTimeModelInfo, CWeaponModelInfo, CClumpModelInfo, CLodAtomicModelInfo) store per-model metadata read from IDE files. The streaming system loads and unloads models via CStreamingInfo slots.",
+
+  "dff_file_format": {
+    "rw_chunk_id": "0x10 (rwID_CLUMP)",
+    "endian": "little",
+    "rw_version": "0x36003 (RenderWare 3.6.0.3, GTA:SA PC)",
+    "tier": "verified",
+    "top_level_sections": [
+      { "chunk_id": "0x10", "name": "RpClump",          "description": "Root clump; contains frame list, geometry list, and atomic/light/camera children" },
+      { "chunk_id": "0x0E", "name": "FrameList",        "description": "Hierarchy of RwFrames: transform + parent index + name extension" },
+      { "chunk_id": "0x1A", "name": "GeometryList",     "description": "Array of RpGeometry objects" },
+      { "chunk_id": "0x0F", "name": "Atomic",           "description": "Binds a geometry to a frame; one per mesh" },
+      { "chunk_id": "0x01", "name": "Struct",           "description": "Binary data for parent chunk" },
+      { "chunk_id": "0x03", "name": "Extension",        "description": "Plugin data attached to any chunk (e.g. frame name, skin, 2DFX)" }
+    ],
+    "geometry_struct_fields": {
+      "flags":          "uint16 — geometry flags: tristrip=1, vert_pos=2, tex_coords=4, vert_color=8, normals=16, lit=32, prelit=64, tex_multi=128",
+      "num_triangles":  "uint16",
+      "num_vertices":   "uint16",
+      "num_morph_targets":"uint16",
+      "surface_properties": "3 floats: ambient, specular, diffuse"
+    }
+  },
+
+  "model_info_pool": {
+    "global": "0xA9B0C8",
+    "pool_size": 20000,
+    "element_type": "CBaseModelInfo*",
+    "tier": "verified_by_disassembly",
+    "note": "Model IDs are stable pool indices. ID 0 = no model."
+  },
+
+  "model_id_ranges": {
+    "objects_props":     "0–599    (IDE OBJS/TOBJ entries)",
+    "timed_objects":     "600–699  (IDE TOBJ entries extending base range)",
+    "peds":              "1–288 within ped model ID space",
+    "vehicles":          "400–611  (IDE CARS/BOAT/PLANE/HELI/BIKE entries)",
+    "weapons_pickups":   "330–399  (IDE WEAP/HIER entries)",
+    "cutscene_objects":  "790–799  (internal cutscene props)",
+    "first_special_char":"290     (used by mission-specific ped slots)"
+  },
+
+  "subclasses": {
+    "CBaseModelInfo":    { "chapter": "C3",  "note": "Base for all model types: name hash, TXD index, ref count, RpClump*" },
+    "CAtomicModelInfo":  { "chapter": "C3",  "note": "Standard world props and objects" },
+    "CTimeModelInfo":    { "chapter": "C3",  "note": "Time-of-day visibility (IDE TOBJ hour range)" },
+    "CClumpModelInfo":   { "chapter": "C3",  "note": "Multi-atomic clump props (doors, gates)" },
+    "CVehicleModelInfo": { "chapter": "C3",  "note": "Vehicles: wheel/door/dummy frame offsets, handling ID, colour slots" },
+    "CPedModelInfo":     { "chapter": "C3",  "note": "Peds: animation group, ped stats index, model flags" },
+    "CWeaponModelInfo":  { "chapter": "C3",  "note": "Weapons and pickups: pickup class index" },
+    "CLodAtomicModelInfo":{"chapter": "C3",  "note": "LOD companion to CAtomicModelInfo; shares TXD, separate geometry" }
+  },
+
+  "key_functions": {
+    "CModelInfo::GetModelInfo":        "0x4044C0",
+    "CModelInfo::AddAtomicModel":      "0x404DE0",
+    "CModelInfo::AddVehicleModel":     "0x404E00",
+    "CModelInfo::AddPedModel":         "0x404E20",
+    "CBaseModelInfo::SetModelName":    "0x4082F0",
+    "CStreaming::RequestModel":        "0x4087E0",
+    "CStreaming::LoadAllRequestedModels":"0x40EA10"
+  },
+
+  "ide_integration": {
+    "file_pattern": "data/*.ide  (and all IDE files listed in gta.dat)",
+    "OBJS_line_format":  "model_id  model_name  txd_name  draw_distance  flags",
+    "CARS_line_format":  "model_id  model_name  txd_name  handling_id  vehicle_name  vehicle_class  frequency  level  comp_rules  wheel_model  wheel_scale",
+    "PEDS_line_format":  "model_id  model_name  txd_name  ped_type  ped_stats  anim_group  can_drive_id  flags",
+    "tier": "verified"
+  },
+
+  "model_render_pipeline": {
+    "opaque_pass":     "CVisibilityPlugins enqueues opaque atomics into a render list sorted by material; rendered by CCustomRoadsignMgr/CGlass after basic geometry",
+    "alpha_pass":      "Semi-transparent atomics are sorted back-to-front and rendered after opaque objects",
+    "vehicle_pipeline":"CVehicleModelInfo uses the custom vehicle render pipeline (two-tone shader, damage deformation, window alpha)",
+    "tier": "verified"
+  }
+}

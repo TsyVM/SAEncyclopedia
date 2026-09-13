@@ -1,0 +1,46 @@
+{
+ "chapter": "C39",
+ "subject": "The camera (CCamera / CCam)",
+ "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+ "the_camera_singleton": "0xb6f028",
+ "ccam_stride": 568,
+ "ccam_stride_hex": "0x238",
+ "ccam_stride_sites": 27,
+ "ccamera_size": 3448,
+ "ccamera_size_hex": "0xd78",
+ "ccamera_size_tier": "reasoned (bracketed 0x81C..0xE18; disassembly VALIDATE_SIZE 0xD78)",
+ "m_aCams_offset": "0x174",
+ "m_aCams_base": "0xb6f19c",
+ "m_aCams_count": 3,
+ "m_aCams_block_bytes": "0x6a8",
+ "m_aCams_span": "+0x174..+0x81c",
+ "m_nActiveCam_offset": "0x59",
+ "m_nActiveCam_base": "0xb6f081",
+ "get_active_cam": "m_aCams[m_nActiveCam] : movzx idx,[0xB6F081]; imul idx,0x238; add idx,0xB6F19C",
+ "cam_mode_enum": {
+  "type": "uint16 eCamMode",
+  "count": 66,
+  "range": "0..65",
+  "examples": {
+   "MODE_FOLLOWPED": 4,
+   "MODE_AIMING": 5,
+   "MODE_1STPERSON": 16,
+   "MODE_CAM_ON_A_STRING": 18,
+   "MODE_AIMWEAPON_ATTACHED": 65
+  }
+ },
+ "c38_tie": {
+  "heading_field": "0xb6f038",
+  "matrix_field": "0xb6f03c",
+  "note": "C38 RenderSkyPolys read TheCamera +0x10/+0x14"
+ },
+ "key_functions": {
+  "Init": "0x5BC520",
+  "Process": "0x52B730",
+  "TakeControl": "0x50C7C0",
+  "GetGameCamPosition": "0x50AE50",
+  "GetLookDirection": "0x50AE90"
+ },
+ "checks_passed": 6,
+ "checks_total": 6
+}

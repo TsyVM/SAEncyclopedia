@@ -1,0 +1,73 @@
+{
+  "chapter": "C49",
+  "subject": "SA:MP (San Andreas Multiplayer) \u2014 the client mod in the tree",
+  "note": "SA:MP is third-party & closed-source; documented from its own shipped files, honest tiering.",
+  "client": {
+    "file": "samp.dll",
+    "version": "0.3.7-R5",
+    "network_lib": "RakNet (UDP, reliability layer)",
+    "hooks": [
+      "Direct3D 9 (D3DXCheckVersion)",
+      "input (GetAsyncKeyState)",
+      "the game loop"
+    ],
+    "audio": "BASS (bass.dll)",
+    "rcon": "ID_RCON_COMMAND"
+  },
+  "launcher": {
+    "samp.exe": "injects samp.dll into gta_sa.exe",
+    "samp_debug.exe": "debug build",
+    "rcon.exe": "standalone remote-console client"
+  },
+  "sync_packets": [
+    "ID_PLAYER_SYNC",
+    "ID_VEHICLE_SYNC",
+    "ID_AIM_SYNC",
+    "ID_PASSENGER_SYNC",
+    "ID_TRAILER_SYNC",
+    "ID_UNOCCUPIED_SYNC",
+    "ID_SPECTATOR_SYNC"
+  ],
+  "data_files": {
+    "SAMP.img": {
+      "format": "VER2 IMG archive (C7)",
+      "entries": 1673
+    },
+    "SAMP.ide": {
+      "format": "standard IDE (C11)",
+      "objects": 1447,
+      "id_range": [
+        300,
+        19999
+      ],
+      "added_above_18631": 1363,
+      "note": "SA:MP adds objects ABOVE the base game's model-id range (18631+)"
+    },
+    "SAMP.ipl": {
+      "format": "standard IPL (C11)"
+    },
+    "SAMPCOL.img": {
+      "format": "COL archive (C6)"
+    },
+    "samaps.txd/blanktex.txd": {
+      "format": "TXD (C9)"
+    },
+    "samp.saa": {
+      "format": "SA:MP proprietary archive (opaque)"
+    }
+  },
+  "finding": "SA:MP reuses the base-engine data formats (IMG/IDE/IPL/COL/TXD) for its added content and is a client-side hook + RakNet network layer - it does not replace the engine, it wraps it.",
+  "ties": {
+    "C7": "SAMP.img VER2 archive",
+    "C11": "SAMP.ide/ipl",
+    "C6": "SAMPCOL.img",
+    "C44": "hooks the same D3D9 the render pipeline uses"
+  },
+  "open": [
+    "samp.saa internal format",
+    "the exact RakNet sync struct layouts",
+    "the D3D9 hook mechanism"
+  ],
+  "checks_passed": 6,
+  "checks_total": 6
+}

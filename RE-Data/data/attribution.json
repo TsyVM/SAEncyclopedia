@@ -1,0 +1,149 @@
+{
+ "$schema": "attribution.v1",
+ "generated": "tools/derive_attribution.py",
+ "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+ "note": "Class attributions (NOT method names) for C27's unnamed functions, by data-flow reference to C28-C32's recovered class statics.",
+ "summary": {
+  "unnamed_total": 124,
+  "with_signature_ref": 15,
+  "strong_attributions": 11,
+  "data_only_leads": 4
+ },
+ "attributions": [
+  {
+   "entry_va": "0x00407800",
+   "body_extent": 32,
+   "direct_call_sites": 1,
+   "attributed_class": "CStreaming",
+   "hits": 1,
+   "in_cluster": true,
+   "tier": "STRONG"
+  },
+  {
+   "entry_va": "0x00410F80",
+   "body_extent": 96,
+   "direct_call_sites": 1,
+   "attributed_class": "CColStore",
+   "hits": 1,
+   "in_cluster": true,
+   "tier": "STRONG"
+  },
+  {
+   "entry_va": "0x00411030",
+   "body_extent": 112,
+   "direct_call_sites": 0,
+   "attributed_class": "CColStore",
+   "hits": 1,
+   "in_cluster": true,
+   "tier": "STRONG"
+  },
+  {
+   "entry_va": "0x0043E400",
+   "body_extent": 16,
+   "direct_call_sites": 1,
+   "attributed_class": "CEntryExitManager",
+   "hits": 1,
+   "in_cluster": true,
+   "tier": "STRONG"
+  },
+  {
+   "entry_va": "0x0043EF00",
+   "body_extent": 32,
+   "direct_call_sites": 3,
+   "attributed_class": "CEntryExitManager",
+   "hits": 1,
+   "in_cluster": true,
+   "tier": "STRONG"
+  },
+  {
+   "entry_va": "0x0043EF20",
+   "body_extent": 112,
+   "direct_call_sites": 1,
+   "attributed_class": "CEntryExitManager",
+   "hits": 2,
+   "in_cluster": true,
+   "tier": "STRONG"
+  },
+  {
+   "entry_va": "0x0043EF90",
+   "body_extent": 64,
+   "direct_call_sites": 1,
+   "attributed_class": "CEntryExitManager",
+   "hits": 2,
+   "in_cluster": true,
+   "tier": "STRONG"
+  },
+  {
+   "entry_va": "0x0043F720",
+   "body_extent": 96,
+   "direct_call_sites": 0,
+   "attributed_class": "CEntryExitManager",
+   "hits": 1,
+   "in_cluster": true,
+   "tier": "STRONG"
+  },
+  {
+   "entry_va": "0x0043F7D0",
+   "body_extent": 112,
+   "direct_call_sites": 1,
+   "attributed_class": "CEntryExitManager",
+   "hits": 1,
+   "in_cluster": true,
+   "tier": "STRONG"
+  },
+  {
+   "entry_va": "0x00448990",
+   "body_extent": 96,
+   "direct_call_sites": 1,
+   "attributed_class": "CGarages",
+   "hits": 2,
+   "in_cluster": true,
+   "tier": "STRONG"
+  },
+  {
+   "entry_va": "0x0044D520",
+   "body_extent": 608,
+   "direct_call_sites": 1,
+   "attributed_class": "CPathFind",
+   "hits": 17,
+   "in_cluster": true,
+   "tier": "STRONG"
+  },
+  {
+   "entry_va": "0x00422590",
+   "body_extent": 144,
+   "direct_call_sites": 4,
+   "attributed_class": "CPathFind",
+   "hits": 4,
+   "in_cluster": false,
+   "tier": "data-only"
+  },
+  {
+   "entry_va": "0x0042F870",
+   "body_extent": 352,
+   "direct_call_sites": 16,
+   "attributed_class": "CPathFind",
+   "hits": 1,
+   "in_cluster": false,
+   "tier": "data-only"
+  },
+  {
+   "entry_va": "0x0044CC20",
+   "body_extent": 304,
+   "direct_call_sites": 1,
+   "attributed_class": "CTheScripts",
+   "hits": 3,
+   "in_cluster": false,
+   "tier": "data-only"
+  },
+  {
+   "entry_va": "0x0046AA80",
+   "body_extent": 112,
+   "direct_call_sites": 1,
+   "attributed_class": "CStreaming",
+   "hits": 1,
+   "in_cluster": false,
+   "tier": "data-only"
+  }
+ ]
+}

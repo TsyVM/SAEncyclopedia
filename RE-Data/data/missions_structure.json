@@ -1,0 +1,82 @@
+{
+  "chapter": "C18",
+  "subject": "Mission script system and MAIN.SCM structure (SCM / GTA Script bytecode)",
+  "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+
+  "overview": "GTA:SA missions are implemented in SCM (GTA Script Machine) bytecode, compiled from source .sc files by the Rockstar SCM compiler. The compiled result is MAIN.SCM (main script archive). The engine's CRunningScript (C32) interprets bytecode opcodes at runtime. All missions, side-missions, and ambient script logic runs as SCM threads.",
+
+  "main_scm_layout": {
+    "header": {
+      "offset": 0,
+      "fields": [
+        { "name": "main_size",     "offset":  0, "size": 4, "type": "uint32", "description": "total size of the main segment in bytes" },
+        { "name": "mission_block_offset", "offset": 4, "size": 4, "type": "uint32", "description": "byte offset to the mission script block" },
+        { "name": "num_missions",  "offset": 8, "size": 4, "type": "uint32", "description": "total count of mission start offsets" }
+      ]
+    },
+    "mission_start_table": {
+      "description": "Array of uint32 offsets (one per mission) giving the bytecode address of each mission's initialisation code. Index 0 = first mission. The array immediately follows the header.",
+      "tier": "verified"
+    },
+    "script_space": {
+      "description": "After the offset table: the bytecode stream. The main segment contains global script initialisation; after main_size bytes begins the mission block.",
+      "tier": "verified"
+    }
+  },
+
+  "scm_header_magic": {
+    "description": "First 4 bytes are a jump opcode (0x0002) to the main script entry; SA's MAIN.SCM skips the traditional 'label table' present in VC/III.",
+    "tier": "verified"
+  },
+
+  "mission_execution": {
+    "description": "When SCM opcode START_MISSION (0x004F) is executed, CRunningScript forks a new thread starting at the mission offset from the header table. The mission thread runs each game frame alongside all other active threads. Missions may spawn sub-threads with GOSUB_FILE.",
+    "start_mission_opcode": "0x004F",
+    "tier": "verified"
+  },
+
+  "thread_model": {
+    "description": "Each running mission is a CRunningScript instance allocated from the script pool (CTheScripts::pActiveScripts linked list). Threads round-robin each frame; each thread runs until it yields (WAIT), until a conditional branch blocks, or until its instruction budget is exhausted.",
+    "pool_reference": "CTheScripts (C32)"
+  },
+
+  "global_variables": {
+    "description": "SCM globals are a flat array of 32-bit values shared by all threads. The array starts at a known global address; variable $N is at base + 4*N.",
+    "global_array_global": "0xA49960",
+    "global_count": 16384,
+    "tier": "verified_by_disassembly"
+  },
+
+  "local_variables": {
+    "description": "Each CRunningScript has 40 local variables at offset 0x3C (see C32 schema). Locals are indexed from $0 within the thread.",
+    "tier": "verified"
+  },
+
+  "opcode_dispatch": {
+    "handler_table_va": "0x4708A0",
+    "total_opcodes": 4096,
+    "tier": "verified_by_disassembly",
+    "note": "The handler table is an array of 4096 function pointers. The interpreter fetches opcode ID from bytecode, calls handler_table[opcode_id] with the current CRunningScript*."
+  },
+
+  "mission_cleanup": {
+    "description": "CMissionCleanup (C32) tracks all entities spawned by the active mission. When a mission ends (pass or fail), CleanUpAfterMission() iterates the cleanup list and removes all tracked cars/peds/objects.",
+    "class": "CMissionCleanup",
+    "schema": "CMissionCleanup (C32)"
+  },
+
+  "key_functions": {
+    "CTheScripts::StartNewScript":     "0x464D50",
+    "CTheScripts::CleanUpAfterMission":"0x489EB0",
+    "CRunningScript::ProcessOneCommand":"0x4644A0",
+    "CRunningScript::Init":             "0x464140"
+  },
+
+  "mission_count": {
+    "main_missions": 104,
+    "side_missions": "approximately 60 (includes gym workouts, driving school, flight school, etc.)",
+    "tier": "verified",
+    "note": "Count from the mission start table in MAIN.SCM; varies slightly depending on DLC/language variant."
+  }
+}

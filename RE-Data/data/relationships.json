@@ -1,0 +1,393 @@
+{
+ "$schema": "relationships.v2",
+ "total_call_sites": 72719,
+ "measured_chapters": 12,
+ "chapters": {
+  "C0": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "naive signature scanners read the 5-byte jmp thunk, not the function (the whole point of the chapter).",
+   "modding": "the entry->body resolver is the base every hook/mod-loader tool needs on this build; MD5-gate before patching.",
+   "performance": "one-time load; no runtime cost."
+  },
+  "C1": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "streaming races can pop entities in/out at chunk edges; the request queue is bounded.",
+   "modding": "streaming memory budget + the IMG archive are the classic mod-content injection points.",
+   "performance": "the dominant background cost; async disk + eviction each frame."
+  },
+  "C2": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "a mis-sliced streaming-info record poisons the whole 26,316-entry array (why C2 proves it twice).",
+   "modding": "the streaming-info flags @0x8E4CC0 gate what is resident; mod tools flip them.",
+   "performance": "per-request bookkeeping; the array is flat and cache-friendly."
+  },
+  "C3": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "model-store slot exhaustion silently drops loads.",
+   "modding": "TXD/DFF/COL stores are where replacement assets register.",
+   "performance": "fixed-size stores; O(1) slot lookup."
+  },
+  "C4": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "pool exhaustion is the classic 'too many objects' crash; each pool is a hard cap.",
+   "modding": "CPool bases are the universal entity-hook target (peds/vehicles/objects).",
+   "performance": "flat pools, generational handles; fast but capped."
+  },
+  "C5": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "CWorld sector edge cases with fast-moving entities.",
+   "modding": "the sector grid is where custom collision/entities register.",
+   "performance": "spatial partition keeps per-frame queries bounded."
+  },
+  "C6": {
+   "functions": {
+    "CColStore::RemoveCol": "0x410730",
+    "CIplStore::RequestIplAndIgnore": "0x405850"
+   },
+   "n_callers": 4,
+   "n_callees": 6,
+   "known_bugs": "bad COL bounds cause fall-through-world; the CColStore 44-byte slot must match.",
+   "modding": "COL files are heavily modded; the CColStore pool @0x965560 is the hook.",
+   "performance": "broadphase + narrowphase per contact; bounding volumes cheap."
+  },
+  "C7": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "truncated RW streams crash the reader; version tags must match RW 3.6.",
+   "modding": "DFF/TXD are the RenderWare containers every model mod ships.",
+   "performance": "parse-once at load; streaming amortises it."
+  },
+  "C8": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "degenerate geometry can NaN the pipeline.",
+   "modding": "geometry/material edits flow through here into the D3D9 pipelines (C44).",
+   "performance": "vertex/index buffers instanced once; drawn many times."
+  },
+  "C9": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "missing TXD parent (C48 txdcut) leaves untextured white models.",
+   "modding": "TXD raster edits are the texture-mod path; DXT formats matter.",
+   "performance": "raster upload cost at load; sampler state per draw."
+  },
+  "C10": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "2dEffect misplacement (lights/coronas offset from model).",
+   "modding": "2dEffect entries add lights/particles/ped-attractors to models.",
+   "performance": "small per-visible-model cost."
+  },
+  "C11": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "malformed IDE/IPL lines are skipped silently (a real modding footgun).",
+   "modding": "IDE/IPL are THE map-mod files; default.dat/gta.dat drive load order (C48).",
+   "performance": "parsed at load; builds the world db."
+  },
+  "C12": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "dead gridref reader (C22) shows cut path features; broken nodes strand AI.",
+   "modding": "NODES*.DAT path graph is edited for custom traffic/AI routes.",
+   "performance": "path queries are graph walks; cached per area."
+  },
+  "C13": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "handling reversed values NaN the sim; mass cap ignored (C42).",
+   "modding": "handling.cfg + carcols/carmods are the vehicle-tuning trinity.",
+   "performance": "data only; runtime cost is C42/C47."
+  },
+  "C14": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "weapon.dat column miscount (C14.4 fixed 26/30->25/29); melee 52/52 open.",
+   "modding": "weapon.dat is the weapon-balance file; the $ gun record is the target.",
+   "performance": "data only."
+  },
+  "C15": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "timecyc column drift between timecyc/timecycp (C48) if edited inconsistently.",
+   "modding": "timecyc.dat is the lighting/atmosphere mod file; sky colours feed C38.",
+   "performance": "per-frame colour interpolation; cheap."
+  },
+  "C16": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "water quad seams if water.dat/water1.dat disagree (C48).",
+   "modding": "water.dat + popcycle are edited for map/ambience mods.",
+   "performance": "water render is a sibling pass; popcycle sampled periodically."
+  },
+  "C17": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "anim group mismatch (C48 animgrp) yields wrong locomotion clips.",
+   "modding": "ped.ifp + animgrp.dat drive custom animations; skinning is C44.",
+   "performance": "IFP decoded at load; blend per animated ped."
+  },
+  "C18": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "26 scripts don't fully decode (C18.7 refutes the old explanation); AAA build artefact.",
+   "modding": "main.scm is THE mission-mod file; the opcode table is the SCM-compiler contract.",
+   "performance": "bytecode walked by C32 CRunningScript threads."
+  },
+  "C19": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "6 of 1186 keys miss; hash collisions theoretically possible.",
+   "modding": "GXT is the localization-mod file; the CRC-32-no-final-XOR hash is the key spec.",
+   "performance": "hash lookup per string draw; cheap."
+  },
+  "C20": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "TrakLkup.size is internally inconsistent (read the header instead); trailer moves on BEATS tracks.",
+   "modding": "the XOR key + bank/stream formats are the audio-replacement path.",
+   "performance": "3.48 GB streamed off disk; fixed-stride seeks."
+  },
+  "C21": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "3 exe-declared particle types are never used; LODSTART/END belong to the emitter (parse trap).",
+   "modding": "effects.fxp is the particle-mod file; submitted via C40 im3d (C44).",
+   "performance": "43,617 lines parsed at load; per-emitter draw at runtime."
+  },
+  "C22": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "dead gridref reader; radar tile 0=NW must not be assumed; NAVIG.ZON cut.",
+   "modding": "info.zon/map.zon define zones; radar tiles in gta3.img are map-mod assets.",
+   "performance": "zone lookup per position; radar tiled 12x12."
+  },
+  "C23": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "hud.txd count read at wrong offset gives 21 not 69 (parse trap); mask atlases requested-not-shipped.",
+   "modding": "fonts.dat + fonts.txd/hud.txd are HUD-mod assets; the 210-byte stride is the contract.",
+   "performance": "glyph atlas sampled per drawn char."
+  },
+  "C24": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "surface count must agree 3 ways (surfinfo=surfaud=exe); procobj/plants must be subset.",
+   "modding": "surface.dat grip matrix + surfinfo flags tune vehicle/ped surface behaviour (C47).",
+   "performance": "surface lookup per wheel/foot contact."
+  },
+  "C25": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "mass cap ignored 514x; sec_keypad declared breakable with no params (field-count parser can't detect).",
+   "modding": "object.dat is the dynamic-object physics file; shares CPhysical with C42.",
+   "performance": "one sscanf per line at load; rigid-body at runtime."
+  },
+  "C26": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "engine ped-group cap is 21 not the file's 32 (silent truncation).",
+   "modding": "ped.dat acquaintances + pedgrp populations tune gang/civilian behaviour.",
+   "performance": "acquaintance lookup per ped decision."
+  },
+  "C27": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "124 functions remain unnamed; disassembly match is external (needs its checkout).",
+   "modding": "the function catalogue is the base for any hook table on this build.",
+   "performance": "static; a naming layer over C0's relocations."
+  },
+  "C28": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "prose can drift from the binary if the derive tool isn't re-run (why it refuses to write on drift).",
+   "modding": "the class catalogue gives the struct offsets every memory-hook needs.",
+   "performance": "static; 16 disassembly facts re-checked per run."
+  },
+  "C29": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "pickup/garage counts are hard engine limits (620/50); overflow drops silently.",
+   "modding": "pickup pool @0x9788C4 + garage pool @0x96C048 are gameplay-hook targets.",
+   "performance": "fixed pools walked per frame for active entries."
+  },
+  "C30": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "CReplay buffer is a fixed 8x100k; CShopping ledger is 560 items (C48 shopping.dat fills it).",
+   "modding": "entry/exit markers + replay + shopping are gameplay-mod surfaces.",
+   "performance": "manager updates are bounded by their fixed caps."
+  },
+  "C31": {
+   "functions": {
+    "CColStore::RemoveCol": "0x410730",
+    "CColStore::RemoveColSlot": "0x411330",
+    "CIplStore::RequestIplAndIgnore": "0x405850"
+   },
+   "n_callers": 5,
+   "n_callees": 15,
+   "known_bugs": "CColStore 44-byte slot re-confirms C6.3; slot exhaustion drops loads.",
+   "modding": "the CPool template (Col/Ipl/streamed-script) is the streaming-hook base.",
+   "performance": "O(1) slot indexing; flat pools."
+  },
+  "C32": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "+0xDC flag redirects mission locals to 0xA48960 (closes C28.2's 'why'); stack is only 8 deep.",
+   "modding": "CRunningScript @224B is the SCM-thread hook; PC/locals are debugger targets.",
+   "performance": "one thread object per active script; bytecode walked each frame."
+  },
+  "C33": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "attributions are data-flow leads (11 strong + 4 data-only), not method names.",
+   "modding": "grows as more classes are structured; a classifier, not a fixed table.",
+   "performance": "static analysis; re-run to reproduce."
+  },
+  "C34": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "475x16 recording table + 16 playback slots are fixed; distinct from CReplay.",
+   "modding": "CVehicleRecording drives set-piece 'follow this path' missions.",
+   "performance": "playback reads a fixed table; cheap."
+  },
+  "C35": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "3 chained dialogue arrays must pack end-to-end; node keys are 6-byte GXT (C19).",
+   "modding": "CConversations ambient dialogue ties GXT (C19) + speech (C20).",
+   "performance": "linear scan of a fixed-stride node table."
+  },
+  "C36": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "corrects a C33 data-only lead (0x46AA80 is CScriptsForBrains, not CStreaming).",
+   "modding": "the 70x20 attractor table binds model ids to streamed scripts (C31.3/C32).",
+   "performance": "proximity lookup per registered brain."
+  },
+  "C37": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "76 methods stay unverified (work via helpers, not refuted); self-signature only.",
+   "modding": "verification promotes 119 names to file-verified; a QA layer over C27.",
+   "performance": "static; re-run to reproduce the 119."
+  },
+  "C38": {
+   "functions": {
+    "CClouds::Init": "0x7138d0",
+    "CClouds::Render": "0x713950",
+    "RenderSkyPolys": "0x714650",
+    "SetUpOneSkyPoly": "0x713060"
+   },
+   "n_callers": 9,
+   "n_callees": 12,
+   "known_bugs": "—",
+   "modding": "—",
+   "performance": "—"
+  },
+  "C39": {
+   "functions": {
+    "CCamera::Init": "0x5bc520",
+    "CCamera::Process": "0x52b730",
+    "TakeControl": "0x50c7c0",
+    "GetGameCamPosition": "0x50ae50"
+   },
+   "n_callers": 25,
+   "n_callees": 22,
+   "known_bugs": "—",
+   "modding": "—",
+   "performance": "—"
+  },
+  "C40": {
+   "functions": {
+    "ScanWorld": "0x554fe0",
+    "ConstructRenderList": "0x5556e0",
+    "RenderRoads": "0x553a10",
+    "RenderEverythingBarRoads": "0x553aa0",
+    "RenderFadingInEntities": "0x5531e0"
+   },
+   "n_callers": 7,
+   "n_callees": 33,
+   "known_bugs": "—",
+   "modding": "—",
+   "performance": "—"
+  },
+  "C41": {
+   "functions": {
+    "CTaskManager::ctor": "0x6816a0",
+    "UpdateWantedLevel": "0x561c90"
+   },
+   "n_callers": 12,
+   "n_callees": 2,
+   "known_bugs": "—",
+   "modding": "—",
+   "performance": "—"
+  },
+  "C42": {
+   "functions": {
+    "ApplyTurnForce": "0x542a50",
+    "ApplyForce": "0x542b50",
+    "ApplyFrictionMoveForce": "0x5430a0",
+    "LoadHandlingData": "0x5bd830",
+    "HasFrontWheelDrive": "0x6a0480"
+   },
+   "n_callers": 113,
+   "n_callees": 14,
+   "known_bugs": "—",
+   "modding": "—",
+   "performance": "—"
+  },
+  "C43": {
+   "functions": {
+    "CMenuManager: ProcessUserInput(controls @0x580050 region)": "0x580050"
+   },
+   "n_callers": 0,
+   "n_callees": 14,
+   "known_bugs": "aScreens[42/43] are empty specials (SCREEN_INITIAL/EMPTY) - not corruption.",
+   "modding": "aScreens @0x8CE008 is the menu-mod table; GXT keys drive labels (C19).",
+   "performance": "one table walk per frame while paused."
+  },
+  "C44": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "the shaders are runtime-assembled (no HLSL to extract); corrected C40.3's 'no shaders'.",
+   "modding": "the RW D3D9 pipelines (AllInOne/EnvMap) are where ENB/graphics mods hook.",
+   "performance": "vertex shaders assembled once per vertex format, cached."
+  },
+  "C45": {
+   "functions": {
+    "DamageResponseCalc": "0x4ad550"
+   },
+   "n_callers": 1,
+   "n_callees": 5,
+   "known_bugs": "—",
+   "modding": "—",
+   "performance": "—"
+  },
+  "C46": {
+   "functions": {
+    "CPad::GetPad": "0x53fb70"
+   },
+   "n_callers": 744,
+   "n_callees": 0,
+   "known_bugs": "—",
+   "modding": "—",
+   "performance": "—"
+  },
+  "C47": {
+   "functions": {
+    "HasFrontWheelDrive": "0x6a0480"
+   },
+   "n_callers": 1,
+   "n_callees": 5,
+   "known_bugs": "burst wheel skews handling via m_fWheelDamageEffect; FuckCarCompletely totals it.",
+   "modding": "the 4-wheel suspension arrays + CDamageManager are vehicle-mod surfaces.",
+   "performance": "4 suspension raycasts + component state per vehicle per frame."
+  },
+  "C48": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "timecycp/water1 must stay consistent with their base files; polydensity grid geometry open.",
+   "modding": "these are the remaining editable data files (clothes/shopping/furniture/etc.).",
+   "performance": "data only; loaded at boot."
+  },
+  "C49": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "closed-source client; sync struct layout + .saa format are ⏳; version-gated (Bad mod version).",
+   "modding": "SA:MP reuses base formats (model ids 18631+); servers script via its own API, not covered here.",
+   "performance": "adds a RakNet UDP loop + a D3D9 overlay on top of the retail frame (C51)."
+  },
+  "C50": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "plugin byte-reservations and the render-state cache behaviour are ⏳.",
+   "modding": "the RW object model (RpClump/Atomic/Geometry/Material) is what every model mod manipulates.",
+   "performance": "88 modules; the D3D9 P2 pipelines (C44) are the per-object render cost."
+  },
+  "C51": {
+   "functions": {
+    "CGame::Initialise": "0x53bc80",
+    "CGame::Process": "0x53bee0",
+    "CGame::Shutdown": "0x53c900"
+   },
+   "n_callers": 4,
+   "n_callees": 197,
+   "known_bugs": "frame pacing / fixed-vs-variable timestep is ⏳; loading-state machine not fully mapped.",
+   "modding": "CGame::Process @0x53BEE0 is the master update-loop hook (ASI mods insert here); Initialise @0x53BC80.",
+   "performance": "CGame::Process calls 81 subsystem updates per frame; render (C40) follows."
+  },
+  "X1": {
+   "relationship": "data/method chapter — see ties",
+   "known_bugs": "external sources enter at lead-only; MD5/ASLR mismatches were found in one dump (C0.3).",
+   "modding": "cross-references community SDKs (disassembly, disassembly) for corroboration.",
+   "performance": "n/a - an appendix."
+  }
+ }
+}

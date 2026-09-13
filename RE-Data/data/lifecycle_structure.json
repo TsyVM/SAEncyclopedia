@@ -1,0 +1,57 @@
+{
+  "chapter": "C51",
+  "subject": "Executable lifecycle: entry -> init -> frame loop -> shutdown",
+  "entry_point": "0x824570",
+  "functions": {
+    "CGame::Initialise": "0x53bc80",
+    "CGame::Process": "0x53bee0",
+    "CGame::Shutdown": "0x53c900"
+  },
+  "startup_chain": [
+    "CRT entry @0x824570",
+    "WinMain",
+    "RenderWare init (RwEngineOpen/Start)",
+    "CGame::Initialise @0x53BC80 (subsystem init)",
+    "the main message/game loop"
+  ],
+  "frame": {
+    "update": "CGame::Process @0x53BEE0 (ordered subsystem update, below)",
+    "render": "CRenderer render passes (C40) after the update",
+    "update_order": [
+      "CPad::UpdatePads",
+      "CStreaming::Update",
+      "CCutsceneMgr::Update",
+      "CTheZones::Update",
+      "CCover::Update",
+      "CAudioZones::Update",
+      "CClock::Update",
+      "CWeather::Update",
+      "CTheScripts::Process",
+      "CCollision::Update",
+      "CTrain::UpdateTrains",
+      "CHeli::UpdateHelis",
+      "CDarkel::Update",
+      "CSkidmarks::Update",
+      "CGlass::Update",
+      "CWanted::UpdateEachFrame",
+      "CCreepingFire::Update",
+      "CSetPieces::Update",
+      "CPopulation::Update"
+    ],
+    "process_callees": 81,
+    "initialise_callees": 142
+  },
+  "ties": {
+    "C46": "CPad::UpdatePads (first)",
+    "C1": "CStreaming::Update",
+    "C22": "CTheZones",
+    "C15": "CClock/CWeather",
+    "C18": "CTheScripts::Process",
+    "C6": "CCollision::Update",
+    "C41": "CWanted::UpdateEachFrame",
+    "C26": "CPopulation::Update",
+    "C40": "render after Process"
+  },
+  "checks_passed": 4,
+  "checks_total": 4
+}

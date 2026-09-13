@@ -1,0 +1,123 @@
+{
+  "chapter": "C52",
+  "subject": "CTimer — per-frame timestep, game_FPS, pause flags, and the physics clamp",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+  "build": "GTASA 1.0 US HOODLUM",
+
+  "discovery_note": "All addresses and constants proven by Capstone disassembly. External project names are never used as evidence. The clamp constant (2.0) proven from rdata 0x858C14 directly referenced by CTimer::Update at 0x560DA2.",
+
+  "ctimer_globals": {
+    "layout_base": "0xB7CB40",
+    "globals": [
+      {
+        "name": "bIsFrozen",
+        "va": "0xB7CB48",
+        "size": 1,
+        "type": "uint8_t",
+        "tier": "verified_by_disassembly",
+        "evidence_va": "0x560D55",
+        "note": "Flag: non-zero stops time advance (loading, cutscene pause)"
+      },
+      {
+        "name": "bGameStarted",
+        "va": "0xB7CB49",
+        "size": 1,
+        "type": "uint8_t",
+        "tier": "verified_by_disassembly",
+        "evidence_va": "0x560D4C",
+        "note": "Flag tested in CTimer::Update alongside bIsFrozen"
+      },
+      {
+        "name": "game_FPS",
+        "va": "0xB7CB50",
+        "size": 4,
+        "type": "float",
+        "tier": "verified_by_disassembly",
+        "evidence_va": "0x560F86",
+        "note": "Measured frames per second — written once per frame by CTimer::Update (fstp at 0x560F86)"
+      },
+      {
+        "name": "ms_fTimeStep_prev",
+        "va": "0xB7CB54",
+        "size": 4,
+        "type": "float",
+        "tier": "verified_by_disassembly",
+        "evidence_va": "0x560D83",
+        "note": "Previous frame's clamped timestep (ms_fTimeStep saved before update)"
+      },
+      {
+        "name": "ms_fTimeStepNonClipped",
+        "va": "0xB7CB58",
+        "size": 4,
+        "type": "float",
+        "tier": "verified_by_disassembly",
+        "evidence_va": "0x560D71",
+        "note": "Raw unclamped elapsed step. Used by rendering/interpolation that must not stutter. Set to fixed value 0x3C23D70A (~0.00795) when bIsFrozen=1."
+      },
+      {
+        "name": "ms_fTimeStep",
+        "va": "0xB7CB5C",
+        "size": 4,
+        "type": "float",
+        "tier": "verified_by_disassembly",
+        "evidence_va": "0x560DA2",
+        "note": "Clamped per-frame step — the scalar multiplied 984× in .text. MAX = 2.0 proven from rdata 0x858C14 at 0x560DA2. Unit: 50ms per unit (1.0 = one 50ms tick). So 30fps → ~0.667, 60fps → ~0.333, 120fps → ~0.167. Max of 2.0 = ~100ms frame cap."
+      },
+      {
+        "name": "ms_nTimeInMilliseconds",
+        "va": "0xB7CB84",
+        "size": 4,
+        "type": "uint32_t",
+        "tier": "verified_by_disassembly",
+        "evidence_va": "0x560D31",
+        "note": "Game-time accumulator in milliseconds — incremented every frame, compared against a threshold at 0x560D37 (fcomp [0x858C58])"
+      }
+    ]
+  },
+
+  "clamp_constants": {
+    "ms_fTimeStep_max": {
+      "value_float": 2.0,
+      "rdata_va": "0x858C14",
+      "evidence_va": "0x560DA2",
+      "meaning": "If ms_fTimeStepNonClipped > 2.0, ms_fTimeStep is capped at 2.0. Prevents tunnelling through geometry on long stalls. Two units = 100ms at 50ms-per-unit."
+    },
+    "ms_fTimeStep_min": {
+      "value_float": 0.005,
+      "rdata_va": "0x858C18",
+      "evidence_va": "inferred from adjacent constant",
+      "tier": "structural_pad",
+      "meaning": "Floor value for timestep — stops physics from running at zero when frames are impossibly fast."
+    }
+  },
+
+  "update_function": {
+    "va": "0x560D2E",
+    "notes": [
+      "Reads ms_fTimeStepNonClipped @ 0xB7CB58",
+      "If bIsFrozen or !bGameStarted, sets ms_fTimeStepNonClipped to fixed 0x3C23D70A (~0.01s equivalent)",
+      "Copies old ms_fTimeStep to ms_fTimeStep_prev @ 0xB7CB54",
+      "Clamps ms_fTimeStepNonClipped against rdata MIN floor (0x858B3C area)",
+      "Clamps against MAX = 2.0 from rdata 0x858C14",
+      "Stores clamped result to ms_fTimeStep @ 0xB7CB5C",
+      "Writes game_FPS @ 0xB7CB50"
+    ]
+  },
+
+  "modder_implications": {
+    "fps_unlock_problem": "At 60fps ms_fTimeStep ~0.333, at 120fps ~0.167. All velocities/forces multiply ms_fTimeStep, so doubling framerate halves each per-frame delta — physics is effectively correct. However some legacy code adds a per-frame constant without timestep scaling, causing speed-up at high FPS.",
+    "physics_cap_note": "The 2.0 max means the engine never simulates more than ~100ms of physics in one frame. A stall longer than 100ms simply drops that extra time — objects do not teleport.",
+    "safe_patch_target": "To adjust the cap, patch the float at rdata 0x858C14 (currently = 2.0 = 0x40000000). Increasing it widens the stall-protection window. Decreasing it creates artificial slowdown under load.",
+    "timestep_unit": "ms_fTimeStep unit confirmed as 50ms per 1.0. Evidence: 0x3C23D70A ≈ 0.008 is the frozen value (~0.4ms), and 2.0 cap = 100ms max. Normal ~33ms frame → ~0.667."
+  },
+
+  "ties": {
+    "C51": "CTimer::Update called inside CGame::Process every frame (C51.2)",
+    "C42": "ms_fTimeStep multiplied in every vehicle physics integration step",
+    "C25": "Object physics also multiplies ms_fTimeStep for velocity integration",
+    "C41": "CWanted task timers multiply ms_fTimeStep for their timeouts"
+  },
+
+  "checks_passed": 6,
+  "checks_total": 6
+}

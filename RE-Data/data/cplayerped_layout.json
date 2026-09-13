@@ -1,0 +1,115 @@
+{
+ "class_name": "CPlayerPed",
+ "base_class": "CPed",
+ "size_bytes": 1956,
+ "size_hex": "0x7A4",
+ "own_range_hex": "0x79C..0x7A3",
+ "own_size_bytes": 8,
+ "coverage_pct": 100.0,
+ "chapter": "CPed-derived/CPlayerPed",
+ "provenance": "disassembly VALIDATE_OFFSET (2 macros, authoritative) + disassembly PlayerPed.cpp InjectHooks (names + VAs) + Capstone sweep of 15 CPlayerPed functions vs gta_sa.exe. VALIDATE_SIZE(CPlayerPed, 0x7A4) = 1956 bytes.",
+ "fields": [
+  {
+   "name": "m_p3rdPersonMouseTarget",
+   "offset_hex": "0x79c",
+   "offset_int": 1948,
+   "size": 4,
+   "type_hint": "CPed*",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x609ed1",
+   "note": "Lock-on / 3rd-person-mouse camera target ped. Set by Compute3rdPersonMouseTarget and FindPedToAttack; cleared by Clear3rdPersonMouseTarget/ClearWeaponTarget. disassembly name: m_p3rdPersonMouseTarget; disassembly: m_pPlayerTargettedPed."
+  },
+  {
+   "name": "field_7A0",
+   "offset_hex": "0x7a0",
+   "offset_int": 1952,
+   "size": 4,
+   "type_hint": "int32_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Unknown int at end of CPlayerPed own range. VALIDATE_OFFSET confirmed offset; purpose not yet identified."
+  }
+ ],
+ "methods": [
+  {
+   "name": "ClearWeaponTarget",
+   "entry_va": "0x609C80",
+   "tier": "verified_by_disassembly"
+  },
+  {
+   "name": "Clear3rdPersonMouseTarget",
+   "entry_va": "0x609ED0",
+   "tier": "verified_by_disassembly"
+  },
+  {
+   "name": "FindPedToAttack",
+   "entry_va": "0x60C5F0",
+   "tier": "verified_by_disassembly"
+  },
+  {
+   "name": "EvaluateTarget",
+   "entry_va": "0x60D020",
+   "tier": "verified_by_disassembly"
+  },
+  {
+   "name": "ProcessControl",
+   "entry_va": "0x60EA90",
+   "tier": "verified_by_disassembly"
+  },
+  {
+   "name": "Busted",
+   "entry_va": "0x609EF0",
+   "tier": "verified"
+  },
+  {
+   "name": "GetWantedLevel",
+   "entry_va": "0x41BE60",
+   "tier": "verified"
+  },
+  {
+   "name": "SetWantedLevel",
+   "entry_va": "0x609F10",
+   "tier": "verified"
+  },
+  {
+   "name": "SetWantedLevelNoDrop",
+   "entry_va": "0x609F30",
+   "tier": "verified"
+  },
+  {
+   "name": "RemovePlayerPed",
+   "entry_va": "0x6094A0",
+   "tier": "verified"
+  },
+  {
+   "name": "SetupPlayerPed",
+   "entry_va": "0x60D790",
+   "tier": "verified"
+  },
+  {
+   "name": "MakeChangesForNewWeapon",
+   "entry_va": "0x60B460",
+   "tier": "verified"
+  },
+  {
+   "name": "ResetSprintEnergy",
+   "entry_va": "0x60A530",
+   "tier": "verified"
+  },
+  {
+   "name": "HandleSprintEnergy",
+   "entry_va": "0x60A550",
+   "tier": "verified"
+  },
+  {
+   "name": "ResetPlayerBreath",
+   "entry_va": "0x60A8A0",
+   "tier": "verified"
+  },
+  {
+   "name": "HandlePlayerBreath",
+   "entry_va": "0x60A8D0",
+   "tier": "verified"
+  }
+ ]
+}

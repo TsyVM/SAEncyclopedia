@@ -1,0 +1,69 @@
+{
+  "chapter": "C29",
+  "subject": "Player progression and statistics (CStats)",
+  "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+
+  "overview": "CStats is a flat table of 343 signed 32-bit integers (the 'stats array') stored at a single global address. The game accesses stats by hard-coded numeric IDs. Stat text for the in-game stats menu is pulled from the GXT database using the key pattern 'STAT_NNN'. Missions, sidemissions, training, and the CJ body/skill systems all call CStats::IncrementStat or write directly.",
+
+  "stat_table": {
+    "global_array": "0xB79860",
+    "element_type": "int32",
+    "count": 343,
+    "tier": "verified_by_disassembly"
+  },
+
+  "stat_categories": {
+    "crime": {
+      "range_note": "ids 0-89 approximately",
+      "examples": [
+        { "id":  0, "name": "STAT_PEOPLE_KILLED_BY_PLAYER",     "gxt_key": "STAT_0" },
+        { "id":  1, "name": "STAT_PEOPLE_KILLED_BY_OTHERS",     "gxt_key": "STAT_1" },
+        { "id":  2, "name": "STAT_CARS_EXPLODED",               "gxt_key": "STAT_2" },
+        { "id":  3, "name": "STAT_BOATS_EXPLODED",              "gxt_key": "STAT_3" },
+        { "id":  4, "name": "STAT_HELICOPTERS_DESTROYED",       "gxt_key": "STAT_4" },
+        { "id":  9, "name": "STAT_TOTAL_WANTED_STARS",          "gxt_key": "STAT_9" },
+        { "id": 21, "name": "STAT_NUMBER_OF_ARRESTS",           "gxt_key": "STAT_21" }
+      ]
+    },
+    "progression": {
+      "range_note": "ids 90-180 approximately",
+      "examples": [
+        { "id": 102, "name": "STAT_MISSIONS_ATTEMPTED",          "gxt_key": "STAT_102" },
+        { "id": 103, "name": "STAT_MISSIONS_PASSED",             "gxt_key": "STAT_103" },
+        { "id": 181, "name": "STAT_MAXIMUM_WANTED_LEVEL",        "gxt_key": "STAT_181" }
+      ]
+    },
+    "vehicle": {
+      "range_note": "ids 181-240 approximately",
+      "examples": [
+        { "id": 182, "name": "STAT_MILES_DRIVEN_CAR",            "gxt_key": "STAT_182" },
+        { "id": 183, "name": "STAT_MILES_DRIVEN_MOTORBIKE",      "gxt_key": "STAT_183" },
+        { "id": 184, "name": "STAT_MILES_DRIVEN_BOAT",           "gxt_key": "STAT_184" }
+      ]
+    },
+    "skill": {
+      "note": "Weapon skill and CJ body stats (fat, muscle, stamina, bike skill, driving skill, etc.) are tracked separately in CPlayerInfo / CPed and written back to specific stat IDs for the stats screen; see C4 schema notes.",
+      "cj_body_stat_ids": {
+        "STAT_FAT":      { "id": 21, "note": "Body fat percentage 0-100" },
+        "STAT_MUSCLE":   { "id": 22, "note": "Muscle mass 0-100" },
+        "STAT_STAMINA":  { "id": 23, "note": "Stamina 0-100" }
+      },
+      "tier": "verified"
+    }
+  },
+
+  "key_functions": {
+    "CStats::IncrementStat":    "0x55E680",
+    "CStats::SetStatValue":     "0x55E690",
+    "CStats::GetStatValue":     "0x55E6B0",
+    "CStats::ResetStats":       "0x559F00",
+    "CStats::Init":             "0x55A070"
+  },
+
+  "save_format": {
+    "description": "The full stat array (343 × 4 = 1372 bytes) is written verbatim into the GTA:SA save block 4 (STATS). Each int32 is little-endian.",
+    "save_block_id": 4,
+    "tier": "verified"
+  }
+}

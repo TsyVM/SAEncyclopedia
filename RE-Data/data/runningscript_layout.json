@@ -1,0 +1,110 @@
+{
+ "$schema": "runningscript_layout.v1",
+ "generated": "tools/derive_runningscript.py",
+ "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+ "object_size": 224,
+ "summary": {
+  "facts_checked": 7,
+  "facts_passed": 7,
+  "local_var_dwords": 34,
+  "return_stack_dwords": 8,
+  "mission_lvar_block": 10783072,
+  "global_var_space": 10787168
+ },
+ "fields": [
+  {
+   "offset": 0,
+   "size": 4,
+   "name": "next (intrusive list)"
+  },
+  {
+   "offset": 4,
+   "size": 4,
+   "name": "prev (intrusive list)"
+  },
+  {
+   "offset": 8,
+   "size": 8,
+   "name": "name[8]"
+  },
+  {
+   "offset": 16,
+   "size": 4,
+   "name": "base pointer (script code base)"
+  },
+  {
+   "offset": 20,
+   "size": 4,
+   "name": "program counter (current IP)"
+  },
+  {
+   "offset": 24,
+   "size": 32,
+   "name": "return/gosub stack (8 dwords)"
+  },
+  {
+   "offset": 56,
+   "size": 4,
+   "name": "stack depth + pad"
+  },
+  {
+   "offset": 60,
+   "size": 136,
+   "name": "local variables (34 dwords = 32 locals + 2 timers)"
+  },
+  {
+   "offset": 196,
+   "size": 28,
+   "name": "condition/state flag bytes (+0xC4..+0xC9=0xFF, +0xCC, +0xD0..+0xD4, +0xD8)"
+  },
+  {
+   "offset": 220,
+   "size": 4,
+   "name": "+0xDC mission-LVAR-mode flag (within the flag block above; last dword)"
+  }
+ ],
+ "structural_facts": [
+  {
+   "entry_va": "0x004648E0",
+   "method": "CRunningScript::Init",
+   "fact": "Init lays out the object: return/gosub stack = 8 dwords @+0x18; local-var array = 0x22 (34) dwords @+0x3C; init flags +0xC9=0xFF, +0xD3=1",
+   "verified": true
+  },
+  {
+   "entry_va": "0x00464DA0",
+   "method": "CRunningScript::UpdatePC",
+   "fact": "UpdatePC: base pointer @+0x10, program counter (PC) @+0x14",
+   "verified": true
+  },
+  {
+   "entry_va": "0x00463CA0",
+   "method": "CRunningScript::GetPointerToLocalVariable",
+   "fact": "GetPointerToLocalVariable: +0xDC flag redirects locals to the shared mission-LVAR block at 0xA48960 (C28.2's 4 KB block)",
+   "verified": true
+  },
+  {
+   "entry_va": "0x00463CF0",
+   "method": "CRunningScript::ReadArrayInformation",
+   "fact": "ReadArrayInformation: own locals @this+0x3C; global array space @0xA49960",
+   "verified": true
+  },
+  {
+   "entry_va": "0x00464700",
+   "method": "CRunningScript::GetIndexOfGlobalVariable",
+   "fact": "GetIndexOfGlobalVariable: PC @+0x14 walked; global var space @0xA49960",
+   "verified": true
+  },
+  {
+   "entry_va": "0x00464C00",
+   "method": "CRunningScript::AddScriptToList",
+   "fact": "AddScriptToList: intrusive list links next@+0, prev@+4",
+   "verified": true
+  },
+  {
+   "entry_va": "0x00464BD0",
+   "method": "CRunningScript::RemoveScriptFromList",
+   "fact": "RemoveScriptFromList: same next@+0 / prev@+4 links",
+   "verified": true
+  }
+ ]
+}

@@ -1,0 +1,505 @@
+{
+ "$schema": "name_verification.v1",
+ "generated": "tools/derive_name_verification.py",
+ "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+ "note": "Promotes C27 external-only (\ud83d\udd37) names to \u2705 where the method's disassembly references its OWN class's signature statics (name + data-flow corroborate).",
+ "summary": {
+  "considered": 195,
+  "promoted": 119,
+  "prior_verified": 13,
+  "total_structure_or_disasm_verified": 132,
+  "by_class": {
+   "CIplStore": 6,
+   "CStreaming": 15,
+   "CColStore": 8,
+   "CConversations": 8,
+   "CEntryExitManager": 10,
+   "CGarages": 10,
+   "CPathFind": 12,
+   "CPickups": 6,
+   "CVehicleRecording": 11,
+   "CReplay": 10,
+   "CRunningScript": 5,
+   "CTheScripts": 11,
+   "CShopping": 7
+  }
+ },
+ "promotions": [
+  {
+   "entry_va": "0x00404C90",
+   "name": "CIplStore::IncludeEntity"
+  },
+  {
+   "entry_va": "0x00405850",
+   "name": "CIplStore::RequestIplAndIgnore"
+  },
+  {
+   "entry_va": "0x00405890",
+   "name": "CIplStore::RemoveIplAndIgnore"
+  },
+  {
+   "entry_va": "0x004058D0",
+   "name": "CIplStore::RemoveIplWhenFarAway"
+  },
+  {
+   "entry_va": "0x00405AC0",
+   "name": "CIplStore::AddIplSlot"
+  },
+  {
+   "entry_va": "0x00405FA0",
+   "name": "CIplStore::Shutdown"
+  },
+  {
+   "entry_va": "0x00407610",
+   "name": "CStreaming::AddImageToList"
+  },
+  {
+   "entry_va": "0x00407820",
+   "name": "CStreaming::HasVehicleUpgradeLoaded"
+  },
+  {
+   "entry_va": "0x00407A40",
+   "name": "CStreaming::ClearFlagForAll"
+  },
+  {
+   "entry_va": "0x00407C00",
+   "name": "CStreaming::GetDefaultCopModel"
+  },
+  {
+   "entry_va": "0x00407F00",
+   "name": "CStreaming::HasSpecialCharLoaded"
+  },
+  {
+   "entry_va": "0x00407F80",
+   "name": "CStreaming::WeAreTryingToPhaseVehicleOut"
+  },
+  {
+   "entry_va": "0x004084B0",
+   "name": "CStreaming::Shutdown"
+  },
+  {
+   "entry_va": "0x00409710",
+   "name": "CStreaming::RemoveEntity"
+  },
+  {
+   "entry_va": "0x00409A90",
+   "name": "CStreaming::AreTexturesUsedByRequestedModels"
+  },
+  {
+   "entry_va": "0x0040A080",
+   "name": "CStreaming::RequestFile"
+  },
+  {
+   "entry_va": "0x0040A150",
+   "name": "CStreaming::StreamCopModels"
+  },
+  {
+   "entry_va": "0x0040A400",
+   "name": "CStreaming::StreamFireEngineAndFireman"
+  },
+  {
+   "entry_va": "0x0040B080",
+   "name": "CStreaming::RemoveCurrentZonesModels"
+  },
+  {
+   "entry_va": "0x0040B4F0",
+   "name": "CStreaming::StreamOneNewCar"
+  },
+  {
+   "entry_va": "0x0040E560",
+   "name": "CStreaming::ReInit"
+  },
+  {
+   "entry_va": "0x004106D0",
+   "name": "CColStore::LoadCol[2]"
+  },
+  {
+   "entry_va": "0x00410730",
+   "name": "CColStore::RemoveCol"
+  },
+  {
+   "entry_va": "0x004107A0",
+   "name": "CColStore::AddRef"
+  },
+  {
+   "entry_va": "0x004107D0",
+   "name": "CColStore::RemoveRef"
+  },
+  {
+   "entry_va": "0x00410800",
+   "name": "CColStore::GetBoundingBox"
+  },
+  {
+   "entry_va": "0x00410820",
+   "name": "CColStore::IncludeModelIndex"
+  },
+  {
+   "entry_va": "0x00411140",
+   "name": "CColStore::AddColSlot"
+  },
+  {
+   "entry_va": "0x00411330",
+   "name": "CColStore::RemoveColSlot"
+  },
+  {
+   "entry_va": "0x0043A7B0",
+   "name": "CConversations::Clear"
+  },
+  {
+   "entry_va": "0x0043A810",
+   "name": "CConversations::AwkwardSay"
+  },
+  {
+   "entry_va": "0x0043A840",
+   "name": "CConversations::StartSettingUpConversation"
+  },
+  {
+   "entry_va": "0x0043A870",
+   "name": "CConversations::SetUpConversationNode"
+  },
+  {
+   "entry_va": "0x0043A960",
+   "name": "CConversations::RemoveConversationForPed"
+  },
+  {
+   "entry_va": "0x0043AAC0",
+   "name": "CConversations::IsConversationGoingOn"
+  },
+  {
+   "entry_va": "0x0043B0B0",
+   "name": "CConversations::IsPlayerInPositionForConversation"
+  },
+  {
+   "entry_va": "0x0043C590",
+   "name": "CConversations::Update"
+  },
+  {
+   "entry_va": "0x0043E410",
+   "name": "CEntryExitManager::AddEntryExitToStack"
+  },
+  {
+   "entry_va": "0x0043ECF0",
+   "name": "CEntryExitManager::SetAreaCodeForVisibleObjects"
+  },
+  {
+   "entry_va": "0x0043ED80",
+   "name": "CEntryExitManager::ResetAreaCodeForVisibleObjects"
+  },
+  {
+   "entry_va": "0x0043F0A0",
+   "name": "CEntryExitManager::PostEntryExitsCreation"
+  },
+  {
+   "entry_va": "0x0043F150",
+   "name": "CEntryExitManager::GetPositionRelativeToOutsideWorld"
+  },
+  {
+   "entry_va": "0x0043F180",
+   "name": "CEntryExitManager::EnableBurglaryHouses"
+  },
+  {
+   "entry_va": "0x0043F880",
+   "name": "CEntryExitManager::Init"
+  },
+  {
+   "entry_va": "0x0043FD50",
+   "name": "CEntryExitManager::DeleteOne"
+  },
+  {
+   "entry_va": "0x00440B90",
+   "name": "CEntryExitManager::Shutdown"
+  },
+  {
+   "entry_va": "0x00440C40",
+   "name": "CEntryExitManager::ShutdownForRestart"
+  },
+  {
+   "entry_va": "0x004471B0",
+   "name": "CGarages::Shutdown"
+  },
+  {
+   "entry_va": "0x00447680",
+   "name": "CGarages::GetGarageNumberByName"
+  },
+  {
+   "entry_va": "0x004476D0",
+   "name": "CGarages::ChangeGarageType"
+  },
+  {
+   "entry_va": "0x00447C40",
+   "name": "CGarages::SetTargetCarForMissionGarage"
+  },
+  {
+   "entry_va": "0x00447CB0",
+   "name": "CGarages::DeActivateGarage"
+  },
+  {
+   "entry_va": "0x00447CD0",
+   "name": "CGarages::ActivateGarage"
+  },
+  {
+   "entry_va": "0x00447D00",
+   "name": "CGarages::IsGarageOpen"
+  },
+  {
+   "entry_va": "0x00447D30",
+   "name": "CGarages::IsGarageClosed"
+  },
+  {
+   "entry_va": "0x00448B30",
+   "name": "CGarages::AllRespraysCloseOrOpen"
+  },
+  {
+   "entry_va": "0x00449E60",
+   "name": "CGarages::PlayerArrestedOrDied"
+  },
+  {
+   "entry_va": "0x0044D230",
+   "name": "CPathFind::These2NodesAreAdjacent"
+  },
+  {
+   "entry_va": "0x0044D310",
+   "name": "CPathFind::ThisNodeWillLeadIntoADeadEnd"
+  },
+  {
+   "entry_va": "0x0044D480",
+   "name": "CPathFind::TestForPedTrafficLight"
+  },
+  {
+   "entry_va": "0x0044D790",
+   "name": "CPathFind::TestCrossesRoad"
+  },
+  {
+   "entry_va": "0x0044E000",
+   "name": "CPathFind::AddDynamicLinkBetween2Nodes_For1Node"
+  },
+  {
+   "entry_va": "0x0044E1A0",
+   "name": "CPathFind::RemoveInterior"
+  },
+  {
+   "entry_va": "0x004504F0",
+   "name": "CPathFind::CountNeighboursToBeSwitchedOff"
+  },
+  {
+   "entry_va": "0x00450560",
+   "name": "CPathFind::MarkRoadNodeAsDontWander"
+  },
+  {
+   "entry_va": "0x00451350",
+   "name": "CPathFind::FindLinkBetweenNodes"
+  },
+  {
+   "entry_va": "0x00452090",
+   "name": "CPathFind::Find2NodesForCarCreation"
+  },
+  {
+   "entry_va": "0x00452160",
+   "name": "CPathFind::SwitchOffNodeAndNeighbours"
+  },
+  {
+   "entry_va": "0x004529F0",
+   "name": "CPathFind::LoadPathFindData[FromStream]"
+  },
+  {
+   "entry_va": "0x00454A70",
+   "name": "CPickups::Init"
+  },
+  {
+   "entry_va": "0x00454B40",
+   "name": "CPickups::IsPickUpPickedUp"
+  },
+  {
+   "entry_va": "0x004551C0",
+   "name": "CPickups::FindPickUpForThisObject"
+  },
+  {
+   "entry_va": "0x00455240",
+   "name": "CPickups::AddToCollectedPickupsArray"
+  },
+  {
+   "entry_va": "0x004552A0",
+   "name": "CPickups::GetActualPickupIndex"
+  },
+  {
+   "entry_va": "0x00455680",
+   "name": "CPickups::UpdateMoneyPerDay"
+  },
+  {
+   "entry_va": "0x00459400",
+   "name": "CVehicleRecording::ShutDown"
+  },
+  {
+   "entry_va": "0x004594C0",
+   "name": "CVehicleRecording::IsPlaybackGoingOnForCar"
+  },
+  {
+   "entry_va": "0x00459740",
+   "name": "CVehicleRecording::PausePlaybackRecordedCar"
+  },
+  {
+   "entry_va": "0x00459850",
+   "name": "CVehicleRecording::UnpausePlaybackRecordedCar"
+  },
+  {
+   "entry_va": "0x00459F80",
+   "name": "CVehicleRecording::RegisterRecordingFile"
+  },
+  {
+   "entry_va": "0x0045A020",
+   "name": "CVehicleRecording::RequestRecordingFile"
+  },
+  {
+   "entry_va": "0x0045A060",
+   "name": "CVehicleRecording::HasRecordingFileBeenLoaded"
+  },
+  {
+   "entry_va": "0x0045A0A0",
+   "name": "CVehicleRecording::RemoveRecordingFile"
+  },
+  {
+   "entry_va": "0x0045A160",
+   "name": "CVehicleRecording::RemoveAllRecordingsThatArentUsed"
+  },
+  {
+   "entry_va": "0x0045A8F0",
+   "name": "CVehicleRecording::Load"
+  },
+  {
+   "entry_va": "0x0045A980",
+   "name": "CVehicleRecording::StartPlaybackRecordedCar"
+  },
+  {
+   "entry_va": "0x0045CEA0",
+   "name": "CReplay::DealWithNewPedPacket"
+  },
+  {
+   "entry_va": "0x0045D4B0",
+   "name": "CReplay::StreamAllNecessaryCarsAndPeds"
+  },
+  {
+   "entry_va": "0x0045D6C0",
+   "name": "CReplay::FindFirstFocusCoordinate"
+  },
+  {
+   "entry_va": "0x0045DDE0",
+   "name": "CReplay::IsThisPedUsedInRecording"
+  },
+  {
+   "entry_va": "0x0045EBB0",
+   "name": "CReplay::RecordVehicleDeleted"
+  },
+  {
+   "entry_va": "0x0045EC20",
+   "name": "CReplay::RecordPedDeleted"
+  },
+  {
+   "entry_va": "0x0045EF20",
+   "name": "CReplay::InitialisePedPoolConversionTable"
+  },
+  {
+   "entry_va": "0x0045F180",
+   "name": "CReplay::StoreStuffInMem"
+  },
+  {
+   "entry_va": "0x004600F0",
+   "name": "CReplay::TriggerPlayback"
+  },
+  {
+   "entry_va": "0x004604A0",
+   "name": "CReplay::PlayBackThisFrame"
+  },
+  {
+   "entry_va": "0x00463CA0",
+   "name": "CRunningScript::GetPointerToLocalVariable"
+  },
+  {
+   "entry_va": "0x00463CF0",
+   "name": "CRunningScript::ReadArrayInformation"
+  },
+  {
+   "entry_va": "0x00464700",
+   "name": "CRunningScript::GetIndexOfGlobalVariable"
+  },
+  {
+   "entry_va": "0x00464BB0",
+   "name": "CTheScripts::WipeLocalVariableMemoryForMissionScript"
+  },
+  {
+   "entry_va": "0x00464D40",
+   "name": "CTheScripts::StartTestScript"
+  },
+  {
+   "entry_va": "0x00464D50",
+   "name": "CTheScripts::IsPlayerOnAMission"
+  },
+  {
+   "entry_va": "0x00464DA0",
+   "name": "CRunningScript::UpdatePC"
+  },
+  {
+   "entry_va": "0x0046A7C0",
+   "name": "CTheScripts::ClearAllSuppressedCarModels"
+  },
+  {
+   "entry_va": "0x0046AB60",
+   "name": "CTheScripts::AddToWaitingForScriptBrainArray"
+  },
+  {
+   "entry_va": "0x0046ABC0",
+   "name": "CTheScripts::RemoveFromWaitingForScriptBrainArray"
+  },
+  {
+   "entry_va": "0x00474750",
+   "name": "CTheScripts::AddToListOfSpecialAnimGroupsAttachedToCharModels"
+  },
+  {
+   "entry_va": "0x00481200",
+   "name": "CTheScripts::AddToInvisibilitySwapArray"
+  },
+  {
+   "entry_va": "0x004812D0",
+   "name": "CTheScripts::UndoEntityInvisibilitySettings"
+  },
+  {
+   "entry_va": "0x00485A50",
+   "name": "CRunningScript::DoDeathArrestCheck"
+  },
+  {
+   "entry_va": "0x00486720",
+   "name": "CTheScripts::ReadObjectNamesFromScript"
+  },
+  {
+   "entry_va": "0x004867C0",
+   "name": "CTheScripts::ReadMultiScriptFileOffsetsFromScript"
+  },
+  {
+   "entry_va": "0x0049AB10",
+   "name": "CShopping::GetItemIndex"
+  },
+  {
+   "entry_va": "0x0049B200",
+   "name": "CShopping::StoreClothesState"
+  },
+  {
+   "entry_va": "0x0049B240",
+   "name": "CShopping::RestoreClothesState"
+  },
+  {
+   "entry_va": "0x0049B5E0",
+   "name": "CShopping::HasPlayerBought"
+  },
+  {
+   "entry_va": "0x0049B610",
+   "name": "CShopping::SetPlayerHasBought"
+  },
+  {
+   "entry_va": "0x0049B640",
+   "name": "CShopping::ShutdownForRestart"
+  },
+  {
+   "entry_va": "0x0049BEF0",
+   "name": "CShopping::UpdateStats"
+  }
+ ]
+}

@@ -1,0 +1,473 @@
+{
+ "chapter": "C42",
+ "class_name": "CPhysical",
+ "size_bytes": 312,
+ "base_chain": "CEntity(0x38) -> CPhysical(0x138)",
+ "own_range": "0x38..0x138",
+ "fields": [
+  {
+   "name": "field_0x38",
+   "offset": "0x38",
+   "offset_int": 56,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x00542B07",
+   "access_count": 21,
+   "access_fns": [
+    "ApplyTurnForce",
+    "ApplyForce",
+    "ApplyMoveSpeed",
+    "ApplyFrictionTurnForce",
+    "ApplyFrictionForce",
+    "ApplySoftCollision"
+   ],
+   "note": "hit in 6 function(s): ApplyTurnForce, ApplyForce, ApplyMoveSpeed, ApplyFrictionTurnForce"
+  },
+  {
+   "name": "field_0x3c",
+   "offset": "0x3C",
+   "offset_int": 60,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x00542D4A",
+   "access_count": 12,
+   "access_fns": [
+    "GetSpeed",
+    "ApplyFrictionTurnForce",
+    "ApplyFrictionForce",
+    "AddCollisionRecord",
+    "ApplySoftCollision"
+   ],
+   "note": "hit in 5 function(s): GetSpeed, ApplyFrictionTurnForce, ApplyFrictionForce, AddCollisionRecord"
+  },
+  {
+   "name": "field_0x40",
+   "offset": "0x40",
+   "offset_int": 64,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005429A4",
+   "access_count": 28,
+   "access_fns": [
+    "SetDamagedPieceRecord",
+    "ApplyMoveForce",
+    "ApplyTurnForce",
+    "ApplyForce",
+    "GetSpeed",
+    "ApplyMoveSpeed",
+    "ApplyTurnSpeed",
+    "ApplyGravity",
+    "ApplyFrictionMoveForce",
+    "ApplyFrictionTurnForce",
+    "ApplyFrictionForce",
+    "SkipPhysics",
+    "AddCollisionRecord",
+    "GetHasCollidedWith",
+    "ApplySoftCollision"
+   ],
+   "note": "hit in 15 function(s): SetDamagedPieceRecord, ApplyMoveForce, ApplyTurnForce, ApplyForce"
+  },
+  {
+   "name": "field_0x44",
+   "offset": "0x44",
+   "offset_int": 68,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x00542A2B",
+   "access_count": 12,
+   "access_fns": [
+    "ApplyMoveForce",
+    "ApplyForce",
+    "GetSpeed",
+    "ApplyMoveSpeed",
+    "ApplySoftCollision"
+   ],
+   "note": "hit in 5 function(s): ApplyMoveForce, ApplyForce, GetSpeed, ApplyMoveSpeed"
+  },
+  {
+   "name": "field_0x48",
+   "offset": "0x48",
+   "offset_int": 72,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x00542A37",
+   "access_count": 10,
+   "access_fns": [
+    "ApplyMoveForce",
+    "ApplyForce",
+    "GetSpeed",
+    "ApplyMoveSpeed",
+    "ApplySoftCollision"
+   ],
+   "note": "hit in 5 function(s): ApplyMoveForce, ApplyForce, GetSpeed, ApplyMoveSpeed"
+  },
+  {
+   "name": "field_0x4c",
+   "offset": "0x4C",
+   "offset_int": 76,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x00542A41",
+   "access_count": 7,
+   "access_fns": [
+    "ApplyMoveForce",
+    "ApplyForce",
+    "GetSpeed",
+    "ApplyMoveSpeed",
+    "ApplySoftCollision"
+   ],
+   "note": "hit in 5 function(s): ApplyMoveForce, ApplyForce, GetSpeed, ApplyMoveSpeed"
+  },
+  {
+   "name": "field_0x50",
+   "offset": "0x50",
+   "offset_int": 80,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x00542B24",
+   "access_count": 9,
+   "access_fns": [
+    "ApplyTurnForce",
+    "ApplyForce",
+    "GetSpeed",
+    "ApplyTurnSpeed",
+    "ApplySoftCollision"
+   ],
+   "note": "hit in 5 function(s): ApplyTurnForce, ApplyForce, GetSpeed, ApplyTurnSpeed"
+  },
+  {
+   "name": "field_0x54",
+   "offset": "0x54",
+   "offset_int": 84,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x00542B2E",
+   "access_count": 11,
+   "access_fns": [
+    "ApplyTurnForce",
+    "ApplyForce",
+    "GetSpeed",
+    "ApplyTurnSpeed",
+    "ApplySoftCollision"
+   ],
+   "note": "hit in 5 function(s): ApplyTurnForce, ApplyForce, GetSpeed, ApplyTurnSpeed"
+  },
+  {
+   "name": "field_0x58",
+   "offset": "0x58",
+   "offset_int": 88,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x00542B38",
+   "access_count": 16,
+   "access_fns": [
+    "ApplyTurnForce",
+    "ApplyForce",
+    "GetSpeed",
+    "ApplyTurnSpeed",
+    "ApplySoftCollision"
+   ],
+   "note": "hit in 5 function(s): ApplyTurnForce, ApplyForce, GetSpeed, ApplyTurnSpeed"
+  },
+  {
+   "name": "field_0x5c",
+   "offset": "0x5C",
+   "offset_int": 92,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x00542DB4",
+   "access_count": 5,
+   "access_fns": [
+    "GetSpeed",
+    "ApplyFrictionMoveForce",
+    "ApplyFrictionForce"
+   ],
+   "note": "hit in 3 function(s): GetSpeed, ApplyFrictionMoveForce, ApplyFrictionForce"
+  },
+  {
+   "name": "field_0x60",
+   "offset": "0x60",
+   "offset_int": 96,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x00542DAD",
+   "access_count": 6,
+   "access_fns": [
+    "GetSpeed",
+    "ApplyFrictionMoveForce",
+    "ApplyFrictionForce",
+    "ApplySoftCollision"
+   ],
+   "note": "hit in 4 function(s): GetSpeed, ApplyFrictionMoveForce, ApplyFrictionForce, ApplySoftCollision"
+  },
+  {
+   "name": "field_0x64",
+   "offset": "0x64",
+   "offset_int": 100,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x00542DA6",
+   "access_count": 5,
+   "access_fns": [
+    "GetSpeed",
+    "ApplyFrictionMoveForce",
+    "ApplyFrictionForce"
+   ],
+   "note": "hit in 3 function(s): GetSpeed, ApplyFrictionMoveForce, ApplyFrictionForce"
+  },
+  {
+   "name": "field_0x68",
+   "offset": "0x68",
+   "offset_int": 104,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x00542D66",
+   "access_count": 6,
+   "access_fns": [
+    "GetSpeed",
+    "ApplyFrictionTurnForce",
+    "ApplyFrictionForce",
+    "SkipPhysics"
+   ],
+   "note": "hit in 4 function(s): GetSpeed, ApplyFrictionTurnForce, ApplyFrictionForce, SkipPhysics"
+  },
+  {
+   "name": "field_0x6c",
+   "offset": "0x6C",
+   "offset_int": 108,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x00542D70",
+   "access_count": 5,
+   "access_fns": [
+    "GetSpeed",
+    "ApplyFrictionTurnForce",
+    "ApplyFrictionForce"
+   ],
+   "note": "hit in 3 function(s): GetSpeed, ApplyFrictionTurnForce, ApplyFrictionForce"
+  },
+  {
+   "name": "field_0x70",
+   "offset": "0x70",
+   "offset_int": 112,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x00542D7A",
+   "access_count": 5,
+   "access_fns": [
+    "GetSpeed",
+    "ApplyFrictionTurnForce",
+    "ApplyFrictionForce"
+   ],
+   "note": "hit in 3 function(s): GetSpeed, ApplyFrictionTurnForce, ApplyFrictionForce"
+  },
+  {
+   "name": "field_0x8c",
+   "offset": "0x8C",
+   "offset_int": 140,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x00542A07",
+   "access_count": 9,
+   "access_fns": [
+    "ApplyMoveForce",
+    "ApplyForce",
+    "ApplyGravity",
+    "ApplyFrictionMoveForce",
+    "ApplyFrictionTurnForce",
+    "ApplyFrictionForce",
+    "ApplySoftCollision"
+   ],
+   "note": "hit in 7 function(s): ApplyMoveForce, ApplyForce, ApplyGravity, ApplyFrictionMoveForce"
+  },
+  {
+   "name": "field_0x90",
+   "offset": "0x90",
+   "offset_int": 144,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x00542AC7",
+   "access_count": 5,
+   "access_fns": [
+    "ApplyTurnForce",
+    "ApplyForce",
+    "ApplyFrictionTurnForce",
+    "ApplyFrictionForce",
+    "ApplySoftCollision"
+   ],
+   "note": "hit in 5 function(s): ApplyTurnForce, ApplyForce, ApplyFrictionTurnForce, ApplyFrictionForce"
+  },
+  {
+   "name": "field_0xa4",
+   "offset": "0xA4",
+   "offset_int": 164,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x00542A80",
+   "access_count": 7,
+   "access_fns": [
+    "ApplyTurnForce",
+    "ApplyForce",
+    "GetSpeed",
+    "ApplyGravity",
+    "ApplyFrictionTurnForce",
+    "ApplyFrictionForce",
+    "ApplySoftCollision"
+   ],
+   "note": "hit in 7 function(s): ApplyTurnForce, ApplyForce, GetSpeed, ApplyGravity"
+  },
+  {
+   "name": "field_0xac",
+   "offset": "0xAC",
+   "offset_int": 172,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x00542BFE",
+   "access_count": 3,
+   "access_fns": [
+    "ApplyForce",
+    "ApplyFrictionTurnForce",
+    "ApplyFrictionForce"
+   ],
+   "note": "hit in 3 function(s): ApplyForce, ApplyFrictionTurnForce, ApplyFrictionForce"
+  },
+  {
+   "name": "field_0xb4",
+   "offset": "0xB4",
+   "offset_int": 180,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x0054282A",
+   "access_count": 4,
+   "access_fns": [
+    "AddToMovingList",
+    "RemoveFromMovingList"
+   ],
+   "note": "hit in 2 function(s): AddToMovingList, RemoveFromMovingList"
+  },
+  {
+   "name": "field_0xb9",
+   "offset": "0xB9",
+   "offset_int": 185,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005433FC",
+   "access_count": 4,
+   "access_fns": [
+    "SkipPhysics",
+    "AddCollisionRecord"
+   ],
+   "note": "hit in 2 function(s): SkipPhysics, AddCollisionRecord"
+  },
+  {
+   "name": "field_0xbc",
+   "offset": "0xBC",
+   "offset_int": 188,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005434FF",
+   "access_count": 1,
+   "access_fns": [
+    "AddCollisionRecord"
+   ],
+   "note": "hit in 1 function(s): AddCollisionRecord"
+  },
+  {
+   "name": "field_0xd8",
+   "offset": "0xD8",
+   "offset_int": 216,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005428D0",
+   "access_count": 3,
+   "access_fns": [
+    "SetDamagedPieceRecord",
+    "SkipPhysics"
+   ],
+   "note": "hit in 2 function(s): SetDamagedPieceRecord, SkipPhysics"
+  },
+  {
+   "name": "field_0xdc",
+   "offset": "0xDC",
+   "offset_int": 220,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005428EF",
+   "access_count": 2,
+   "access_fns": [
+    "SetDamagedPieceRecord",
+    "SkipPhysics"
+   ],
+   "note": "hit in 2 function(s): SetDamagedPieceRecord, SkipPhysics"
+  },
+  {
+   "name": "field_0xe0",
+   "offset": "0xE0",
+   "offset_int": 224,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x00542937",
+   "access_count": 1,
+   "access_fns": [
+    "SetDamagedPieceRecord"
+   ],
+   "note": "hit in 1 function(s): SetDamagedPieceRecord"
+  },
+  {
+   "name": "field_0xec",
+   "offset": "0xEC",
+   "offset_int": 236,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x00542920",
+   "access_count": 1,
+   "access_fns": [
+    "SetDamagedPieceRecord"
+   ],
+   "note": "hit in 1 function(s): SetDamagedPieceRecord"
+  },
+  {
+   "name": "field_0xf8",
+   "offset": "0xF8",
+   "offset_int": 248,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005428FF",
+   "access_count": 2,
+   "access_fns": [
+    "SetDamagedPieceRecord",
+    "SkipPhysics"
+   ],
+   "note": "hit in 2 function(s): SetDamagedPieceRecord, SkipPhysics"
+  }
+ ],
+ "total_unique_offsets": 27,
+ "provenance": "Capstone sweep of disassembly anchor functions against gta_sa.exe"
+}

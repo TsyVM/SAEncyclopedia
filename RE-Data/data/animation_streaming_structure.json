@@ -1,0 +1,73 @@
+{
+  "chapter": "C17",
+  "subject": "Animation streaming and IFP file format (CAnimManager, ANP3)",
+  "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+
+  "ifp_file_format": {
+    "magic": "ANP3",
+    "endian": "little",
+    "tier": "verified",
+    "sections": [
+      { "id": "ANP3", "description": "root container; 4-byte child count follows magic" },
+      { "id": "INFO", "description": "animation block info: total anim count (uint32)" },
+      { "id": "NAME", "description": "block name string, null-padded to 24 bytes" },
+      { "id": "DGAN", "description": "per-animation wrapper: NAME child + CPAN child array" },
+      { "id": "CPAN", "description": "compressed bone channel; contains ANIM child" },
+      { "id": "ANIM", "description": "bone animation header: bone name (24B), num_frames (uint16), keyframe_type (uint16), flags (uint32)" }
+    ],
+    "keyframe_types": {
+      "3": "translation only (12B per frame: 3×float)",
+      "4": "rotation only (16B per frame: quaternion xyzw)",
+      "5": "both rotation + translation (28B per frame)"
+    }
+  },
+
+  "anim_manager_globals": {
+    "ms_aAnimAssocGroups": "0xB4EA40",
+    "ms_numAnimAssocDefinitions": "0xB4EA58",
+    "tier": "verified_by_disassembly"
+  },
+
+  "anim_group_ids": {
+    "note": "Animation groups (AnimAssocDefinition entries) are enumerated in animgrp.dat. Each line defines the group name, IFP file, and animation names within that IFP.",
+    "dat_file": "data/animgrp.dat",
+    "tier": "verified"
+  },
+
+  "streaming_slots": {
+    "description": "IFP files are streamed on demand via the standard CStreaming slot system. CStreamingInfo has one slot per registered IFP. IFPs are reference-counted; CAnimManager::RemoveAnimBlock decrements the ref and marks the slot free.",
+    "register_function": "CAnimManager::LoadAnimFile",
+    "register_va": "0x4D5310",
+    "remove_function":   "CAnimManager::RemoveAnimBlock",
+    "remove_va":         "0x4D4A80",
+    "tier": "verified_by_disassembly"
+  },
+
+  "key_blend_classes": {
+    "CAnimBlendStaticAssociation": {
+      "description": "Non-looping, non-blended association. Used for scripted one-shot anims.",
+      "schema": "CAnimBlendStaticAssociation (C17)"
+    },
+    "CAnimBlendAssociation": {
+      "description": "Blendable animation association with weight/speed. Most in-game movement uses this.",
+      "schema": "CAnimBlendAssociation (C17)"
+    },
+    "CAnimBlendClumpData": {
+      "description": "Per-clump (model) animation state; holds the linked list of active associations.",
+      "schema": "CAnimBlendClumpData (C17)"
+    },
+    "CAnimBlendSequence": {
+      "description": "Stores the bone keyframe data for one CPAN block from the IFP.",
+      "schema": "CAnimBlendSequence (C17)"
+    }
+  },
+
+  "key_functions": {
+    "CAnimManager::Init":                 "0x4D4C00",
+    "CAnimManager::LoadAnimFile":         "0x4D5310",
+    "CAnimManager::GetAnimAssocGroup":    "0x4D4D00",
+    "CAnimBlendAssociation::SetCurrentTime": "0x4CEDF0",
+    "RpAnimBlendClumpFillFrameArray":     "0x4D20A0"
+  }
+}

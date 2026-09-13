@@ -1,0 +1,762 @@
+{
+ "chapter": "C47-CAutomobile",
+ "subject": "CAutomobile -- complete field layout from VALIDATE_OFFSET + Capstone sweep",
+ "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+ "_note": "CAutomobile inherits CVehicle (0x5A0). Own range 0x5A0..0x987 (1000 bytes). 53 fields from VALIDATE_OFFSET (disassembly/game_sa/CAutomobile.h) cross-verified by Capstone sweep of 13 anchor functions. m_nAutomobileFlags@0x868 documented as 8-bit bitfield (bTaxiLight..bIsMonsterTruck). Structural pads: 0x869(1B after flags), 0x963(1B after m_nNumDriveWheelsOnGroundLastFrame), 0x982-3(2B after m_fireParticleCounter). eCarNodes enum (25 nodes) and eWheelState enum (4 states) documented inline.",
+ "class_name": "CAutomobile",
+ "base_chain": "CEntity -> CPhysical (0x138) -> CVehicle (0x5A0) -> CAutomobile",
+ "size_hex": "0x988",
+ "size_bytes": 2440,
+ "own_range_hex": "0x5A0..0x987",
+ "coverage_pct": 100.0,
+ "provenance": "cold disassembly of gta_sa.exe (1.0 US); names from disassembly CAutomobile.h VALIDATE_OFFSET macros; bitflags from CAutomobile class body declarations",
+ "fields": [
+  {
+   "name": "m_damageManager",
+   "offset_hex": "0x5A0",
+   "offset_int": 1440,
+   "size": 24,
+   "type_hint": "CDamageManager",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Vehicle damage state manager. 24B struct tracking panel/door/wheel damage.",
+   "sweep_fn_hits": 12
+  },
+  {
+   "name": "m_doors",
+   "offset_hex": "0x5B8",
+   "offset_int": 1464,
+   "size": 144,
+   "type_hint": "CDoor[6]",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Door physics array (6 doors x 24B each = 144B). Indices: 0=RF, 1=RR, 2=LF, 3=LR, 4=bonnet, 5=boot.",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_aCarNodes",
+   "offset_hex": "0x648",
+   "offset_int": 1608,
+   "size": 100,
+   "type_hint": "RwFrame*[25]",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "RwFrame* pointers for all 25 car model nodes (see eCarNodes enum). CAR_NUM_NODES=25, 25x4B=100B. Indices: CHASSIS=1, WHEEL_RF=2..LB=7, DOOR_RF=8..LR=11, BUMP_FRONT=12, BUMP_REAR=13, WING_RF=14, WING_LF=15, BONNET=16, BOOT=17, WINDSCREEN=18, EXHAUST=19, MISC_A..E=20..24.",
+   "sweep_fn_hits": 1
+  },
+  {
+   "name": "m_panels",
+   "offset_hex": "0x6AC",
+   "offset_int": 1708,
+   "size": 96,
+   "type_hint": "CBouncingPanel[3]",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Bouncing panel physics array (3 panels x 32B each). Hood, trunk, and bumper deformation physics.",
+   "sweep_fn_hits": 6
+  },
+  {
+   "name": "m_swingingChassis",
+   "offset_hex": "0x70C",
+   "offset_int": 1804,
+   "size": 24,
+   "type_hint": "CDoor",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "CDoor instance used for swinging chassis physics (buses, certain trucks).",
+   "sweep_fn_hits": 1
+  },
+  {
+   "name": "m_wheelColPoint",
+   "offset_hex": "0x724",
+   "offset_int": 1828,
+   "size": 176,
+   "type_hint": "CColPoint[4]",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Collision contact point per wheel (4 wheels x 44B CColPoint = 176B). Wheels: RF=0, RB=1, LF=2, LB=3.",
+   "sweep_fn_hits": 6
+  },
+  {
+   "name": "m_fWheelsSuspensionCompression",
+   "offset_hex": "0x7D4",
+   "offset_int": 2004,
+   "size": 16,
+   "type_hint": "float[4]",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Per-wheel suspension compression ratio: 0.0=fully compressed, 1.0=fully relaxed.",
+   "sweep_fn_hits": 13
+  },
+  {
+   "name": "m_fWheelsSuspensionCompressionPrev",
+   "offset_hex": "0x7E4",
+   "offset_int": 2020,
+   "size": 16,
+   "type_hint": "float[4]",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Previous frame suspension compression (used for spring velocity).",
+   "sweep_fn_hits": 0
+  },
+  {
+   "name": "m_fWheelCounts",
+   "offset_hex": "0x7F4",
+   "offset_int": 2036,
+   "size": 16,
+   "type_hint": "float[4]",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Per-wheel contact force / ground-reaction counter.",
+   "sweep_fn_hits": 4
+  },
+  {
+   "name": "m_fBrakeCount",
+   "offset_hex": "0x804",
+   "offset_int": 2052,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Braking force accumulator for this frame.",
+   "sweep_fn_hits": 1
+  },
+  {
+   "name": "m_fIntertiaValue1",
+   "offset_hex": "0x808",
+   "offset_int": 2056,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Inertia value 1 (typo in original: 'Intertia'). Used in wheel pair processing.",
+   "sweep_fn_hits": 1
+  },
+  {
+   "name": "m_fIntertiaValue2",
+   "offset_hex": "0x80C",
+   "offset_int": 2060,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Inertia value 2. Used in wheel pair processing.",
+   "sweep_fn_hits": 1
+  },
+  {
+   "name": "m_wheelSkidmarkType",
+   "offset_hex": "0x810",
+   "offset_int": 2064,
+   "size": 16,
+   "type_hint": "eSkidmarkType[4]",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Skid mark type per wheel (4 x 4B int). 0=none, 1=normal, 2=mud, etc.",
+   "sweep_fn_hits": 1
+  },
+  {
+   "name": "m_bWheelSkidmarkBloody",
+   "offset_hex": "0x820",
+   "offset_int": 2080,
+   "size": 4,
+   "type_hint": "bool[4]",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Per-wheel: skidmark should be bloody (ran over a ped).",
+   "sweep_fn_hits": 0
+  },
+  {
+   "name": "m_bWheelSkidmarkMuddy",
+   "offset_hex": "0x824",
+   "offset_int": 2084,
+   "size": 4,
+   "type_hint": "bool[4]",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Per-wheel: skidmark should be muddy (driving on soft ground).",
+   "sweep_fn_hits": 0
+  },
+  {
+   "name": "m_fWheelRotation",
+   "offset_hex": "0x828",
+   "offset_int": 2088,
+   "size": 16,
+   "type_hint": "float[4]",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Per-wheel spin angle (radians, accumulated).",
+   "sweep_fn_hits": 0
+  },
+  {
+   "name": "m_fWheelPosition",
+   "offset_hex": "0x838",
+   "offset_int": 2104,
+   "size": 16,
+   "type_hint": "float[4]",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Per-wheel bounce position along suspension axis.",
+   "sweep_fn_hits": 0
+  },
+  {
+   "name": "m_fWheelSpeed",
+   "offset_hex": "0x848",
+   "offset_int": 2120,
+   "size": 16,
+   "type_hint": "float[4]",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Per-wheel rotation speed (rad/frame). Used for audio and skidmark logic.",
+   "sweep_fn_hits": 4
+  },
+  {
+   "name": "m_fWheelBurnoutSpeed",
+   "offset_hex": "0x858",
+   "offset_int": 2136,
+   "size": 16,
+   "type_hint": "float[4]",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Per-wheel burnout speed target (unused in normal SA gameplay).",
+   "sweep_fn_hits": 0
+  },
+  {
+   "name": "m_nAutomobileFlags",
+   "offset_hex": "0x868",
+   "offset_int": 2152,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Packed automobile behaviour bitflags (8 flags in 1 byte). Bit 0: bTaxiLight, Bit 1: bShouldNotChangeColour, Bit 2: bWaterTight, Bit 3: bDoesNotGetDamagedUpsideDown, Bit 4: bCanBeVisiblyDamaged, Bit 5: bTankExplodesCars, Bit 6: bIsBoggedDownInSand, Bit 7: bIsMonsterTruck.",
+   "sweep_fn_hits": 10,
+   "bitfields": [
+    {
+     "name": "bTaxiLight",
+     "bit": 0,
+     "desc": "Taxi light on (requires SetTaxiLight or m_sAllTaxiLights)"
+    },
+    {
+     "name": "bShouldNotChangeColour",
+     "bit": 1,
+     "desc": "Suppress colour change when remapping texture"
+    },
+    {
+     "name": "bWaterTight",
+     "bit": 2,
+     "desc": "Vehicle does not take water ingress damage"
+    },
+    {
+     "name": "bDoesNotGetDamagedUpsideDown",
+     "bit": 3,
+     "desc": "Inverted vehicle takes no damage"
+    },
+    {
+     "name": "bCanBeVisiblyDamaged",
+     "bit": 4,
+     "desc": "Allow visual deformation components"
+    },
+    {
+     "name": "bTankExplodesCars",
+     "bit": 5,
+     "desc": "Collisions with other vehicles cause explosions (tank behaviour)"
+    },
+    {
+     "name": "bIsBoggedDownInSand",
+     "bit": 6,
+     "desc": "Vehicle is currently stuck in soft ground"
+    },
+    {
+     "name": "bIsMonsterTruck",
+     "bit": 7,
+     "desc": "Monster truck (extra traction + ground clearance logic)"
+    }
+   ]
+  },
+  {
+   "name": "m_bDoingBurnout",
+   "offset_hex": "0x86A",
+   "offset_int": 2154,
+   "size": 2,
+   "type_hint": "int16_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Burnout state counter. Non-zero = vehicle is currently doing a burnout.",
+   "sweep_fn_hits": 5
+  },
+  {
+   "name": "m_wMiscComponentAngle",
+   "offset_hex": "0x86C",
+   "offset_int": 2156,
+   "size": 2,
+   "type_hint": "int16_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Current misc component angle (cranes, spinning parts). In fixed-point.",
+   "sweep_fn_hits": 9
+  },
+  {
+   "name": "m_wMiscComponentAnglePrev",
+   "offset_hex": "0x86E",
+   "offset_int": 2158,
+   "size": 2,
+   "type_hint": "int16_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Previous frame misc component angle (for interpolation).",
+   "sweep_fn_hits": 3
+  },
+  {
+   "name": "m_dwBusDoorTimerEnd",
+   "offset_hex": "0x870",
+   "offset_int": 2160,
+   "size": 4,
+   "type_hint": "uint32_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Game time (ms) when bus doors finish opening/closing.",
+   "sweep_fn_hits": 7
+  },
+  {
+   "name": "m_dwBusDoorTimerStart",
+   "offset_hex": "0x874",
+   "offset_int": 2164,
+   "size": 4,
+   "type_hint": "uint32_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Game time (ms) when bus door animation started.",
+   "sweep_fn_hits": 7
+  },
+  {
+   "name": "m_aSuspensionSpringLength",
+   "offset_hex": "0x878",
+   "offset_int": 2168,
+   "size": 16,
+   "type_hint": "float[4]",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Natural (rest) spring length per wheel from handling data.",
+   "sweep_fn_hits": 3
+  },
+  {
+   "name": "m_aSuspensionLineLength",
+   "offset_hex": "0x888",
+   "offset_int": 2184,
+   "size": 16,
+   "type_hint": "float[4]",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Total suspension line cast length per wheel.",
+   "sweep_fn_hits": 5
+  },
+  {
+   "name": "m_fFrontHeightAboveRoad",
+   "offset_hex": "0x898",
+   "offset_int": 2200,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Front axle centre height above road surface (from CWorld::ProcessVerticalLine).",
+   "sweep_fn_hits": 4
+  },
+  {
+   "name": "m_fRearHeightAboveRoad",
+   "offset_hex": "0x89C",
+   "offset_int": 2204,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Rear axle centre height above road surface.",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_fExtraTractionMult",
+   "offset_hex": "0x8A0",
+   "offset_int": 2208,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Traction multiplier override (cheat/script injection point).",
+   "sweep_fn_hits": 1
+  },
+  {
+   "name": "m_fNitroValue",
+   "offset_hex": "0x8A4",
+   "offset_int": 2212,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Nitro boost value / tyre temperature accumulator.",
+   "sweep_fn_hits": 9
+  },
+  {
+   "name": "m_fAircraftGoToHeading",
+   "offset_hex": "0x8A8",
+   "offset_int": 2216,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Target heading for TellPlaneToGoToCoors/TellHeliToGoToCoors.",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_fRotationBalance",
+   "offset_hex": "0x8AC",
+   "offset_int": 2220,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Controls destroyed helicopter rotation (angular momentum).",
+   "sweep_fn_hits": 1
+  },
+  {
+   "name": "m_fMoveDirection",
+   "offset_hex": "0x8B0",
+   "offset_int": 2224,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Previous speed (used as move direction parameter).",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_vecMoveForce",
+   "offset_hex": "0x8B4",
+   "offset_int": 2228,
+   "size": 12,
+   "type_hint": "CVector",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Accumulated move force vector applied this frame.",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_vecTurnForce",
+   "offset_hex": "0x8C0",
+   "offset_int": 2240,
+   "size": 12,
+   "type_hint": "CVector",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Accumulated turn/torque force vector applied this frame.",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_aDoorRotation",
+   "offset_hex": "0x8CC",
+   "offset_int": 2252,
+   "size": 24,
+   "type_hint": "float[6]",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Door rotation angles for 6 doors (unused in SA -- doors use CDoor physics).",
+   "sweep_fn_hits": 1
+  },
+  {
+   "name": "m_fBurningTimer",
+   "offset_hex": "0x8E4",
+   "offset_int": 2276,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Fire countdown: starts when health < 250.0; vehicle explodes at 5000.0.",
+   "sweep_fn_hits": 1
+  },
+  {
+   "name": "m_pWheelCollisionEntity",
+   "offset_hex": "0x8E8",
+   "offset_int": 2280,
+   "size": 16,
+   "type_hint": "CEntity*[4]",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Per-wheel: entity the wheel is in contact with (NULL if no contact).",
+   "sweep_fn_hits": 4
+  },
+  {
+   "name": "m_vWheelCollisionPos",
+   "offset_hex": "0x8F8",
+   "offset_int": 2296,
+   "size": 48,
+   "type_hint": "CVector[4]",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Per-wheel: world-space contact point position.",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_pExplosionVictim",
+   "offset_hex": "0x928",
+   "offset_int": 2344,
+   "size": 4,
+   "type_hint": "CPed*",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Ped caught in explosion radius (set during explosion processing).",
+   "sweep_fn_hits": 1
+  },
+  {
+   "name": "field_92C",
+   "offset_hex": "0x92C",
+   "offset_int": 2348,
+   "size": 24,
+   "type_hint": "uint8_t[24]",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "24 bytes of unknown purpose. May contain animation state or physics scratch.",
+   "sweep_fn_hits": 0
+  },
+  {
+   "name": "m_fLeftDoorOpenForDriveBys",
+   "offset_hex": "0x944",
+   "offset_int": 2372,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Left door open ratio for drive-by shooting (0.0=closed, 1.0=fully open).",
+   "sweep_fn_hits": 1
+  },
+  {
+   "name": "m_fRightDoorOpenForDriveBys",
+   "offset_hex": "0x948",
+   "offset_int": 2376,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Right door open ratio for drive-by shooting.",
+   "sweep_fn_hits": 1
+  },
+  {
+   "name": "m_fDoomVerticalRotation",
+   "offset_hex": "0x94C",
+   "offset_int": 2380,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Vertical rotation for Doom-style aircraft gun targeting.",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_fDoomHorizontalRotation",
+   "offset_hex": "0x950",
+   "offset_int": 2384,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Horizontal rotation for Doom-style aircraft gun targeting.",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_fForcedOrientation",
+   "offset_hex": "0x954",
+   "offset_int": 2388,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Forced heading for helicopter (set by SetHeliOrientation; -1.0 = disabled).",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_fPropRotate",
+   "offset_hex": "0x958",
+   "offset_int": 2392,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Propeller rotation angle (previously m_fUpDownLightAngle[0]).",
+   "sweep_fn_hits": 1
+  },
+  {
+   "name": "m_fCumulativeDamage",
+   "offset_hex": "0x95C",
+   "offset_int": 2396,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Accumulated crash damage for deformation visuals (previously m_fUpDownLightAngle[1]).",
+   "sweep_fn_hits": 0
+  },
+  {
+   "name": "m_nNumContactWheels",
+   "offset_hex": "0x960",
+   "offset_int": 2400,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Number of wheels currently in contact with ground.",
+   "sweep_fn_hits": 3
+  },
+  {
+   "name": "m_nWheelsOnGround",
+   "offset_hex": "0x961",
+   "offset_int": 2401,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Wheels-on-ground bitmask or count (used by GetNumContactWheels).",
+   "sweep_fn_hits": 3
+  },
+  {
+   "name": "m_nNumDriveWheelsOnGroundLastFrame",
+   "offset_hex": "0x962",
+   "offset_int": 2402,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Number of driven wheels touching ground last frame (for burnout/traction logic).",
+   "sweep_fn_hits": 1
+  },
+  {
+   "name": "m_fGasPedalAudioRevs",
+   "offset_hex": "0x964",
+   "offset_int": 2404,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Gas pedal audio revs multiplier: adjusts skid sound playback speed (0.0..1.0).",
+   "sweep_fn_hits": 1
+  },
+  {
+   "name": "m_wheelState",
+   "offset_hex": "0x968",
+   "offset_int": 2408,
+   "size": 16,
+   "type_hint": "eWheelState[4]",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Per-wheel state enum (4 x 4B int32). WHEEL_STATE_NORMAL=0, SPINNING=1, SKIDDING=2, FIXED=3.",
+   "sweep_fn_hits": 0
+  },
+  {
+   "name": "m_pNitroParticle",
+   "offset_hex": "0x978",
+   "offset_int": 2424,
+   "size": 8,
+   "type_hint": "FxSystem_c*[2]",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Nitro exhaust FxSystem pointers (left=0, right=1). NULL if inactive.",
+   "sweep_fn_hits": 9
+  },
+  {
+   "name": "m_harvesterParticleCounter",
+   "offset_hex": "0x980",
+   "offset_int": 2432,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Frame counter for harvester combine particle spawning.",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_fireParticleCounter",
+   "offset_hex": "0x981",
+   "offset_int": 2433,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Frame counter for fire particle spawning.",
+   "sweep_fn_hits": 1
+  },
+  {
+   "name": "m_heliDustFxTimeConst",
+   "offset_hex": "0x984",
+   "offset_int": 2436,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Time constant for helicopter dust effect intensity scaling.",
+   "sweep_fn_hits": 1
+  }
+ ],
+ "methods": [
+  {
+   "name": "CAutomobile::Constructor",
+   "entry_va": "0x006B0A90",
+   "tier": "verified"
+  },
+  {
+   "name": "CAutomobile::HydraulicControl",
+   "entry_va": "0x006A07A0",
+   "tier": "verified"
+  },
+  {
+   "name": "CAutomobile::ProcessBuoyancy",
+   "entry_va": "0x006A8C00",
+   "tier": "verified"
+  },
+  {
+   "name": "CAutomobile::TankControl",
+   "entry_va": "0x006AE850",
+   "tier": "verified"
+  },
+  {
+   "name": "CAutomobile::ProcessCarWheelPair",
+   "entry_va": "0x006A4EC0",
+   "tier": "verified"
+  },
+  {
+   "name": "CAutomobile::SetTotalDamage",
+   "entry_va": "0x006A27F0",
+   "tier": "verified"
+  },
+  {
+   "name": "CAutomobile::FixTyre",
+   "entry_va": "0x006A3580",
+   "tier": "verified"
+  },
+  {
+   "name": "CAutomobile::FixDoor",
+   "entry_va": "0x006A35A0",
+   "tier": "verified"
+  },
+  {
+   "name": "CAutomobile::FixPanel",
+   "entry_va": "0x006A3670",
+   "tier": "verified"
+  },
+  {
+   "name": "CAutomobile::PlayHornIfNecessary",
+   "entry_va": "0x006A3820",
+   "tier": "verified"
+  },
+  {
+   "name": "CAutomobile::ReduceHornCounter",
+   "entry_va": "0x006A29A0",
+   "tier": "verified"
+  },
+  {
+   "name": "CAutomobile::UpdateMovingCollision",
+   "entry_va": "0x006A1460",
+   "tier": "verified"
+  },
+  {
+   "name": "CAutomobile::DoSoftGroundResistance",
+   "entry_va": "0x006A4AF0",
+   "tier": "verified"
+  }
+ ]
+}

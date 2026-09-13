@@ -1,0 +1,1591 @@
+{
+ "chapter": "C47-CVehicle",
+ "subject": "CVehicle -- complete field layout from VALIDATE_OFFSET + Capstone sweep",
+ "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+ "_note": "Complete CVehicle own-range layout (0x138..0x59F, 1128 bytes). 86 fields from VALIDATE_OFFSET (disassembly/game_sa/CVehicle.h) cross-verified by Capstone sweep of 14 anchor functions. Bitfield unions documented: m_nHandlingFlagsIntValue@0x38C (29 handling flags), m_nVehicleFlags@0x4EC (52 vehicle behaviour flags, 8 bytes), m_nBombState@0x4A8 (bomb/lights/winch packed bits), m_nRenderLightsFlags@0x584 (4 light bits). Offsets absolute from object base. field_4EC / field_4ED renamed to m_nVehicleFlags (the vehicle bitflag block identified by cross-reference of disassembly source declaration vs VALIDATE_OFFSET evidence). Structural padding bytes NOT listed as fields: 0x4A5(1B), 0x4AF(1B), 0x4B5-7(3B), 0x509-B(3B), 0x585-7(3B) = 11 bytes total.",
+ "class_name": "CVehicle",
+ "base_chain": "CEntity -> CPhysical (0x138) -> CVehicle",
+ "size_hex": "0x5A0",
+ "size_bytes": 1440,
+ "own_range_hex": "0x138..0x59F",
+ "coverage_pct": 100.0,
+ "provenance": "cold disassembly of gta_sa.exe (1.0 US); names from disassembly CVehicle.h VALIDATE_OFFSET macros; flags from CVehicle.h class body declarations",
+ "fields": [
+  {
+   "name": "m_vehicleAudio",
+   "offset_hex": "0x138",
+   "offset_int": 312,
+   "size": 588,
+   "type_hint": "CAEVehicleAudioEntity",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Vehicle audio entity. 588B struct ending at 0x384.",
+   "sweep_fn_hits": 3
+  },
+  {
+   "name": "m_pHandlingData",
+   "offset_hex": "0x384",
+   "offset_int": 900,
+   "size": 4,
+   "type_hint": "tHandlingData*",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x006D5F10",
+   "note": "Pointer to handling data for this vehicle model.",
+   "sweep_fn_hits": 14
+  },
+  {
+   "name": "m_pFlyingHandlingData",
+   "offset_hex": "0x388",
+   "offset_int": 904,
+   "size": 4,
+   "type_hint": "tFlyingHandlingData*",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Pointer to flying handling data (aircraft/heli only; NULL for ground vehicles).",
+   "sweep_fn_hits": 1
+  },
+  {
+   "name": "m_nHandlingFlagsIntValue",
+   "offset_hex": "0x38C",
+   "offset_int": 908,
+   "size": 4,
+   "type_hint": "eVehicleHandlingFlags",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Handling flags as raw integer; aliases m_nHandlingFlags bitfield struct. See eVehicleHandlingFlags enum.",
+   "sweep_fn_hits": 5,
+   "bitfields": [
+    {
+     "name": "b1gBoost",
+     "bit": 0,
+     "desc": "1st-gear nitro boost"
+    },
+    {
+     "name": "b2gBoost",
+     "bit": 1,
+     "desc": "2nd-gear nitro boost"
+    },
+    {
+     "name": "bNpcAntiRoll",
+     "bit": 2,
+     "desc": "NPC anti-roll handling"
+    },
+    {
+     "name": "bNpcNeutralHandl",
+     "bit": 3,
+     "desc": "NPC neutral handling (less sliding)"
+    },
+    {
+     "name": "bNoHandbrake",
+     "bit": 4,
+     "desc": "Handbrake has no effect"
+    },
+    {
+     "name": "bSteerRearwheels",
+     "bit": 5,
+     "desc": "Steer rear wheels"
+    },
+    {
+     "name": "bHbRearwheelSteer",
+     "bit": 6,
+     "desc": "Handbrake triggers rear-wheel steer"
+    },
+    {
+     "name": "bAltSteerOpt",
+     "bit": 7,
+     "desc": "Alternate steering option"
+    },
+    {
+     "name": "bWheelFNarrow2",
+     "bit": 8,
+     "desc": "Front wheels: very narrow"
+    },
+    {
+     "name": "bWheelFNarrow",
+     "bit": 9,
+     "desc": "Front wheels: narrow"
+    },
+    {
+     "name": "bWheelFWide",
+     "bit": 10,
+     "desc": "Front wheels: wide"
+    },
+    {
+     "name": "bWheelFWide2",
+     "bit": 11,
+     "desc": "Front wheels: very wide"
+    },
+    {
+     "name": "bWheelRNarrow2",
+     "bit": 12,
+     "desc": "Rear wheels: very narrow"
+    },
+    {
+     "name": "bWheelRNarrow",
+     "bit": 13,
+     "desc": "Rear wheels: narrow"
+    },
+    {
+     "name": "bWheelRWide",
+     "bit": 14,
+     "desc": "Rear wheels: wide"
+    },
+    {
+     "name": "bWheelRWide2",
+     "bit": 15,
+     "desc": "Rear wheels: very wide"
+    },
+    {
+     "name": "bHydraulicGeom",
+     "bit": 16,
+     "desc": "Hydraulic suspension geometric mode"
+    },
+    {
+     "name": "bHydraulicInst",
+     "bit": 17,
+     "desc": "Hydraulic suspension instant"
+    },
+    {
+     "name": "bHydraulicNone",
+     "bit": 18,
+     "desc": "No hydraulic suspension"
+    },
+    {
+     "name": "bNosInst",
+     "bit": 19,
+     "desc": "NOS installed"
+    },
+    {
+     "name": "bOffroadAbility",
+     "bit": 20,
+     "desc": "Off-road ability"
+    },
+    {
+     "name": "bOffroadAbility2",
+     "bit": 21,
+     "desc": "Enhanced off-road ability"
+    },
+    {
+     "name": "bHalogenLights",
+     "bit": 22,
+     "desc": "Halogen headlights"
+    },
+    {
+     "name": "bProcRearwheelFirst",
+     "bit": 23,
+     "desc": "Process rear wheels before front"
+    },
+    {
+     "name": "bUseMaxspLimit",
+     "bit": 24,
+     "desc": "Enforce max speed limit from handling.cfg"
+    },
+    {
+     "name": "bLowRider",
+     "bit": 25,
+     "desc": "Low rider (hydraulics eligible)"
+    },
+    {
+     "name": "bStreetRacer",
+     "bit": 26,
+     "desc": "Street racer tuning"
+    },
+    {
+     "name": "bUnused1",
+     "bit": 27,
+     "desc": "Unused handling flag"
+    },
+    {
+     "name": "bSwingingChassis",
+     "bit": 28,
+     "desc": "Swinging chassis (bus body roll)"
+    }
+   ]
+  },
+  {
+   "name": "m_autoPilot",
+   "offset_hex": "0x390",
+   "offset_int": 912,
+   "size": 160,
+   "type_hint": "CAutoPilot",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Auto-pilot / AI waypoint data. 160B struct.",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_nCreationTime",
+   "offset_hex": "0x430",
+   "offset_int": 1072,
+   "size": 4,
+   "type_hint": "uint32_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Game time (ms) when vehicle was created.",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_nPrimaryColor",
+   "offset_hex": "0x434",
+   "offset_int": 1076,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Primary paint colour index.",
+   "sweep_fn_hits": 5
+  },
+  {
+   "name": "m_nSecondaryColor",
+   "offset_hex": "0x435",
+   "offset_int": 1077,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Secondary paint colour index.",
+   "sweep_fn_hits": 5
+  },
+  {
+   "name": "m_nTertiaryColor",
+   "offset_hex": "0x436",
+   "offset_int": 1078,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Tertiary paint colour index.",
+   "sweep_fn_hits": 5
+  },
+  {
+   "name": "m_nQuaternaryColor",
+   "offset_hex": "0x437",
+   "offset_int": 1079,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Quaternary paint colour index.",
+   "sweep_fn_hits": 5
+  },
+  {
+   "name": "m_anExtras",
+   "offset_hex": "0x438",
+   "offset_int": 1080,
+   "size": 2,
+   "type_hint": "int8_t[2]",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Extra component indices (0..1). -1 = none.",
+   "sweep_fn_hits": 9
+  },
+  {
+   "name": "m_anUpgrades",
+   "offset_hex": "0x43A",
+   "offset_int": 1082,
+   "size": 30,
+   "type_hint": "int16_t[15]",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Installed upgrade model IDs (up to 15 upgrade slots). -1 = empty.",
+   "sweep_fn_hits": 5
+  },
+  {
+   "name": "m_fWheelScale",
+   "offset_hex": "0x458",
+   "offset_int": 1112,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Wheel scale override (1.0 = default from handling).",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_nAlarmState",
+   "offset_hex": "0x45C",
+   "offset_int": 1116,
+   "size": 2,
+   "type_hint": "uint16_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Alarm countdown timer (ms). 0 = no alarm.",
+   "sweep_fn_hits": 5
+  },
+  {
+   "name": "m_nForcedRandomRouteSeed",
+   "offset_hex": "0x45E",
+   "offset_int": 1118,
+   "size": 2,
+   "type_hint": "int16_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Non-zero = deterministic random AI wander seed.",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_pDriver",
+   "offset_hex": "0x460",
+   "offset_int": 1120,
+   "size": 4,
+   "type_hint": "CPed*",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x006D5F10",
+   "note": "Pointer to driver CPed. NULL if no driver.",
+   "sweep_fn_hits": 12
+  },
+  {
+   "name": "m_apPassengers",
+   "offset_hex": "0x464",
+   "offset_int": 1124,
+   "size": 32,
+   "type_hint": "CPed*[8]",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Array of 8 passenger CPed pointers. NULL = empty seat.",
+   "sweep_fn_hits": 9
+  },
+  {
+   "name": "m_nNumPassengers",
+   "offset_hex": "0x484",
+   "offset_int": 1156,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Current passenger count (0..8).",
+   "sweep_fn_hits": 6
+  },
+  {
+   "name": "m_nNumGettingIn",
+   "offset_hex": "0x485",
+   "offset_int": 1157,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Number of peds currently in get-in animation.",
+   "sweep_fn_hits": 3
+  },
+  {
+   "name": "m_nGettingInFlags",
+   "offset_hex": "0x486",
+   "offset_int": 1158,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Bitmask: seat is occupied by ped getting in. Bit N = seat N.",
+   "sweep_fn_hits": 5
+  },
+  {
+   "name": "m_nGettingOutFlags",
+   "offset_hex": "0x487",
+   "offset_int": 1159,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Bitmask: seat is occupied by ped getting out. Bit N = seat N.",
+   "sweep_fn_hits": 6
+  },
+  {
+   "name": "m_nMaxPassengers",
+   "offset_hex": "0x488",
+   "offset_int": 1160,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Maximum passenger capacity (set from vehicle model info).",
+   "sweep_fn_hits": 10
+  },
+  {
+   "name": "m_nWindowsOpenFlags",
+   "offset_hex": "0x489",
+   "offset_int": 1161,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Windows open bitmask (initialised, but not used in SA).",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_nNitroBoosts",
+   "offset_hex": "0x48A",
+   "offset_int": 1162,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Number of nitro boost uses remaining.",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_nSpecialColModel",
+   "offset_hex": "0x48B",
+   "offset_int": 1163,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Special collision model index (see CVehicle::m_aSpecialColModel).",
+   "sweep_fn_hits": 5
+  },
+  {
+   "name": "m_pEntityWeAreOn",
+   "offset_hex": "0x48C",
+   "offset_int": 1164,
+   "size": 4,
+   "type_hint": "CEntity*",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x006D5F10",
+   "note": "Static entity (building/road) that the vehicle is resting on. NULL if airborne.",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_pFire",
+   "offset_hex": "0x490",
+   "offset_int": 1168,
+   "size": 4,
+   "type_hint": "CFire*",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x006D5F10",
+   "note": "Pointer to attached CFire if vehicle is on fire. NULL otherwise.",
+   "sweep_fn_hits": 5
+  },
+  {
+   "name": "m_fSteerAngle",
+   "offset_hex": "0x494",
+   "offset_int": 1172,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Current front-wheel steer angle (radians).",
+   "sweep_fn_hits": 3
+  },
+  {
+   "name": "m_f2ndSteerAngle",
+   "offset_hex": "0x498",
+   "offset_int": 1176,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Secondary steer angle (rear wheels, elevator, rudder, etc.).",
+   "sweep_fn_hits": 3
+  },
+  {
+   "name": "m_fGasPedal",
+   "offset_hex": "0x49C",
+   "offset_int": 1180,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Gas pedal input: 0.0 = off, 1.0 = full throttle.",
+   "sweep_fn_hits": 8
+  },
+  {
+   "name": "m_fBreakPedal",
+   "offset_hex": "0x4A0",
+   "offset_int": 1184,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Brake pedal input: 0.0 = off, 1.0 = full brake.",
+   "sweep_fn_hits": 1
+  },
+  {
+   "name": "m_nCreatedBy",
+   "offset_hex": "0x4A4",
+   "offset_int": 1188,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "See eVehicleCreatedBy: RANDOM(1), MISSION(2), PARKED(3), PERMANENT(4).",
+   "sweep_fn_hits": 4
+  },
+  {
+   "name": "m_nExtendedRemovalRange",
+   "offset_hex": "0x4A6",
+   "offset_int": 1190,
+   "size": 2,
+   "type_hint": "int16_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Override removal distance (game uses min(this, 170.0)). 0 = default.",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_nBombState",
+   "offset_hex": "0x4A8",
+   "offset_int": 1192,
+   "size": 2,
+   "type_hint": "uint8_t[2]",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Packed bitfields: m_nBombOnBoard(bits 0-2, see eBombState), m_nOverrideLights(bits 3-4), m_nWinchType(bits 5-6), m_nGunsCycleIndex(bits 8-9), m_nOrdnanceCycleIndex(bits 10-11). Byte[0]=0x4A8, Byte[1]=0x4A9.",
+   "sweep_fn_hits": 6,
+   "bitfields": [
+    {
+     "name": "m_nBombOnBoard",
+     "bits": "0..2",
+     "desc": "Bomb type: 0=none, 1=timed, 2=ignition, 3=remote?, 4=timed-activated, 5=ignition-activated"
+    },
+    {
+     "name": "m_nOverrideLights",
+     "bits": "3..4",
+     "desc": "Light override: 0=no override, 1=force off, 2=force on"
+    },
+    {
+     "name": "m_nWinchType",
+     "bits": "5..6",
+     "desc": "Winch type attached (0=none)"
+    },
+    {
+     "name": "m_nGunsCycleIndex",
+     "bits": "8..9",
+     "desc": "Alternate gun hardpoint cycle index (planes/helis)"
+    },
+    {
+     "name": "m_nOrdnanceCycleIndex",
+     "bits": "10..11",
+     "desc": "Alternate ordnance hardpoint cycle index (planes/helis)"
+    }
+   ]
+  },
+  {
+   "name": "m_nUsedForCover",
+   "offset_hex": "0x4AA",
+   "offset_int": 1194,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Number of cops currently using this vehicle as cover.",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_nAmmoInClip",
+   "offset_hex": "0x4AB",
+   "offset_int": 1195,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Ammo in clip for vehicle-mounted boat gun (reload at 20).",
+   "sweep_fn_hits": 0
+  },
+  {
+   "name": "m_nPacMansCollected",
+   "offset_hex": "0x4AC",
+   "offset_int": 1196,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Pac-Man pickups collected (initialised, not used in SA).",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_nPedsPositionForRoadBlock",
+   "offset_hex": "0x4AD",
+   "offset_int": 1197,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Roadblock ped position slot: 0, 1, or 2.",
+   "sweep_fn_hits": 0
+  },
+  {
+   "name": "m_nNumCopsForRoadBlock",
+   "offset_hex": "0x4AE",
+   "offset_int": 1198,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Number of cops to spawn for this roadblock vehicle.",
+   "sweep_fn_hits": 0
+  },
+  {
+   "name": "m_fDirtLevel",
+   "offset_hex": "0x4B0",
+   "offset_int": 1200,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Dirt accumulation on bodywork: 0.0 = clean, 15.0 = max visible dirt.",
+   "sweep_fn_hits": 5
+  },
+  {
+   "name": "m_nCurrentGear",
+   "offset_hex": "0x4B4",
+   "offset_int": 1204,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Current transmission gear (0=reverse, 1=neutral, 2+= gears).",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_fGearChangeCount",
+   "offset_hex": "0x4B8",
+   "offset_int": 1208,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Gear-change parameter passed to CTransmission::CalculateDriveAcceleration (static in SA).",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_fWheelSpinForAudio",
+   "offset_hex": "0x4BC",
+   "offset_int": 1212,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Wheel spin rate fed to audio engine for tyre screech sounds.",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_fHealth",
+   "offset_hex": "0x4C0",
+   "offset_int": 1216,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x006D603B",
+   "note": "Vehicle health: 1000.0 = full. Drops to 0 = explosion. Set by CVehicle::Fix.",
+   "sweep_fn_hits": 9
+  },
+  {
+   "name": "m_pTractor",
+   "offset_hex": "0x4C4",
+   "offset_int": 1220,
+   "size": 4,
+   "type_hint": "CVehicle*",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x006D5F10",
+   "note": "Pointer to tractor vehicle towing this one. NULL if not being towed.",
+   "sweep_fn_hits": 6
+  },
+  {
+   "name": "m_pTrailer",
+   "offset_hex": "0x4C8",
+   "offset_int": 1224,
+   "size": 4,
+   "type_hint": "CVehicle*",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x006D5F10",
+   "note": "Pointer to trailer vehicle being towed. NULL if not towing.",
+   "sweep_fn_hits": 6
+  },
+  {
+   "name": "m_pWhoInstalledBombOnMe",
+   "offset_hex": "0x4CC",
+   "offset_int": 1228,
+   "size": 4,
+   "type_hint": "CPed*",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x006D5F10",
+   "note": "Pointer to the ped who planted the bomb on this vehicle.",
+   "sweep_fn_hits": 4
+  },
+  {
+   "name": "m_nTimeTillWeNeedThisCar",
+   "offset_hex": "0x4D0",
+   "offset_int": 1232,
+   "size": 4,
+   "type_hint": "uint32_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Game won't auto-delete this vehicle until timer expires.",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_nGunFiringTime",
+   "offset_hex": "0x4D4",
+   "offset_int": 1236,
+   "size": 4,
+   "type_hint": "uint32_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Last game time (ms) when vehicle gun was fired (boats).",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_nTimeWhenBlowedUp",
+   "offset_hex": "0x4D8",
+   "offset_int": 1240,
+   "size": 4,
+   "type_hint": "uint32_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Game time when vehicle was blown up; deleted 60s after this.",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_nCopsInCarTimer",
+   "offset_hex": "0x4DC",
+   "offset_int": 1244,
+   "size": 2,
+   "type_hint": "int16_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Timer for police car occupants to stay in pursuit vehicle. Increments when player stops.",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_wBombTimer",
+   "offset_hex": "0x4DE",
+   "offset_int": 1246,
+   "size": 2,
+   "type_hint": "int16_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Timed-bomb countdown (decrements each frame).",
+   "sweep_fn_hits": 7
+  },
+  {
+   "name": "m_pWhoDetonatedMe",
+   "offset_hex": "0x4E0",
+   "offset_int": 1248,
+   "size": 4,
+   "type_hint": "CPed*",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x006D5F10",
+   "note": "Ped who detonated this vehicle (copied from m_pWhoInstalledBombOnMe at detonation).",
+   "sweep_fn_hits": 7
+  },
+  {
+   "name": "m_fVehicleFrontGroundZ",
+   "offset_hex": "0x4E4",
+   "offset_int": 1252,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Z height of ground under front axle (from collision query).",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_fVehicleRearGroundZ",
+   "offset_hex": "0x4E8",
+   "offset_int": 1256,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Z height of ground under rear axle (from collision query).",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_nVehicleFlags",
+   "offset_hex": "0x4EC",
+   "offset_int": 1260,
+   "size": 8,
+   "type_hint": "uint8_t[8]",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Packed vehicle behaviour bitflags (52 flags across 8 bytes). Byte 0 (0x4EC): bIsLawEnforcer|bIsAmbulanceOnDuty|bIsFireTruckOnDuty|bIsLocked|bEngineOn|bIsHandbrakeOn|bLightsOn|bFreebies. Byte 1 (0x4ED): bIsVan|bIsBus|bIsBig|bLowVehicle|bComedyControls|bWarnedPeds|bCraneMessageDone|bTakeLessDamage. Byte 2 (0x4EE): bIsDamaged|bHasBeenOwnedByPlayer|bFadeOut|bIsBeingCarJacked|bCreateRoadBlockPeds|bCanBeDamaged|bOccupantsHaveBeenGenerated|bGunSwitchedOff. Byte 3 (0x4EF): bVehicleColProcessed|bIsCarParkVehicle|bHasAlreadyBeenRecorded|bPartOfConvoy|bHeliMinimumTilt|bAudioChangingGear|bIsDrowning|bTyresDontBurst. Byte 4 (0x4F0): bCreatedAsPoliceVehicle|bRestingOnPhysical|bParking|bCanPark|bFireGun|bDriverLastFrame|bNeverUseSmallerRemovalRange|bIsRCVehicle. Byte 5 (0x4F1): bAlwaysSkidMarks|bEngineBroken|bVehicleCanBeTargetted|bPartOfAttackWave|bWinchCanPickMeUp|bImpounded|bVehicleCanBeTargettedByHS|bSirenOrAlarm. Byte 6 (0x4F2): bHasGangLeaningOn|bGangMembersForRoadBlock|bDoesProvideCover|bMadDriver|bUpgradedStereo|bConsideredByPlayer|bPetrolTankIsWeakPoint|bDisableParticles. Byte 7 (0x4F3): bHasBeenResprayed|bUseCarCheats|bDontSetColourWhenRemapping|bUsedForReplay|pad4..pad7.",
+   "sweep_fn_hits": 2,
+   "bitfields": [
+    {
+     "name": "bIsLawEnforcer",
+     "byte": 0,
+     "bit_in_byte": 0,
+     "desc": "Chasing player (law enforcement AI)"
+    },
+    {
+     "name": "bIsAmbulanceOnDuty",
+     "byte": 0,
+     "bit_in_byte": 1,
+     "desc": "Ambulance en route to accident"
+    },
+    {
+     "name": "bIsFireTruckOnDuty",
+     "byte": 0,
+     "bit_in_byte": 2,
+     "desc": "Fire truck en route to fire"
+    },
+    {
+     "name": "bIsLocked",
+     "byte": 0,
+     "bit_in_byte": 3,
+     "desc": "Script-locked (cannot be auto-removed)"
+    },
+    {
+     "name": "bEngineOn",
+     "byte": 0,
+     "bit_in_byte": 4,
+     "desc": "Engine is running (sound purposes)"
+    },
+    {
+     "name": "bIsHandbrakeOn",
+     "byte": 0,
+     "bit_in_byte": 5,
+     "desc": "Handbrake is engaged"
+    },
+    {
+     "name": "bLightsOn",
+     "byte": 0,
+     "bit_in_byte": 6,
+     "desc": "Headlights are on"
+    },
+    {
+     "name": "bFreebies",
+     "byte": 0,
+     "bit_in_byte": 7,
+     "desc": "Vehicle has freebies remaining (health/armour pickups)"
+    },
+    {
+     "name": "bIsVan",
+     "byte": 1,
+     "bit_in_byte": 0,
+     "desc": "Van-type (rear-door entry animations)"
+    },
+    {
+     "name": "bIsBus",
+     "byte": 1,
+     "bit_in_byte": 1,
+     "desc": "Bus-type vehicle"
+    },
+    {
+     "name": "bIsBig",
+     "byte": 1,
+     "bit_in_byte": 2,
+     "desc": "Large vehicle (affects pathfinding clearance)"
+    },
+    {
+     "name": "bLowVehicle",
+     "byte": 1,
+     "bit_in_byte": 3,
+     "desc": "Low-slung vehicle (uses low get-in/out anims)"
+    },
+    {
+     "name": "bComedyControls",
+     "byte": 1,
+     "bit_in_byte": 4,
+     "desc": "Comical/hard-to-control handling"
+    },
+    {
+     "name": "bWarnedPeds",
+     "byte": 1,
+     "bit_in_byte": 5,
+     "desc": "Scan-and-warn-peds already processed"
+    },
+    {
+     "name": "bCraneMessageDone",
+     "byte": 1,
+     "bit_in_byte": 6,
+     "desc": "Crane retrieval message already shown"
+    },
+    {
+     "name": "bTakeLessDamage",
+     "byte": 1,
+     "bit_in_byte": 7,
+     "desc": "Reinforced vehicle (takes ~25% damage)"
+    },
+    {
+     "name": "bIsDamaged",
+     "byte": 2,
+     "bit_in_byte": 0,
+     "desc": "Damaged state (visual damage components active)"
+    },
+    {
+     "name": "bHasBeenOwnedByPlayer",
+     "byte": 2,
+     "bit_in_byte": 1,
+     "desc": "Player has driven this vehicle (theft crime check)"
+    },
+    {
+     "name": "bFadeOut",
+     "byte": 2,
+     "bit_in_byte": 2,
+     "desc": "Vehicle is fading out before removal"
+    },
+    {
+     "name": "bIsBeingCarJacked",
+     "byte": 2,
+     "bit_in_byte": 3,
+     "desc": "Carjacking in progress"
+    },
+    {
+     "name": "bCreateRoadBlockPeds",
+     "byte": 2,
+     "bit_in_byte": 4,
+     "desc": "Spawn roadblock peds when nearby"
+    },
+    {
+     "name": "bCanBeDamaged",
+     "byte": 2,
+     "bit_in_byte": 5,
+     "desc": "Vehicle can take damage (false during cut scenes)"
+    },
+    {
+     "name": "bOccupantsHaveBeenGenerated",
+     "byte": 2,
+     "bit_in_byte": 6,
+     "desc": "Occupants already generated (don't generate again)"
+    },
+    {
+     "name": "bGunSwitchedOff",
+     "byte": 2,
+     "bit_in_byte": 7,
+     "desc": "Vehicle guns disabled (level designer flag for boats)"
+    },
+    {
+     "name": "bVehicleColProcessed",
+     "byte": 3,
+     "bit_in_byte": 0,
+     "desc": "ProcessEntityCollision already ran this frame"
+    },
+    {
+     "name": "bIsCarParkVehicle",
+     "byte": 3,
+     "bit_in_byte": 1,
+     "desc": "Created by CAR_PARK script command"
+    },
+    {
+     "name": "bHasAlreadyBeenRecorded",
+     "byte": 3,
+     "bit_in_byte": 2,
+     "desc": "Already recorded in replay buffer"
+    },
+    {
+     "name": "bPartOfConvoy",
+     "byte": 3,
+     "bit_in_byte": 3,
+     "desc": "Part of convoy AI group"
+    },
+    {
+     "name": "bHeliMinimumTilt",
+     "byte": 3,
+     "bit_in_byte": 4,
+     "desc": "Helicopter should have minimal tilt"
+    },
+    {
+     "name": "bAudioChangingGear",
+     "byte": 3,
+     "bit_in_byte": 5,
+     "desc": "Audio: vehicle is changing gear"
+    },
+    {
+     "name": "bIsDrowning",
+     "byte": 3,
+     "bit_in_byte": 6,
+     "desc": "Vehicle is submerged; occupants taking drowning damage"
+    },
+    {
+     "name": "bTyresDontBurst",
+     "byte": 3,
+     "bit_in_byte": 7,
+     "desc": "Tyres are indestructible"
+    },
+    {
+     "name": "bCreatedAsPoliceVehicle",
+     "byte": 4,
+     "bit_in_byte": 0,
+     "desc": "Created as police vehicle (enforcer, police car)"
+    },
+    {
+     "name": "bRestingOnPhysical",
+     "byte": 4,
+     "bit_in_byte": 1,
+     "desc": "Sitting on a physical object (prevents going static)"
+    },
+    {
+     "name": "bParking",
+     "byte": 4,
+     "bit_in_byte": 2,
+     "desc": "AI is parking this vehicle"
+    },
+    {
+     "name": "bCanPark",
+     "byte": 4,
+     "bit_in_byte": 3,
+     "desc": "Vehicle can be parked by AI"
+    },
+    {
+     "name": "bFireGun",
+     "byte": 4,
+     "bit_in_byte": 4,
+     "desc": "AI wants to fire vehicle weapon this frame"
+    },
+    {
+     "name": "bDriverLastFrame",
+     "byte": 4,
+     "bit_in_byte": 5,
+     "desc": "Driver was present last frame"
+    },
+    {
+     "name": "bNeverUseSmallerRemovalRange",
+     "byte": 4,
+     "bit_in_byte": 6,
+     "desc": "Never use reduced removal range (planes etc.)"
+    },
+    {
+     "name": "bIsRCVehicle",
+     "byte": 4,
+     "bit_in_byte": 7,
+     "desc": "Remote-controlled small vehicle"
+    },
+    {
+     "name": "bAlwaysSkidMarks",
+     "byte": 5,
+     "bit_in_byte": 0,
+     "desc": "Always leave skid marks regardless of wheel state"
+    },
+    {
+     "name": "bEngineBroken",
+     "byte": 5,
+     "bit_in_byte": 1,
+     "desc": "Engine is dead (player can get in but cannot drive)"
+    },
+    {
+     "name": "bVehicleCanBeTargetted",
+     "byte": 5,
+     "bit_in_byte": 2,
+     "desc": "Driver can be lock-on targeted (Toreno mission flag)"
+    },
+    {
+     "name": "bPartOfAttackWave",
+     "byte": 5,
+     "bit_in_byte": 3,
+     "desc": "Part of gang-war attack wave"
+    },
+    {
+     "name": "bWinchCanPickMeUp",
+     "byte": 5,
+     "bit_in_byte": 4,
+     "desc": "Can be picked up by crane/magnet winch"
+    },
+    {
+     "name": "bImpounded",
+     "byte": 5,
+     "bit_in_byte": 5,
+     "desc": "Has been through police impound garage"
+    },
+    {
+     "name": "bVehicleCanBeTargettedByHS",
+     "byte": 5,
+     "bit_in_byte": 6,
+     "desc": "Heat-seeking missiles can target this vehicle"
+    },
+    {
+     "name": "bSirenOrAlarm",
+     "byte": 5,
+     "bit_in_byte": 7,
+     "desc": "Siren or alarm is currently active"
+    },
+    {
+     "name": "bHasGangLeaningOn",
+     "byte": 6,
+     "bit_in_byte": 0,
+     "desc": "Gang member is leaning on this vehicle"
+    },
+    {
+     "name": "bGangMembersForRoadBlock",
+     "byte": 6,
+     "bit_in_byte": 1,
+     "desc": "Spawns gang members for roadblock (if NumPedsForRoadBlock > 0)"
+    },
+    {
+     "name": "bDoesProvideCover",
+     "byte": 6,
+     "bit_in_byte": 2,
+     "desc": "Can be used as cover by AI peds"
+    },
+    {
+     "name": "bMadDriver",
+     "byte": 6,
+     "bit_in_byte": 3,
+     "desc": "AI driver behaves erratically"
+    },
+    {
+     "name": "bUpgradedStereo",
+     "byte": 6,
+     "bit_in_byte": 4,
+     "desc": "Vehicle has an upgraded stereo system"
+    },
+    {
+     "name": "bConsideredByPlayer",
+     "byte": 6,
+     "bit_in_byte": 5,
+     "desc": "Player is considering entering this vehicle"
+    },
+    {
+     "name": "bPetrolTankIsWeakPoint",
+     "byte": 6,
+     "bit_in_byte": 6,
+     "desc": "Shooting petrol tank causes explosion (if false, it doesn't)"
+    },
+    {
+     "name": "bDisableParticles",
+     "byte": 6,
+     "bit_in_byte": 7,
+     "desc": "Disable particle effects (used in garage)"
+    },
+    {
+     "name": "bHasBeenResprayed",
+     "byte": 7,
+     "bit_in_byte": 0,
+     "desc": "Resprayed since last respray-check (resets after check)"
+    },
+    {
+     "name": "bUseCarCheats",
+     "byte": 7,
+     "bit_in_byte": 1,
+     "desc": "Apply car-cheat state in ProcessControl"
+    },
+    {
+     "name": "bDontSetColourWhenRemapping",
+     "byte": 7,
+     "bit_in_byte": 2,
+     "desc": "Don't change colour when texture is remapped"
+    },
+    {
+     "name": "bUsedForReplay",
+     "byte": 7,
+     "bit_in_byte": 3,
+     "desc": "Controlled by replay system; remove when replay ends"
+    }
+   ]
+  },
+  {
+   "name": "field_4F4",
+   "offset_hex": "0x4F4",
+   "offset_int": 1268,
+   "size": 4,
+   "type_hint": "uint8_t[4]",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "4 bytes between vehicle flags and m_eDoorLock. Purpose unknown; possibly padding or unused.",
+   "sweep_fn_hits": 0
+  },
+  {
+   "name": "m_eDoorLock",
+   "offset_hex": "0x4F8",
+   "offset_int": 1272,
+   "size": 4,
+   "type_hint": "eDoorLock",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Door lock state. See eDoorLock enum: UNLOCKED, LOCKED, LOCKOUT_PLAYER_ONLY, etc.",
+   "sweep_fn_hits": 3
+  },
+  {
+   "name": "m_nProjectileWeaponFiringTime",
+   "offset_hex": "0x4FC",
+   "offset_int": 1276,
+   "size": 4,
+   "type_hint": "uint32_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Last fire time for manual-aimed projectiles (Hunter/Hydra).",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_nAdditionalProjectileWeaponFiringTime",
+   "offset_hex": "0x500",
+   "offset_int": 1280,
+   "size": 4,
+   "type_hint": "uint32_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Last fire time for additional projectile weapon (Hydra manual-aimed).",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_nTimeForMinigunFiring",
+   "offset_hex": "0x504",
+   "offset_int": 1284,
+   "size": 4,
+   "type_hint": "uint32_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Minigun firing time (Hunter minigun).",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_nLastWeaponDamageType",
+   "offset_hex": "0x508",
+   "offset_int": 1288,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Last eWeaponType that damaged this vehicle. -1 (0xFF) if no damage.",
+   "sweep_fn_hits": 5
+  },
+  {
+   "name": "m_pLastDamageEntity",
+   "offset_hex": "0x50C",
+   "offset_int": 1292,
+   "size": 4,
+   "type_hint": "CEntity*",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x006D5F10",
+   "note": "Last entity that damaged this vehicle.",
+   "sweep_fn_hits": 5
+  },
+  {
+   "name": "field_510",
+   "offset_hex": "0x510",
+   "offset_int": 1296,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Unknown 1B field. Initialised to 0 in constructor.",
+   "sweep_fn_hits": 0
+  },
+  {
+   "name": "field_511",
+   "offset_hex": "0x511",
+   "offset_int": 1297,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Unknown 1B field. Initialised but unused.",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "field_512",
+   "offset_hex": "0x512",
+   "offset_int": 1298,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Unknown 1B field. Initialised but unused.",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_nVehicleWeaponInUse",
+   "offset_hex": "0x513",
+   "offset_int": 1299,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Current vehicle weapon slot. See eCarWeapon enum.",
+   "sweep_fn_hits": 7
+  },
+  {
+   "name": "m_nHornCounter",
+   "offset_hex": "0x514",
+   "offset_int": 1300,
+   "size": 4,
+   "type_hint": "uint32_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Horn activation counter (decrements each frame).",
+   "sweep_fn_hits": 4
+  },
+  {
+   "name": "m_HornPattern",
+   "offset_hex": "0x518",
+   "offset_int": 1304,
+   "size": 1,
+   "type_hint": "int8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Horn honk pattern ID.",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_nCarHornTimer",
+   "offset_hex": "0x519",
+   "offset_int": 1305,
+   "size": 1,
+   "type_hint": "int8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Horn timer for car horn sequences.",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_comedyControlState",
+   "offset_hex": "0x51A",
+   "offset_int": 1306,
+   "size": 1,
+   "type_hint": "eComedyControlState",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Comedy-control steering state: INACTIVE, STEER_RIGHT, STEER_LEFT.",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_nHasslePosId",
+   "offset_hex": "0x51B",
+   "offset_int": 1307,
+   "size": 1,
+   "type_hint": "int8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Hassle position ID used in gang-hassle scenarios.",
+   "sweep_fn_hits": 3
+  },
+  {
+   "name": "m_FrontCollPoly",
+   "offset_hex": "0x51C",
+   "offset_int": 1308,
+   "size": 44,
+   "type_hint": "CStoredCollPoly",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Stored collision polygon under the front of the vehicle (for wheel contact queries).",
+   "sweep_fn_hits": 0
+  },
+  {
+   "name": "m_RearCollPoly",
+   "offset_hex": "0x548",
+   "offset_int": 1352,
+   "size": 44,
+   "type_hint": "CStoredCollPoly",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "Stored collision polygon under the rear of the vehicle (for wheel contact queries).",
+   "sweep_fn_hits": 1
+  },
+  {
+   "name": "m_anCollisionLighting",
+   "offset_hex": "0x574",
+   "offset_int": 1396,
+   "size": 4,
+   "type_hint": "uint8_t[4]",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Per-corner collision lighting: [left-front, left-rear, right-front, right-rear].",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_pOverheatParticle",
+   "offset_hex": "0x578",
+   "offset_int": 1400,
+   "size": 4,
+   "type_hint": "FxSystem_c*",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x006D5F10",
+   "note": "FxSystem for engine overheat steam. NULL if not playing.",
+   "sweep_fn_hits": 5
+  },
+  {
+   "name": "m_pFireParticle",
+   "offset_hex": "0x57C",
+   "offset_int": 1404,
+   "size": 4,
+   "type_hint": "FxSystem_c*",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x006D5F10",
+   "note": "FxSystem for vehicle fire. NULL if not playing.",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_pDustParticle",
+   "offset_hex": "0x580",
+   "offset_int": 1408,
+   "size": 4,
+   "type_hint": "FxSystem_c*",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x006D5F10",
+   "note": "FxSystem for road dust. NULL if not playing.",
+   "sweep_fn_hits": 2
+  },
+  {
+   "name": "m_nRenderLightsFlags",
+   "offset_hex": "0x584",
+   "offset_int": 1412,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Headlight/tail-light render bitfield union. Bit 0=m_bRightFront, Bit 1=m_bLeftFront, Bit 2=m_bRightRear, Bit 3=m_bLeftRear. See eVehicleLightsFlags for TWIN/IGNORE_DAMAGE/DISABLE_FRONT/DISABLE_REAR values.",
+   "sweep_fn_hits": 6,
+   "bitfields": [
+    {
+     "name": "m_bRightFront",
+     "bit": 0,
+     "desc": "Right front light on"
+    },
+    {
+     "name": "m_bLeftFront",
+     "bit": 1,
+     "desc": "Left front light on"
+    },
+    {
+     "name": "m_bRightRear",
+     "bit": 2,
+     "desc": "Right rear light on"
+    },
+    {
+     "name": "m_bLeftRear",
+     "bit": 3,
+     "desc": "Left rear light on"
+    }
+   ]
+  },
+  {
+   "name": "m_pCustomCarPlate",
+   "offset_hex": "0x588",
+   "offset_int": 1416,
+   "size": 4,
+   "type_hint": "RwTexture*",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x006D5F10",
+   "note": "Custom number-plate RwTexture (CCustomCarPlateMgr). NULL = default plate.",
+   "sweep_fn_hits": 3
+  },
+  {
+   "name": "m_fRawSteerAngle",
+   "offset_hex": "0x58C",
+   "offset_int": 1420,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Raw input steer angle before suspension/geometry scaling. Also called fSteer.",
+   "sweep_fn_hits": 8
+  },
+  {
+   "name": "m_nVehicleClass",
+   "offset_hex": "0x590",
+   "offset_int": 1424,
+   "size": 4,
+   "type_hint": "eVehicleType",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Vehicle base class/type (car, bike, boat, plane, heli, etc.).",
+   "sweep_fn_hits": 14
+  },
+  {
+   "name": "m_nVehicleSubClass",
+   "offset_hex": "0x594",
+   "offset_int": 1428,
+   "size": 4,
+   "type_hint": "eVehicleType",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Vehicle sub-class (e.g. quad vs bike within bike class).",
+   "sweep_fn_hits": 14
+  },
+  {
+   "name": "m_nPreviousRemapTxd",
+   "offset_hex": "0x598",
+   "offset_int": 1432,
+   "size": 2,
+   "type_hint": "int16_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Previous remap TXD index (before last SetRemapTexDictionary call).",
+   "sweep_fn_hits": 9
+  },
+  {
+   "name": "m_nRemapTxd",
+   "offset_hex": "0x59A",
+   "offset_int": 1434,
+   "size": 2,
+   "type_hint": "int16_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": null,
+   "note": "Active remap TXD index. -1 = using default texture dictionary.",
+   "sweep_fn_hits": 5
+  },
+  {
+   "name": "m_pRemapTexture",
+   "offset_hex": "0x59C",
+   "offset_int": 1436,
+   "size": 4,
+   "type_hint": "RwTexture*",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x006D5F10",
+   "note": "Active remap RwTexture pointer. NULL = not remapped.",
+   "sweep_fn_hits": 5
+  }
+ ],
+ "methods": [
+  {
+   "name": "CVehicle::Fix",
+   "entry_va": "0x006D6390",
+   "tier": "verified"
+  },
+  {
+   "name": "CVehicle::Constructor",
+   "entry_va": "0x006D5F10",
+   "tier": "verified"
+  },
+  {
+   "name": "CVehicle::SetModelIndex",
+   "entry_va": "0x006D6A40",
+   "tier": "verified"
+  },
+  {
+   "name": "CVehicle::SpecialEntityPreCollisionStuff",
+   "entry_va": "0x006D6640",
+   "tier": "verified"
+  },
+  {
+   "name": "CVehicle::PreRender",
+   "entry_va": "0x006D6480",
+   "tier": "verified"
+  },
+  {
+   "name": "CVehicle::ProcessOpenDoor",
+   "entry_va": "0x006D56C0",
+   "tier": "verified"
+  },
+  {
+   "name": "CVehicle::GetHeightAboveRoad",
+   "entry_va": "0x006D63F0",
+   "tier": "verified"
+  },
+  {
+   "name": "CVehicle::CanPedStepOutCar",
+   "entry_va": "0x006D1F30",
+   "tier": "verified"
+  },
+  {
+   "name": "CVehicle::ProcessWheel",
+   "entry_va": "0x006D6C00",
+   "tier": "verified"
+  },
+  {
+   "name": "CVehicle::ApplyBoatWaterResistance",
+   "entry_va": "0x006D2740",
+   "tier": "verified"
+  },
+  {
+   "name": "CVehicle::ProcessBoatControl",
+   "entry_va": "0x006DBCE0",
+   "tier": "verified"
+  },
+  {
+   "name": "CVehicle::ChangeLawEnforcerState",
+   "entry_va": "0x006D2330",
+   "tier": "verified"
+  },
+  {
+   "name": "CVehicle::DoHeadLightBeam",
+   "entry_va": "0x006E0E20",
+   "tier": "verified"
+  },
+  {
+   "name": "CVehicle::GetVehicleAppearance",
+   "entry_va": "0x006D1080",
+   "tier": "verified"
+  }
+ ]
+}

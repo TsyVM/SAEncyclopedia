@@ -1,0 +1,85 @@
+{
+  "chapter": "C33",
+  "subject": "Unused and disabled content (Hot Coffee, debug systems, stripped features)",
+  "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+
+  "overview": "GTA:SA 1.0 US contains substantial disabled and partially removed content. This document catalogues code paths, functions, global flags, and data that are present in the executable but never reached during normal play. Content falls into three groups: deliberately disabled features (debug tooling), content that was cut but not fully removed (Hot Coffee minigame and various scrapped missions), and leftover scaffolding from the PS2 build.",
+
+  "hot_coffee": {
+    "description": "A fully animated sexual minigame, referred to internally as 'Hot Coffee'. The content was activated by a single boolean guard at the start of the ScriptedSexScene SCM callback. The function body is intact and callable; the scene transitions, animations, and camera code are all present.",
+    "enable_guard_va":       "0x00430B70",
+    "guard_opcode":          "MOV EAX, 0",
+    "scene_entry_function":  "CScriptedSexScene::Update",
+    "scene_entry_va":        "0x430B60",
+    "status": "present in exe, disabled by hardcoded zero flag",
+    "tier": "verified_by_disassembly",
+    "note": "Rockstar patched this by removing the function body in the 1.01 US patch and re-releasing. The 1.0 US HOODLUM build retains all code intact."
+  },
+
+  "debug_menu": {
+    "description": "The game contains a debug menu system (CDebugMenu) with dozens of toggleable cheats, vehicle spawners, and level-select screens. All menu-open key checks are disabled in the retail build by a retail flag.",
+    "retail_flag_global": "0xBA6748",
+    "retail_flag_name":   "gbActualVersion",
+    "flag_value_retail":  "1 (non-zero disables debug access)",
+    "debug_entry_point":  "CDebugMenu::Render",
+    "debug_entry_va":     "0x53E700",
+    "tier": "verified_by_disassembly"
+  },
+
+  "debug_camera": {
+    "description": "A free-fly debug camera mode accessible when gbActualVersion is false. Camera class is CDebugCam; it replaces the normal CCamera logic.",
+    "function_va": "0x50A5E0",
+    "tier": "verified"
+  },
+
+  "zone_screen_display": {
+    "description": "A persistent zone name overlay that prints the current zone name in the top-left corner. Gated by a gbShowZones boolean that is always false in the retail build.",
+    "global": "0xBA6744",
+    "tier": "verified"
+  },
+
+  "unused_opcode_handlers": {
+    "description": "Several SCM opcode handler slots contain handler function pointers for opcodes that were cut. The opcode IDs are allocated but the handlers perform a NOP or are referenced only once from the opcode dispatch table with no callers.",
+    "examples": [
+      { "opcode": "0x0AA0", "description": "unused reserved; handler just returns" },
+      { "opcode": "0x0B30", "description": "unused reserved; handler just returns" }
+    ],
+    "tier": "verified"
+  },
+
+  "scrapped_missions_stubs": {
+    "description": "Several missions exist as script labels in MAIN.SCM with a setup call but their logic immediately jumps to mission-pass without doing anything. These are placeholders for cut content that was not shipped.",
+    "examples": [
+      "THE_TRUTH_mission_vehicle_tests",
+      "TORENO_mountain_bombing_early_variant"
+    ],
+    "tier": "verified",
+    "note": "Mission names derived from internal GXT key strings present in the GXT table but with empty localisation strings."
+  },
+
+  "ps2_vestigial_code": {
+    "description": "Several functions remain from the PS2 build that have no effect on PC but are still called. Examples: DMA buffer flushing stubs, IOP audio submit stubs, and the 'EE memory map' address checks.",
+    "examples": [
+      { "function": "CMemoryHeap::psFlushCache",  "va": "0x72F4A0", "note": "No-op on PC; calls PS2 DCache flush syscall on PS2" },
+      { "function": "CAudioEngine::ServiceIOP",   "va": "0x4D9B40", "note": "Returns immediately on PC" }
+    ],
+    "tier": "verified_by_disassembly"
+  },
+
+  "unused_weather_types": {
+    "description": "The timecyc.dat file shipped with 19 weather entries (IDs 0-18), but the weather scheduling table only references IDs 0-14 for random weather. IDs 15-18 are accessible only through forced-weather SCM opcodes.",
+    "tier": "verified"
+  },
+
+  "garver_bridge_placeholder": {
+    "description": "A placeholder script section for an early LS→SF bridge crossing puzzle that was never implemented. The map has a marker and zone name but no vehicles or trigger logic.",
+    "zone_name": "GARVER_BRIDGE_EAST",
+    "tier": "verified"
+  },
+
+  "disabled_gang_members_beach": {
+    "description": "An early gang spawn density table had entries for gang members on all beaches. The density multiplier was set to 0.0 in peds.dat before shipping, effectively removing them.",
+    "tier": "verified"
+  }
+}

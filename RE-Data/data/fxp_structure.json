@@ -1,0 +1,397 @@
+{
+  "chapter": "C21",
+  "subject": "GTA:SA particle effects (models/effects.fxp)",
+  "target": "gta_sa.exe 1.0 US, md5 170b3a9108687b26da2d8901c6948a18",
+  "encoding": {
+    "form": "plain text",
+    "line_ending": "CRLF",
+    "bytes": 616708,
+    "lines": 43617,
+    "tier": "verified"
+  },
+  "grammar": {
+    "project": "'FX_PROJECT_DATA:' system* 'FX_PROJECT_DATA_END:'",
+    "system": "'FX_SYSTEM_DATA:' <version> FILENAME NAME LENGTH LOOPINTERVALMIN LENGTH PLAYMODE CULLDIST BOUNDINGSPHERE 'NUM_PRIMS: n' prim{n} OMITTEXTURES TXDNAME",
+    "prim": "'FX_PRIM_EMITTER_DATA:' 'FX_PRIM_BASE_DATA:' NAME MATRIX TEXTURE TEXTURE2 TEXTURE3 TEXTURE4 ALPHAON SRCBLENDID DSTBLENDID 'NUM_INFOS: n' info{n} LODSTART LODEND",
+    "info": "'FX_INFO_<TYPE>_DATA:' scalar* (curveName ':' interp)*",
+    "interp": "'FX_INTERP_DATA:' LOOPED 'NUM_KEYS: n' keyframe{n}",
+    "keyframe": "'FX_KEYFLOAT_DATA:' TIME VAL",
+    "tier": "verified - a count-driven parser consumes all 43617 lines with 0 left over"
+  },
+  "counts": {
+    "systems": 82,
+    "emitters": 161,
+    "info_blocks": 1470,
+    "curves": 4120,
+    "keyframes": 6563
+  },
+  "system_version_word": {
+    "value": "109",
+    "constant": true,
+    "tier": "open"
+  },
+  "info_types": {
+    "FX_INFO_SIZE_DATA": {
+      "count": 161,
+      "scalars": [
+        "TIMEMODEPRT"
+      ],
+      "curves": [
+        "SIZEX",
+        "SIZEY",
+        "SIZEXBIAS",
+        "SIZEYBIAS"
+      ]
+    },
+    "FX_INFO_EMLIFE_DATA": {
+      "count": 147,
+      "scalars": [],
+      "curves": [
+        "LIFE",
+        "BIAS"
+      ]
+    },
+    "FX_INFO_EMRATE_DATA": {
+      "count": 144,
+      "scalars": [],
+      "curves": [
+        "RATE"
+      ]
+    },
+    "FX_INFO_EMSPEED_DATA": {
+      "count": 140,
+      "scalars": [],
+      "curves": [
+        "SPEED",
+        "BIAS"
+      ]
+    },
+    "FX_INFO_EMANGLE_DATA": {
+      "count": 122,
+      "scalars": [],
+      "curves": [
+        "MIN",
+        "MAX"
+      ]
+    },
+    "FX_INFO_FORCE_DATA": {
+      "count": 111,
+      "scalars": [
+        "TIMEMODEPRT"
+      ],
+      "curves": [
+        "FORCEX",
+        "FORCEY",
+        "FORCEZ"
+      ]
+    },
+    "FX_INFO_ROTSPEED_DATA": {
+      "count": 108,
+      "scalars": [
+        "TIMEMODEPRT"
+      ],
+      "curves": [
+        "MINCW",
+        "MAXCW",
+        "MINCCW",
+        "MAXCCW"
+      ]
+    },
+    "FX_INFO_COLOURBRIGHT_DATA": {
+      "count": 102,
+      "scalars": [
+        "TIMEMODEPRT"
+      ],
+      "curves": [
+        "RED",
+        "GREEN",
+        "BLUE",
+        "ALPHA",
+        "BIAS"
+      ]
+    },
+    "FX_INFO_EMROTATION_DATA": {
+      "count": 85,
+      "scalars": [],
+      "curves": [
+        "ANGLEMIN",
+        "ANGLEMAX"
+      ]
+    },
+    "FX_INFO_EMDIR_DATA": {
+      "count": 65,
+      "scalars": [],
+      "curves": [
+        "DIRX",
+        "DIRY",
+        "DIRZ"
+      ]
+    },
+    "FX_INFO_EMSIZE_DATA": {
+      "count": 62,
+      "scalars": [],
+      "curves": [
+        "RADIUS",
+        "SIZEMINX",
+        "SIZEMAXX",
+        "SIZEMINY",
+        "SIZEMAXY",
+        "SIZEMINZ",
+        "SIZEMAXZ"
+      ]
+    },
+    "FX_INFO_COLOUR_DATA": {
+      "count": 48,
+      "scalars": [
+        "TIMEMODEPRT"
+      ],
+      "curves": [
+        "RED",
+        "GREEN",
+        "BLUE",
+        "ALPHA"
+      ]
+    },
+    "FX_INFO_FRICTION_DATA": {
+      "count": 46,
+      "scalars": [
+        "TIMEMODEPRT"
+      ],
+      "curves": [
+        "FRICTION"
+      ]
+    },
+    "FX_INFO_WIND_DATA": {
+      "count": 38,
+      "scalars": [
+        "TIMEMODEPRT"
+      ],
+      "curves": [
+        "WINDFACTOR"
+      ]
+    },
+    "FX_INFO_SELFLIT_DATA": {
+      "count": 28,
+      "scalars": [
+        "TIMEMODEPRT"
+      ],
+      "curves": []
+    },
+    "FX_INFO_DIR_DATA": {
+      "count": 12,
+      "scalars": [
+        "TIMEMODEPRT"
+      ],
+      "curves": [
+        "X",
+        "Y",
+        "Z"
+      ]
+    },
+    "FX_INFO_HEATHAZE_DATA": {
+      "count": 9,
+      "scalars": [
+        "TIMEMODEPRT"
+      ],
+      "curves": []
+    },
+    "FX_INFO_SPRITERECT_DATA": {
+      "count": 8,
+      "scalars": [
+        "TIMEMODEPRT"
+      ],
+      "curves": [
+        "TOP",
+        "BOTTOM",
+        "LEFT",
+        "RIGHT"
+      ]
+    },
+    "FX_INFO_JITTER_DATA": {
+      "count": 8,
+      "scalars": [
+        "TIMEMODEPRT"
+      ],
+      "curves": [
+        "JITTERFACTOR"
+      ]
+    },
+    "FX_INFO_FLAT_DATA": {
+      "count": 6,
+      "scalars": [
+        "TIMEMODEPRT"
+      ],
+      "curves": [
+        "RX",
+        "RY",
+        "RZ",
+        "UX",
+        "UY",
+        "UZ",
+        "AX",
+        "AY",
+        "AZ"
+      ]
+    },
+    "FX_INFO_EMPOS_DATA": {
+      "count": 5,
+      "scalars": [],
+      "curves": [
+        "X",
+        "Y",
+        "Z"
+      ]
+    },
+    "FX_INFO_FLOAT_DATA": {
+      "count": 3,
+      "scalars": [
+        "TIMEMODEPRT"
+      ],
+      "curves": []
+    },
+    "FX_INFO_NOISE_DATA": {
+      "count": 3,
+      "scalars": [
+        "TIMEMODEPRT"
+      ],
+      "curves": [
+        "NOISE"
+      ]
+    },
+    "FX_INFO_UNDERWATER_DATA": {
+      "count": 3,
+      "scalars": [
+        "TIMEMODEPRT"
+      ],
+      "curves": []
+    },
+    "FX_INFO_TRAIL_DATA": {
+      "count": 2,
+      "scalars": [
+        "TIMEMODEPRT"
+      ],
+      "curves": [
+        "TRAILTIME",
+        "SCREENSPACE"
+      ]
+    },
+    "FX_INFO_GROUNDCOLLIDE_DATA": {
+      "count": 1,
+      "scalars": [
+        "TIMEMODEPRT"
+      ],
+      "curves": [
+        "BOUNCE",
+        "SPEEDMULT",
+        "BOUNCEERROR"
+      ]
+    },
+    "FX_INFO_ANIMTEX_DATA": {
+      "count": 1,
+      "scalars": [
+        "TIMEMODEPRT"
+      ],
+      "curves": [
+        "TEXID"
+      ]
+    },
+    "FX_INFO_EMWEATHER_DATA": {
+      "count": 1,
+      "scalars": [],
+      "curves": [
+        "WINDMIN",
+        "WINDMAX",
+        "RAINMIN",
+        "RAINMAX"
+      ]
+    },
+    "FX_INFO_ATTRACTPT_DATA": {
+      "count": 1,
+      "scalars": [
+        "TIMEMODEPRT"
+      ],
+      "curves": [
+        "POSX",
+        "POSY",
+        "POSZ",
+        "FORCE"
+      ]
+    }
+  },
+  "executable_confirmation": {
+    "fxp_path_string_va": "0x85a6d4",
+    "loader_ref_va": "0x49ea9d",
+    "parser_va": "0x5c2420",
+    "tag_match": "repe cmpsb over 0x10 bytes at 0x5c253e - block tags are compared as literals",
+    "fx_data_tokens_in_exe": 34,
+    "declared_but_unused": [
+      "FX_INFO_ATTRACTLINE_DATA",
+      "FX_INFO_COLOURRANGE_DATA",
+      "FX_INFO_SMOKE_DATA"
+    ],
+    "structural_tags_absent": [
+      "FX_PROJECT_DATA",
+      "FX_PRIM_BASE_DATA",
+      "FX_INTERP_DATA",
+      "FX_KEYFLOAT_DATA"
+    ],
+    "note": "scalar field names do not appear in the exe; fields are read positionally"
+  },
+  "checks": [
+    {
+      "name": "file is pure printable text (CRLF, no control bytes)",
+      "pass": true,
+      "detail": "616708 bytes, 43617 lines"
+    },
+    {
+      "name": "parser consumes every line, nothing left over",
+      "pass": true,
+      "detail": "43617 lines"
+    },
+    {
+      "name": "declared NUM_PRIMS total == emitter blocks found",
+      "pass": true,
+      "detail": "161 prims"
+    },
+    {
+      "name": "declared NUM_INFOS total == info blocks found",
+      "pass": true,
+      "detail": "1470 infos"
+    },
+    {
+      "name": "declared NUM_KEYS total == keyframe blocks found",
+      "pass": true,
+      "detail": "6563 keys"
+    },
+    {
+      "name": "every FX_INTERP_DATA carries exactly one NUM_KEYS",
+      "pass": true,
+      "detail": "4120 interps"
+    },
+    {
+      "name": "every FX_INFO type has ONE constant child schema",
+      "pass": true,
+      "detail": "29 types"
+    },
+    {
+      "name": "the FX_SYSTEM_DATA version word is constant",
+      "pass": true,
+      "detail": "value = 109 on all 82 systems"
+    },
+    {
+      "name": "every FX_INFO type in the file is a literal in gta_sa.exe",
+      "pass": true,
+      "detail": "29/29"
+    },
+    {
+      "name": "the exe declares 3 block types the shipped file never uses",
+      "pass": true,
+      "detail": "FX_INFO_ATTRACTLINE_DATA, FX_INFO_COLOURRANGE_DATA, FX_INFO_SMOKE_DATA"
+    },
+    {
+      "name": "structural block tags are ABSENT from the exe (parsed positionally)",
+      "pass": true,
+      "detail": "FX_PROJECT_DATA, FX_PRIM_BASE_DATA, FX_INTERP_DATA, FX_KEYFLOAT_DATA"
+    }
+  ]
+}

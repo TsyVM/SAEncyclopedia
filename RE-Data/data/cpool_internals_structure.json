@@ -1,0 +1,60 @@
+{
+  "chapter": "C4",
+  "subject": "CPool<T> handle encoding and internal layout — proven cold from exe",
+  "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+
+  "discovery_note": "The following was proven by Capstone disassembly of CPools::GetRef at 0x54F420 — NOT derived from any external project. All addresses read from the exe.",
+
+  "pool_struct_layout": {
+    "description": "CPool<T> is a two-pointer struct. The pool global variable (e.g. CPools::ms_pObjectPool) holds a pointer to one of these.",
+    "fields": [
+      { "name": "m_pObjects",  "offset": 0, "size": 4, "type": "T*",      "tier": "verified_by_disassembly",
+        "evidence_va": "0x54F42B",
+        "note": "Pointer to the start of the object array. Subtract this from any T* pointer to get the byte offset into the array." },
+      { "name": "m_byteMap",   "offset": 4, "size": 4, "type": "uint8_t*","tier": "verified_by_disassembly",
+        "evidence_va": "0x54F434",
+        "note": "Pointer to the parallel byte-flag array (one byte per pool slot)." }
+    ]
+  },
+
+  "byteMap_byte_encoding": {
+    "description": "Each byte in m_byteMap encodes both the free/used state and an allocation counter for ABA-protection.",
+    "bit_7": { "name": "isFree", "description": "1 = slot is free (available for allocation), 0 = slot is in use" },
+    "bits_6_to_0": { "name": "counter", "description": "Allocation counter incremented each time the slot is reused. Prevents stale handles from resolving to new objects." },
+    "tier": "verified_by_disassembly",
+    "evidence_va": "0x54F441"
+  },
+
+  "handle_encoding": {
+    "formula": "handle = (slot_index << 8) | byteMap[slot_index]",
+    "description": "A pool handle is a 32-bit value. The upper 24 bits are the slot index (shifted left by 8); the lower 8 bits are the byteMap byte at that slot (counter | free_flag). To convert a handle back to a slot index: slot = handle >> 8. To validate the handle: byteMap[slot] must match (handle & 0xFF) with bit 7 clear.",
+    "tier": "verified_by_disassembly",
+    "evidence_va": "0x54F441",
+    "proof_sequence": [
+      "0x54F441: movzx eax, byte ptr [ecx + edx]   ; eax = byteMap[slot_index]",
+      "0x54F445: shl edx, 8                         ; edx = slot_index << 8",
+      "0x54F448: add eax, edx                       ; eax = (slot_index << 8) | byteMap[slot_index]"
+    ]
+  },
+
+  "pool_handle_validation_pattern": {
+    "description": "To check if a handle is valid: extract slot (handle >> 8), read byteMap[slot], compare lower 8 bits of handle with byteMap[slot] — they must match AND bit 7 of byteMap[slot] must be 0 (slot is in use).",
+    "tier": "verified_by_disassembly"
+  },
+
+  "known_pool_globals": {
+    "note": "All addresses from the 1.0 US HOODLUM exe. Pool pointer values change at runtime; these globals hold the CPool<T>* pointers.",
+    "CPools_ms_pObjectPool":  { "global_va": "0xB7449C", "stride_bytes": 412,  "element_type": "CObject (0x19C = 412B)", "tier": "verified_by_disassembly", "evidence_va": "0x54F425" },
+    "CPools_ms_pVehiclePool": { "global_va": "0xB74494", "stride_bytes": null,  "element_type": "CVehicle", "tier": "verified" },
+    "CPools_ms_pPedPool":     { "global_va": "0xB7449C", "stride_bytes": null,  "element_type": "CPed (0x79C = 1948B)", "tier": "verified",
+      "note": "Address conflicts with ms_pObjectPool in some references — needs separate cold verification. The GetPedRef at 0x54F420 accesses 0xB7449C with CObject stride (412); the ped pool is likely at a closely adjacent global." }
+  },
+
+  "cpools_initialise": {
+    "function_va": "0x550F10",
+    "pool_count": 13,
+    "construction_pattern": "Each pool is initialized with two consecutive `call 0x8207AE` (operator new for pool metadata) + one `call 0x8208BD` (static global registration). 13 such triples confirmed by disassembly.",
+    "tier": "verified_by_disassembly"
+  }
+}

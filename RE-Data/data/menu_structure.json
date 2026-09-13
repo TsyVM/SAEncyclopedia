@@ -1,0 +1,77 @@
+{
+  "chapter": "C43",
+  "subject": "Front-end / pause menu (CMenuManager + aScreens)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+  "menu_manager": {
+    "size": "0x1b78"
+  },
+  "screens_table": {
+    "base": "0x8ce008",
+    "count": 44,
+    "stride": "0xe2",
+    "end": "0x8d06e0",
+    "layout": "char m_szTitleName[8] + eMenuScreen m_nParentMenu + int8 m_nStartEntry + tMenuScreenItem m_aItems[12]",
+    "titles": [
+      "FEP_STA",
+      "FEH_LOA",
+      "FEH_BRI",
+      "FEH_AUD",
+      "FEH_DIS",
+      "FEH_MAP",
+      "FES_NGA",
+      "FES_NGA",
+      "FES_LMI",
+      "FET_LG",
+      "FES_DEL",
+      "FET_LG",
+      "FES_DEL",
+      "FET_LG",
+      "FES_DEL",
+      "FES_DEL",
+      "FET_SG",
+      "FET_SG",
+      "FET_SG",
+      "FET_SG",
+      "FET_SG",
+      "FET_LG",
+      "FET_SG",
+      "FEH_DIS",
+      "FEH_AUD",
+      "FET_CTL",
+      "FEA_TIT",
+      "FEH_DIS",
+      "FEH_LAN",
+      "FET_SG",
+      "FET_SG",
+      "FET_LG",
+      "FET_LG",
+      "FET_OPT",
+      "FEM_MM",
+      "FET_QG",
+      "FET_CTL",
+      "FET_CTL",
+      "FET_CTL",
+      "FEC_MOU",
+      "FEJ_TIT",
+      "FET_PAU",
+      "",
+      ""
+    ]
+  },
+  "menu_item": {
+    "stride": "0x12",
+    "per_screen": 12,
+    "layout": "eMenuAction m_nActionType + char m_szName[8] + eMenuEntryType m_nType + eMenuScreen m_nTargetMenu + uint16 m_X + uint16 m_Y + eMenuAlign m_nAlign"
+  },
+  "enums": {
+    "eMenuScreen_count": 44,
+    "eMenuAction_count": 70,
+    "frontend_sprite_count": 25
+  },
+  "ties": {
+    "gxt": "all titles + item names are C19 GXT keys (FEP_STA, FES_PLA, ...)",
+    "fonts": "menu draws with C23 fonts; frontend sprites in fronten1/2/3.txd (C23 TXD format)"
+  },
+  "checks_passed": 6,
+  "checks_total": 6
+}

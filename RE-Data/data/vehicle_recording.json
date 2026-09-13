@@ -1,0 +1,56 @@
+{
+ "$schema": "vehicle_recording.v1",
+ "generated": "tools/derive_vehiclerecording.py",
+ "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+ "summary": {
+  "recording_slots": 475,
+  "recording_stride": 16,
+  "recording_base": "0x97d880",
+  "count_global": "0x97f630",
+  "playback_slots": 16,
+  "playback_flags": "0x97d6f0",
+  "playback_carptrs": "0x97d840",
+  "facts_checked": 4,
+  "facts_passed": 4
+ },
+ "record_fields": [
+  {
+   "offset": 0,
+   "name": "recording id"
+  },
+  {
+   "offset": 4,
+   "name": "loaded data pointer"
+  },
+  {
+   "offset": 12,
+   "name": "status byte"
+  }
+ ],
+ "structural_facts": [
+  {
+   "entry_va": "0x0045A060",
+   "method": "CVehicleRecording::HasRecordingFileBeenLoaded",
+   "fact": "recording table base 0x97D880, stride 0x10 (16 B), live count global @0x97F630",
+   "verified": true
+  },
+  {
+   "entry_va": "0x0045A0A0",
+   "method": "CVehicleRecording::RemoveRecordingFile",
+   "fact": "record layout: id@+0, dataPtr@+4, status byte@+0xC; array walked to 0x97F634",
+   "verified": true
+  },
+  {
+   "entry_va": "0x00459400",
+   "method": "CVehicleRecording::ShutDown",
+   "fact": "ShutDown frees each slot's dataPtr walking the 16-byte records",
+   "verified": true
+  },
+  {
+   "entry_va": "0x004594C0",
+   "method": "CVehicleRecording::IsPlaybackGoingOnForCar",
+   "fact": "playback state: flag bytes @0x97D6F0, car-pointer array @0x97D840 (dword-indexed)",
+   "verified": true
+  }
+ ]
+}

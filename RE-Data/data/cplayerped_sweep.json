@@ -1,0 +1,107 @@
+{
+  "class": "CPlayerPed",
+  "own_range": "0x79c..0x7a3",
+  "anchor_count": 15,
+  "functions": [
+    {
+      "name": "ClearWeaponTarget",
+      "va": "0x609c80",
+      "hits": {}
+    },
+    {
+      "name": "Clear3rdPersonMouseTarget",
+      "va": "0x609ed0",
+      "hits": {
+        "0x79c": [
+          "0x609ed1"
+        ]
+      }
+    },
+    {
+      "name": "FindPedToAttack",
+      "va": "0x60c5f0",
+      "hits": {}
+    },
+    {
+      "name": "EvaluateTarget",
+      "va": "0x60d020",
+      "hits": {}
+    },
+    {
+      "name": "ProcessControl",
+      "va": "0x60ea90",
+      "hits": {
+        "0x79c": [
+          "0x60ed5f",
+          "0x60ed67"
+        ]
+      }
+    },
+    {
+      "name": "FindNextWeaponLockOnTarget",
+      "va": "0x60d5a0",
+      "hits": {
+        "0x79c": [
+          "0x60ccb2"
+        ]
+      }
+    },
+    {
+      "name": "FindWeaponLockOnTarget",
+      "va": "0x60d5a0",
+      "hits": {
+        "0x79c": [
+          "0x60ccb2"
+        ]
+      }
+    },
+    {
+      "name": "UpdateCameraWeaponModes",
+      "va": "0x609830",
+      "hits": {}
+    },
+    {
+      "name": "DoesPlayerWantNewWeapon",
+      "va": "0x609710",
+      "hits": {}
+    },
+    {
+      "name": "MakeChangesForNewWeapon",
+      "va": "0x60b460",
+      "hits": {}
+    },
+    {
+      "name": "ProcessPlayerWeapon",
+      "va": "0x6097f0",
+      "hits": {}
+    },
+    {
+      "name": "Compute3rdPersonMouseTarget",
+      "va": "0x60d000",
+      "hits": {}
+    },
+    {
+      "name": "SetInitialState",
+      "va": "0x609490",
+      "hits": {}
+    },
+    {
+      "name": "SetupPlayerPed",
+      "va": "0x60d790",
+      "hits": {}
+    },
+    {
+      "name": "FindTargetPriority",
+      "va": "0x609de0",
+      "hits": {}
+    }
+  ],
+  "offset_summary": {
+    "0x79c": [
+      "Clear3rdPersonMouseTarget",
+      "ProcessControl",
+      "FindNextWeaponLockOnTarget",
+      "FindWeaponLockOnTarget"
+    ]
+  }
+}

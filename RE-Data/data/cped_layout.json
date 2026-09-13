@@ -1,0 +1,1808 @@
+{
+ "chapter": "C41",
+ "subject": "CPed -- base class for all peds (player, NPCs, animals)",
+ "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+ "_methodology": "Primary: disassembly VALIDATE_OFFSET macros (compile-time assertions). Secondary: Capstone disassembly sweep of 35 CPed methods (upgrades tier to verified_by_disassembly when offset appears in 2+ function bodies). m_nPedFlags @0x46C is a 16-byte packed bitfield struct confirmed via disassembly #pragma pack(push,1) declarations. Coverage: 0x138..0x79B (91 confirmed fields). Range 0x79C..0x1947 is OPEN.",
+ "class_name": "CPed",
+ "size_hex": "0x1948",
+ "size_bytes": 1948,
+ "base_chain": "CEntity (0x38) -> CPhysical (0x138) -> CPed (0x1948)",
+ "own_range_hex": "0x138..0x79B",
+ "own_size_bytes": 1636,
+ "coverage_bytes": 1635,
+ "coverage_pct": 100.0,
+ "field_count": 92,
+ "fields_verified_by_disassembly": 21,
+ "fields": [
+  {
+   "name": "m_pedAudio",
+   "offset": "0x138",
+   "offset_int": 312,
+   "size": 348,
+   "type_hint": "CAEPedAudioEntity",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E8057",
+   "access_fns": [
+    "CPed::Constructor",
+    "AttachPedToBike"
+   ],
+   "note": "embedded audio entity for ambient ped sounds (footsteps, voice lines). Size = 0x294-0x138 = 0x15C = 348 bytes"
+  },
+  {
+   "name": "m_pedSpeech",
+   "offset": "0x294",
+   "offset_int": 660,
+   "size": 256,
+   "type_hint": "CAEPedSpeechAudioEntity",
+   "tier": "verified",
+   "evidence_va": "0x005E80B1",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "embedded speech/vocal audio entity. Size = 0x394-0x294 = 0x100 = 256 bytes"
+  },
+  {
+   "name": "m_weaponAudio",
+   "offset": "0x394",
+   "offset_int": 916,
+   "size": 168,
+   "type_hint": "CAEWeaponAudioEntity",
+   "tier": "verified",
+   "evidence_va": "0x005E80C1",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "embedded weapon firing audio entity. Size = 0x43C-0x394 = 0xA8 = 168 bytes"
+  },
+  {
+   "name": "field_43C",
+   "offset": "0x43C",
+   "offset_int": 1084,
+   "size": 36,
+   "type_hint": "char[36]",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "purpose unknown; 36-byte opaque block (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_roadRageWith",
+   "offset": "0x460",
+   "offset_int": 1120,
+   "size": 4,
+   "type_hint": "CPed*",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E8411",
+   "access_fns": [
+    "CPed::Constructor",
+    "RemoveWeaponAnims",
+    "ClearLookFlagPostCallback"
+   ],
+   "note": "ped currently in road rage conflict with this ped"
+  },
+  {
+   "name": "field_464",
+   "offset": "0x464",
+   "offset_int": 1124,
+   "size": 4,
+   "type_hint": "char[4]",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "unknown 4-byte block (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "field_468",
+   "offset": "0x468",
+   "offset_int": 1128,
+   "size": 4,
+   "type_hint": "int32_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E8417",
+   "access_fns": [
+    "CPed::Constructor",
+    "RemoveWeaponAnims"
+   ],
+   "note": "unknown int (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_nPedFlags",
+   "offset": "0x46C",
+   "offset_int": 1132,
+   "size": 16,
+   "type_hint": "uint8_t[16]",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E8200",
+   "access_fns": [
+    "CPed::Constructor",
+    "IsPedInControl",
+    "SetLookFlag",
+    "SetAimFlag",
+    "ClearLookFlag",
+    "IsOnBike",
+    "RemoveWeaponAnims",
+    "SetStayInSamePlace",
+    "PedIsReadyForConversation"
+   ],
+   "note": "120-bit packed ped behavior flags (disassembly: #pragma pack(push,1) bitfield block). Range 0x46C..0x47B. 15 full flag bytes + 1 padding/partial byte at 0x47B.",
+   "bitfields": [
+    {
+     "name": "bIsStanding",
+     "byte_offset": 0,
+     "bit": 0
+    },
+    {
+     "name": "bWasStanding",
+     "byte_offset": 0,
+     "bit": 1
+    },
+    {
+     "name": "bIsLooking",
+     "byte_offset": 0,
+     "bit": 2
+    },
+    {
+     "name": "bIsRestoringLook",
+     "byte_offset": 0,
+     "bit": 3
+    },
+    {
+     "name": "bIsAimingGun",
+     "byte_offset": 0,
+     "bit": 4
+    },
+    {
+     "name": "bIsRestoringGun",
+     "byte_offset": 0,
+     "bit": 5
+    },
+    {
+     "name": "bCanPointGunAtTarget",
+     "byte_offset": 0,
+     "bit": 6
+    },
+    {
+     "name": "bIsTalking",
+     "byte_offset": 0,
+     "bit": 7
+    },
+    {
+     "name": "bInVehicle",
+     "byte_offset": 1,
+     "bit": 0
+    },
+    {
+     "name": "bIsInTheAir",
+     "byte_offset": 1,
+     "bit": 1
+    },
+    {
+     "name": "bIsLanding",
+     "byte_offset": 1,
+     "bit": 2
+    },
+    {
+     "name": "bHitSomethingLastFrame",
+     "byte_offset": 1,
+     "bit": 3
+    },
+    {
+     "name": "bIsNearCar",
+     "byte_offset": 1,
+     "bit": 4
+    },
+    {
+     "name": "bRenderPedInCar",
+     "byte_offset": 1,
+     "bit": 5
+    },
+    {
+     "name": "bUpdateAnimHeading",
+     "byte_offset": 1,
+     "bit": 6
+    },
+    {
+     "name": "bRemoveHead",
+     "byte_offset": 1,
+     "bit": 7
+    },
+    {
+     "name": "bFiringWeapon",
+     "byte_offset": 2,
+     "bit": 0
+    },
+    {
+     "name": "bHasACamera",
+     "byte_offset": 2,
+     "bit": 1
+    },
+    {
+     "name": "bPedIsBleeding",
+     "byte_offset": 2,
+     "bit": 2
+    },
+    {
+     "name": "bStopAndShoot",
+     "byte_offset": 2,
+     "bit": 3
+    },
+    {
+     "name": "bIsPedDieAnimPlaying",
+     "byte_offset": 2,
+     "bit": 4
+    },
+    {
+     "name": "bStayInSamePlace",
+     "byte_offset": 2,
+     "bit": 5
+    },
+    {
+     "name": "bKindaStayInSamePlace",
+     "byte_offset": 2,
+     "bit": 6
+    },
+    {
+     "name": "bBeingChasedByPolice",
+     "byte_offset": 2,
+     "bit": 7
+    },
+    {
+     "name": "bNotAllowedToDuck",
+     "byte_offset": 3,
+     "bit": 0
+    },
+    {
+     "name": "bCrouchWhenShooting",
+     "byte_offset": 3,
+     "bit": 1
+    },
+    {
+     "name": "bIsDucking",
+     "byte_offset": 3,
+     "bit": 2
+    },
+    {
+     "name": "bGetUpAnimStarted",
+     "byte_offset": 3,
+     "bit": 3
+    },
+    {
+     "name": "bDoBloodyFootprints",
+     "byte_offset": 3,
+     "bit": 4
+    },
+    {
+     "name": "bDontDragMeOutCar",
+     "byte_offset": 3,
+     "bit": 5
+    },
+    {
+     "name": "bStillOnValidPoly",
+     "byte_offset": 3,
+     "bit": 6
+    },
+    {
+     "name": "bAllowMedicsToReviveMe",
+     "byte_offset": 3,
+     "bit": 7
+    },
+    {
+     "name": "bResetWalkAnims",
+     "byte_offset": 4,
+     "bit": 0
+    },
+    {
+     "name": "bOnBoat",
+     "byte_offset": 4,
+     "bit": 1
+    },
+    {
+     "name": "bBusJacked",
+     "byte_offset": 4,
+     "bit": 2
+    },
+    {
+     "name": "bFadeOut",
+     "byte_offset": 4,
+     "bit": 3
+    },
+    {
+     "name": "bKnockedUpIntoAir",
+     "byte_offset": 4,
+     "bit": 4
+    },
+    {
+     "name": "bHitSteepSlope",
+     "byte_offset": 4,
+     "bit": 5
+    },
+    {
+     "name": "bCullExtraFarAway",
+     "byte_offset": 4,
+     "bit": 6
+    },
+    {
+     "name": "bTryingToReachDryLand",
+     "byte_offset": 4,
+     "bit": 7
+    },
+    {
+     "name": "bCollidedWithMyVehicle",
+     "byte_offset": 5,
+     "bit": 0
+    },
+    {
+     "name": "bRichFromMugging",
+     "byte_offset": 5,
+     "bit": 1
+    },
+    {
+     "name": "bChrisCriminal",
+     "byte_offset": 5,
+     "bit": 2
+    },
+    {
+     "name": "bShakeFist",
+     "byte_offset": 5,
+     "bit": 3
+    },
+    {
+     "name": "bNoCriticalHits",
+     "byte_offset": 5,
+     "bit": 4
+    },
+    {
+     "name": "bHasAlreadyBeenRecorded",
+     "byte_offset": 5,
+     "bit": 5
+    },
+    {
+     "name": "bUpdateMatricesRequired",
+     "byte_offset": 5,
+     "bit": 6
+    },
+    {
+     "name": "bFleeWhenStanding",
+     "byte_offset": 5,
+     "bit": 7
+    },
+    {
+     "name": "bMiamiViceCop",
+     "byte_offset": 6,
+     "bit": 0
+    },
+    {
+     "name": "bMoneyHasBeenGivenByScript",
+     "byte_offset": 6,
+     "bit": 1
+    },
+    {
+     "name": "bHasBeenPhotographed",
+     "byte_offset": 6,
+     "bit": 2
+    },
+    {
+     "name": "bIsDrowning",
+     "byte_offset": 6,
+     "bit": 3
+    },
+    {
+     "name": "bDrownsInWater",
+     "byte_offset": 6,
+     "bit": 4
+    },
+    {
+     "name": "bHeadStuckInCollision",
+     "byte_offset": 6,
+     "bit": 5
+    },
+    {
+     "name": "bDeadPedInFrontOfCar",
+     "byte_offset": 6,
+     "bit": 6
+    },
+    {
+     "name": "bStayInCarOnJack",
+     "byte_offset": 6,
+     "bit": 7
+    },
+    {
+     "name": "bDontFight",
+     "byte_offset": 7,
+     "bit": 0
+    },
+    {
+     "name": "bDoomAim",
+     "byte_offset": 7,
+     "bit": 1
+    },
+    {
+     "name": "bCanBeShotInVehicle",
+     "byte_offset": 7,
+     "bit": 2
+    },
+    {
+     "name": "bPushedAlongByCar",
+     "byte_offset": 7,
+     "bit": 3
+    },
+    {
+     "name": "bNeverEverTargetThisPed",
+     "byte_offset": 7,
+     "bit": 4
+    },
+    {
+     "name": "bThisPedIsATargetPriority",
+     "byte_offset": 7,
+     "bit": 5
+    },
+    {
+     "name": "bCrouchWhenScared",
+     "byte_offset": 7,
+     "bit": 6
+    },
+    {
+     "name": "bKnockedOffBike",
+     "byte_offset": 7,
+     "bit": 7
+    },
+    {
+     "name": "bDonePositionOutOfCollision",
+     "byte_offset": 8,
+     "bit": 0
+    },
+    {
+     "name": "bDontRender",
+     "byte_offset": 8,
+     "bit": 1
+    },
+    {
+     "name": "bHasBeenAddedToPopulation",
+     "byte_offset": 8,
+     "bit": 2
+    },
+    {
+     "name": "bHasJustLeftCar",
+     "byte_offset": 8,
+     "bit": 3
+    },
+    {
+     "name": "bIsInDisguise",
+     "byte_offset": 8,
+     "bit": 4
+    },
+    {
+     "name": "bDoesntListenToPlayerGroupCommands",
+     "byte_offset": 8,
+     "bit": 5
+    },
+    {
+     "name": "bIsBeingArrested",
+     "byte_offset": 8,
+     "bit": 6
+    },
+    {
+     "name": "bHasJustSoughtCover",
+     "byte_offset": 8,
+     "bit": 7
+    },
+    {
+     "name": "bKilledByStealth",
+     "byte_offset": 9,
+     "bit": 0
+    },
+    {
+     "name": "bDoesntDropWeaponsWhenDead",
+     "byte_offset": 9,
+     "bit": 1
+    },
+    {
+     "name": "bCalledPreRender",
+     "byte_offset": 9,
+     "bit": 2
+    },
+    {
+     "name": "bBloodPuddleCreated",
+     "byte_offset": 9,
+     "bit": 3
+    },
+    {
+     "name": "bPartOfAttackWave",
+     "byte_offset": 9,
+     "bit": 4
+    },
+    {
+     "name": "bClearRadarBlipOnDeath",
+     "byte_offset": 9,
+     "bit": 5
+    },
+    {
+     "name": "bNeverLeavesGroup",
+     "byte_offset": 9,
+     "bit": 6
+    },
+    {
+     "name": "bTestForBlockedPositions",
+     "byte_offset": 9,
+     "bit": 7
+    },
+    {
+     "name": "bRightArmBlocked",
+     "byte_offset": 10,
+     "bit": 0
+    },
+    {
+     "name": "bLeftArmBlocked",
+     "byte_offset": 10,
+     "bit": 1
+    },
+    {
+     "name": "bDuckRightArmBlocked",
+     "byte_offset": 10,
+     "bit": 2
+    },
+    {
+     "name": "bMidriffBlockedForJump",
+     "byte_offset": 10,
+     "bit": 3
+    },
+    {
+     "name": "bFallenDown",
+     "byte_offset": 10,
+     "bit": 4
+    },
+    {
+     "name": "bUseAttractorInstantly",
+     "byte_offset": 10,
+     "bit": 5
+    },
+    {
+     "name": "bDontAcceptIKLookAts",
+     "byte_offset": 10,
+     "bit": 6
+    },
+    {
+     "name": "bHasAScriptBrain",
+     "byte_offset": 10,
+     "bit": 7
+    },
+    {
+     "name": "bWaitingForScriptBrainToLoad",
+     "byte_offset": 11,
+     "bit": 0
+    },
+    {
+     "name": "bHasGroupDriveTask",
+     "byte_offset": 11,
+     "bit": 1
+    },
+    {
+     "name": "bCanExitCar",
+     "byte_offset": 11,
+     "bit": 2
+    },
+    {
+     "name": "CantBeKnockedOffBike",
+     "byte_offset": 11,
+     "bit": 3,
+     "width": 2,
+     "note": "0=default 1=never 2=always normal"
+    },
+    {
+     "name": "bHasBeenRendered",
+     "byte_offset": 11,
+     "bit": 5
+    },
+    {
+     "name": "bIsCached",
+     "byte_offset": 11,
+     "bit": 6
+    },
+    {
+     "name": "bPushOtherPeds",
+     "byte_offset": 11,
+     "bit": 7
+    },
+    {
+     "name": "bHasBulletProofVest",
+     "byte_offset": 12,
+     "bit": 0
+    },
+    {
+     "name": "bUsingMobilePhone",
+     "byte_offset": 12,
+     "bit": 1
+    },
+    {
+     "name": "bUpperBodyDamageAnimsOnly",
+     "byte_offset": 12,
+     "bit": 2
+    },
+    {
+     "name": "bStuckUnderCar",
+     "byte_offset": 12,
+     "bit": 3
+    },
+    {
+     "name": "bKeepTasksAfterCleanUp",
+     "byte_offset": 12,
+     "bit": 4
+    },
+    {
+     "name": "bIsDyingStuck",
+     "byte_offset": 12,
+     "bit": 5
+    },
+    {
+     "name": "bIgnoreHeightCheckOnGotoPointTask",
+     "byte_offset": 12,
+     "bit": 6
+    },
+    {
+     "name": "bForceDieInCar",
+     "byte_offset": 12,
+     "bit": 7
+    },
+    {
+     "name": "bCheckColAboveHead",
+     "byte_offset": 13,
+     "bit": 0
+    },
+    {
+     "name": "bIgnoreWeaponRange",
+     "byte_offset": 13,
+     "bit": 1
+    },
+    {
+     "name": "bDruggedUp",
+     "byte_offset": 13,
+     "bit": 2
+    },
+    {
+     "name": "bWantedByPolice",
+     "byte_offset": 13,
+     "bit": 3
+    },
+    {
+     "name": "bSignalAfterKill",
+     "byte_offset": 13,
+     "bit": 4
+    },
+    {
+     "name": "bCanClimbOntoBoat",
+     "byte_offset": 13,
+     "bit": 5
+    },
+    {
+     "name": "bPedHitWallLastFrame",
+     "byte_offset": 13,
+     "bit": 6
+    },
+    {
+     "name": "bIgnoreHeightDifferenceFollowingNodes",
+     "byte_offset": 13,
+     "bit": 7
+    },
+    {
+     "name": "bMoveAnimSpeedHasBeenSetByTask",
+     "byte_offset": 14,
+     "bit": 0
+    },
+    {
+     "name": "bGetOutUpsideDownCar",
+     "byte_offset": 14,
+     "bit": 1
+    },
+    {
+     "name": "bJustGotOffTrain",
+     "byte_offset": 14,
+     "bit": 2
+    },
+    {
+     "name": "bDeathPickupsPersist",
+     "byte_offset": 14,
+     "bit": 3
+    },
+    {
+     "name": "bTestForShotInVehicle",
+     "byte_offset": 14,
+     "bit": 4
+    },
+    {
+     "name": "bUsedForReplay",
+     "byte_offset": 14,
+     "bit": 5
+    }
+   ]
+  },
+  {
+   "name": "m_pIntelligence",
+   "offset": "0x47C",
+   "offset_int": 1148,
+   "size": 4,
+   "type_hint": "CPedIntelligence*",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E84A3",
+   "access_fns": [
+    "CPed::Constructor",
+    "PedIsReadyForConversation"
+   ],
+   "note": "AI task manager and intelligence module for this ped"
+  },
+  {
+   "name": "m_pPlayerData",
+   "offset": "0x480",
+   "offset_int": 1152,
+   "size": 4,
+   "type_hint": "CPlayerData*",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E84B6",
+   "access_fns": [
+    "CPed::Constructor",
+    "ClearLookFlag",
+    "IsOnBike",
+    "GetCurrentWeapon"
+   ],
+   "note": "player-specific data; NULL for non-player peds"
+  },
+  {
+   "name": "m_nCreatedBy",
+   "offset": "0x484",
+   "offset_int": 1156,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E8199",
+   "access_fns": [
+    "CPed::Constructor",
+    "SetMoveState",
+    "IsOnBike",
+    "IsOnFoot"
+   ],
+   "note": "creation source: 1=random/world, 2=script/mission"
+  },
+  {
+   "name": "field_485",
+   "offset": "0x485",
+   "offset_int": 1157,
+   "size": 3,
+   "type_hint": "char[3]",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "alignment padding after m_nCreatedBy (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_apBones",
+   "offset": "0x488",
+   "offset_int": 1160,
+   "size": 76,
+   "type_hint": "AnimBlendFrameData*[19]",
+   "tier": "verified",
+   "evidence_va": null,
+   "access_fns": [],
+   "note": "array of 19 animated bone frame pointers for IK/ped animations. 19*4=76 bytes"
+  },
+  {
+   "name": "m_nAnimGroup",
+   "offset": "0x4D4",
+   "offset_int": 1236,
+   "size": 4,
+   "type_hint": "uint32_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "access_fns": [],
+   "note": "animation group ID (drives which walk/run/idle animations are played)"
+  },
+  {
+   "name": "m_vecAnimMovingShiftLocal",
+   "offset": "0x4D8",
+   "offset_int": 1240,
+   "size": 8,
+   "type_hint": "CVector2D",
+   "tier": "verified",
+   "evidence_va": "0x005E8111",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "local-space 2D movement delta from animation blend"
+  },
+  {
+   "name": "m_acquaintance",
+   "offset": "0x4E0",
+   "offset_int": 1248,
+   "size": 20,
+   "type_hint": "CPedAcquaintance",
+   "tier": "verified",
+   "evidence_va": "0x005E811D",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "acquaintance data (ally/enemy flags vs other ped types). Size = 0x4F4-0x4E0 = 0x14 = 20 bytes"
+  },
+  {
+   "name": "m_pWeaponObject",
+   "offset": "0x4F4",
+   "offset_int": 1268,
+   "size": 4,
+   "type_hint": "RwObject*",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E843C",
+   "access_fns": [
+    "CPed::Constructor",
+    "SelectGoodNextWeapon"
+   ],
+   "note": "RenderWare object for the currently held weapon model"
+  },
+  {
+   "name": "m_pGunflashObject",
+   "offset": "0x4F8",
+   "offset_int": 1272,
+   "size": 4,
+   "type_hint": "RwFrame*",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E8442",
+   "access_fns": [
+    "CPed::Constructor",
+    "SelectGoodNextWeapon",
+    "MakeChangesForNewWeapon",
+    "SetCurrentWeapon"
+   ],
+   "note": "muzzle flash effect frame pointer"
+  },
+  {
+   "name": "m_pGogglesObject",
+   "offset": "0x4FC",
+   "offset_int": 1276,
+   "size": 4,
+   "type_hint": "RwObject*",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E8448",
+   "access_fns": [
+    "CPed::Constructor",
+    "ClearWeapons"
+   ],
+   "note": "night-vision/thermal goggles model object"
+  },
+  {
+   "name": "m_pGogglesState",
+   "offset": "0x500",
+   "offset_int": 1280,
+   "size": 4,
+   "type_hint": "uint8_t*",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E844E",
+   "access_fns": [
+    "CPed::Constructor",
+    "ClearWeapons"
+   ],
+   "note": "pointer to goggles on/off state byte"
+  },
+  {
+   "name": "m_nWeaponGunflashAlphaMP1",
+   "offset": "0x504",
+   "offset_int": 1284,
+   "size": 2,
+   "type_hint": "int16_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "right-hand gunflash alpha (multiplayer only, VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_nWeaponGunFlashAlphaProgMP1",
+   "offset": "0x506",
+   "offset_int": 1286,
+   "size": 2,
+   "type_hint": "int16_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "right-hand gunflash alpha progress (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_nWeaponGunflashAlphaMP2",
+   "offset": "0x508",
+   "offset_int": 1288,
+   "size": 2,
+   "type_hint": "int16_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "left-hand gunflash alpha (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_nWeaponGunFlashAlphaProgMP2",
+   "offset": "0x50A",
+   "offset_int": 1290,
+   "size": 2,
+   "type_hint": "int16_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "left-hand gunflash alpha progress (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_pedIK",
+   "offset": "0x50C",
+   "offset_int": 1292,
+   "size": 32,
+   "type_hint": "CPedIK",
+   "tier": "verified",
+   "evidence_va": "0x005E8132",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "inverse kinematics solver for aiming/looking. Size = 0x52C-0x50C = 0x20 = 32 bytes"
+  },
+  {
+   "name": "m_nAntiSpazTimer",
+   "offset": "0x52C",
+   "offset_int": 1324,
+   "size": 4,
+   "type_hint": "int32_t",
+   "tier": "verified",
+   "evidence_va": "0x005E81A8",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "prevents rapid repeated reactions (anti-spaz cooldown timer)"
+  },
+  {
+   "name": "m_ePedState",
+   "offset": "0x530",
+   "offset_int": 1328,
+   "size": 4,
+   "type_hint": "ePedState",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E81F4",
+   "access_fns": [
+    "CPed::Constructor",
+    "IsPedInControl",
+    "SetLookFlag",
+    "IsWaiting",
+    "IsWaitingForBus",
+    "IsInVehicle",
+    "IsInBoat",
+    "IsInPlane",
+    "IsInHeli"
+   ],
+   "note": "current ped state enum (PED_IDLE, PED_ATTACK, PED_IN_VEHICLE, etc.). 10 hits in Capstone sweep"
+  },
+  {
+   "name": "m_nMoveState",
+   "offset": "0x534",
+   "offset_int": 1332,
+   "size": 4,
+   "type_hint": "eMoveState",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E81FA",
+   "access_fns": [
+    "CPed::Constructor",
+    "SetMoveState"
+   ],
+   "note": "current movement state (STILL, WALK, RUN, SPRINT, etc.)"
+  },
+  {
+   "name": "m_nSwimmingMoveState",
+   "offset": "0x538",
+   "offset_int": 1336,
+   "size": 4,
+   "type_hint": "eMoveState",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "move state while swimming (used by CTaskSimpleSwim::ProcessPed; VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "field_53C",
+   "offset": "0x53C",
+   "offset_int": 1340,
+   "size": 4,
+   "type_hint": "int32_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "unknown int (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_fHealth",
+   "offset": "0x540",
+   "offset_int": 1344,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E8157",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "current health [0..200 for player, 0..100 for NPCs]. Confirmed by Capstone sweep"
+  },
+  {
+   "name": "m_fMaxHealth",
+   "offset": "0x544",
+   "offset_int": 1348,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": "0x005E815D",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "maximum health cap"
+  },
+  {
+   "name": "m_fArmour",
+   "offset": "0x548",
+   "offset_int": 1352,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": "0x005E816C",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "body armour [0..100]. Absorbs bullet/explosion damage before health"
+  },
+  {
+   "name": "m_nTimeTillWeNeedThisPed",
+   "offset": "0x54C",
+   "offset_int": 1356,
+   "size": 4,
+   "type_hint": "uint32_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "game timer value until ped can be removed from world (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_vecAnimMovingShift",
+   "offset": "0x550",
+   "offset_int": 1360,
+   "size": 8,
+   "type_hint": "CVector2D",
+   "tier": "verified",
+   "evidence_va": "0x005E81C6",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "world-space 2D velocity contribution from walk/run animations"
+  },
+  {
+   "name": "m_fHeadingCurrent",
+   "offset": "0x558",
+   "offset_int": 1368,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E8228",
+   "access_fns": [
+    "CPed::Constructor",
+    "GetLocalDirection",
+    "RemoveWeaponAnims"
+   ],
+   "note": "current facing angle in radians"
+  },
+  {
+   "name": "m_fHeadingGoal",
+   "offset": "0x55C",
+   "offset_int": 1372,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "target facing angle in radians (ped turns toward this; VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_fHeadingChangeRate",
+   "offset": "0x560",
+   "offset_int": 1376,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "angular speed toward m_fHeadingGoal (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_fMoveAnim",
+   "offset": "0x564",
+   "offset_int": 1380,
+   "size": 4,
+   "type_hint": "int32_t",
+   "tier": "verified",
+   "evidence_va": "0x005E8238",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "movement animation blend weight / identifier"
+  },
+  {
+   "name": "m_standingOnEntity",
+   "offset": "0x568",
+   "offset_int": 1384,
+   "size": 4,
+   "type_hint": "CEntity*",
+   "tier": "verified",
+   "evidence_va": "0x005E8248",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "entity the ped is currently standing on (vehicle roof, object, etc.)"
+  },
+  {
+   "name": "field_56C",
+   "offset": "0x56C",
+   "offset_int": 1388,
+   "size": 12,
+   "type_hint": "CVector",
+   "tier": "verified",
+   "evidence_va": "0x005E81D2",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "unknown CVector (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "field_578",
+   "offset": "0x578",
+   "offset_int": 1400,
+   "size": 12,
+   "type_hint": "CVector",
+   "tier": "verified",
+   "evidence_va": "0x005E81E2",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "unknown CVector (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_pContactEntity",
+   "offset": "0x584",
+   "offset_int": 1412,
+   "size": 4,
+   "type_hint": "CEntity*",
+   "tier": "verified",
+   "evidence_va": "0x005E8294",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "entity the ped is in physical contact with"
+  },
+  {
+   "name": "field_588",
+   "offset": "0x588",
+   "offset_int": 1416,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": "0x005E829A",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "unknown float (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_pVehicle",
+   "offset": "0x58C",
+   "offset_int": 1420,
+   "size": 4,
+   "type_hint": "CVehicle*",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E81A2",
+   "access_fns": [
+    "CPed::Constructor",
+    "RemoveWeaponAnims",
+    "ClearLookFlagPostCallback"
+   ],
+   "note": "vehicle ped is currently in; NULL when on foot. Confirmed by Capstone sweep"
+  },
+  {
+   "name": "m_VehDeadInFrontOf",
+   "offset": "0x590",
+   "offset_int": 1424,
+   "size": 4,
+   "type_hint": "CVehicle*",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E8436",
+   "access_fns": [
+    "CPed::Constructor",
+    "RemoveWeaponAnims"
+   ],
+   "note": "vehicle that killed ped by running over them (set when bDeadPedInFrontOfCar)"
+  },
+  {
+   "name": "field_594",
+   "offset": "0x594",
+   "offset_int": 1428,
+   "size": 4,
+   "type_hint": "int32_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "unknown int (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_nPedType",
+   "offset": "0x598",
+   "offset_int": 1432,
+   "size": 4,
+   "type_hint": "int32_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E8172",
+   "access_fns": [
+    "CPed::Constructor",
+    "ClearLookFlagPostCallback"
+   ],
+   "note": "ped type enum (PED_TYPE_PLAYER_1, PED_TYPE_CIVMALE, PED_TYPE_COP, etc.)"
+  },
+  {
+   "name": "m_pStats",
+   "offset": "0x59C",
+   "offset_int": 1436,
+   "size": 4,
+   "type_hint": "CPedStat*",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005DEBCF",
+   "access_fns": [
+    "CPed::Initialise",
+    "SetStats"
+   ],
+   "note": "pointer to CPedStat stat block (health/armour/speed/etc parameters)"
+  },
+  {
+   "name": "m_aWeapons",
+   "offset": "0x5A0",
+   "offset_int": 1440,
+   "size": 364,
+   "type_hint": "CWeapon[13]",
+   "tier": "verified",
+   "evidence_va": "0x005E8165",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "13 weapon slots. Size = 0x70C-0x5A0 = 0x16C = 364 bytes; each CWeapon = 28 bytes"
+  },
+  {
+   "name": "m_nSavedWeapon",
+   "offset": "0x70C",
+   "offset_int": 1804,
+   "size": 4,
+   "type_hint": "eWeaponType",
+   "tier": "verified",
+   "evidence_va": "0x005E8389",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "weapon saved before temporary hide (e.g. when entering vehicle cutscene)"
+  },
+  {
+   "name": "m_nDelayedWeapon",
+   "offset": "0x710",
+   "offset_int": 1808,
+   "size": 4,
+   "type_hint": "eWeaponType",
+   "tier": "verified",
+   "evidence_va": "0x005E838F",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "secondary/delayed weapon slot (e.g. cop has nightstick primary + pistol delayed)"
+  },
+  {
+   "name": "m_nDelayedWeaponAmmo",
+   "offset": "0x714",
+   "offset_int": 1812,
+   "size": 4,
+   "type_hint": "uint32_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "ammo for the delayed weapon slot (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_nSelectedWepSlot",
+   "offset": "0x718",
+   "offset_int": 1816,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified",
+   "evidence_va": "0x005E8398",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "index [0..12] into m_aWeapons for the currently selected weapon"
+  },
+  {
+   "name": "m_nWeaponShootingRate",
+   "offset": "0x719",
+   "offset_int": 1817,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified",
+   "evidence_va": "0x005E8259",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "rate of fire modifier for current weapon"
+  },
+  {
+   "name": "m_nWeaponAccuracy",
+   "offset": "0x71A",
+   "offset_int": 1818,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified",
+   "evidence_va": "0x005E83EB",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "accuracy modifier [0..100] for current weapon"
+  },
+  {
+   "name": "pad_71B",
+   "offset_hex": "0x71B",
+   "offset_int": 1819,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "structural_pad",
+   "evidence_va": null,
+   "note": "1-byte MSVC alignment pad between m_nWeaponAccuracy @0x71A and m_pTargetedObject (CEntity*) @0x71C; pointer requires 4-byte alignment."
+  },
+  {
+   "name": "m_pTargetedObject",
+   "offset": "0x71C",
+   "offset_int": 1820,
+   "size": 4,
+   "type_hint": "CObject*",
+   "tier": "verified",
+   "evidence_va": "0x005E8282",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "lock-on target object (vehicle or entity ped is shooting at)"
+  },
+  {
+   "name": "field_720",
+   "offset": "0x720",
+   "offset_int": 1824,
+   "size": 4,
+   "type_hint": "int32_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "unknown (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "field_724",
+   "offset": "0x724",
+   "offset_int": 1828,
+   "size": 4,
+   "type_hint": "int32_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "unknown (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "field_728",
+   "offset": "0x728",
+   "offset_int": 1832,
+   "size": 4,
+   "type_hint": "int32_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "unknown (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_nWeaponSkill",
+   "offset": "0x72C",
+   "offset_int": 1836,
+   "size": 1,
+   "type_hint": "int8_t",
+   "tier": "verified",
+   "evidence_va": "0x005E83CA",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "weapon skill level (0=poor, 1=std, 2=pro) affecting accuracy and reload speed"
+  },
+  {
+   "name": "m_nFightingStyle",
+   "offset": "0x72D",
+   "offset_int": 1837,
+   "size": 1,
+   "type_hint": "eFightingStyle",
+   "tier": "verified",
+   "evidence_va": "0x005E83D1",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "melee fighting style enum (STYLE_STANDARD=4..STYLE_ELBOWS)"
+  },
+  {
+   "name": "m_nAllowedAttackMoves",
+   "offset": "0x72E",
+   "offset_int": 1838,
+   "size": 1,
+   "type_hint": "int8_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "bitmask of allowed attack animations for current fighting style (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "field_72F",
+   "offset": "0x72F",
+   "offset_int": 1839,
+   "size": 1,
+   "type_hint": "int8_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "padding (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_pFire",
+   "offset": "0x730",
+   "offset_int": 1840,
+   "size": 4,
+   "type_hint": "CFire*",
+   "tier": "verified",
+   "evidence_va": "0x005E8272",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "active fire object burning this ped; NULL when not on fire"
+  },
+  {
+   "name": "m_fireDmgMult",
+   "offset": "0x734",
+   "offset_int": 1844,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "multiplier scaling fire damage per frame (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_pLookTarget",
+   "offset": "0x738",
+   "offset_int": 1848,
+   "size": 4,
+   "type_hint": "CEntity*",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E8288",
+   "access_fns": [
+    "CPed::Constructor",
+    "SetLookFlag",
+    "SetAimFlag"
+   ],
+   "note": "entity the ped is currently looking at (head tracking target)"
+  },
+  {
+   "name": "m_fLookDirection",
+   "offset": "0x73C",
+   "offset_int": 1852,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "override look direction in radians when not tracking an entity (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_nWeaponModelId",
+   "offset": "0x740",
+   "offset_int": 1856,
+   "size": 4,
+   "type_hint": "int32_t",
+   "tier": "verified",
+   "evidence_va": "0x005E841D",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "model ID of weapon currently attached to ped skeleton"
+  },
+  {
+   "name": "m_nUnconsciousTimer",
+   "offset": "0x744",
+   "offset_int": 1860,
+   "size": 4,
+   "type_hint": "uint32_t",
+   "tier": "verified",
+   "evidence_va": "0x005E81AE",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "game time at which ped will regain consciousness"
+  },
+  {
+   "name": "m_nLookTime",
+   "offset": "0x748",
+   "offset_int": 1864,
+   "size": 4,
+   "type_hint": "uint32_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E81BA",
+   "access_fns": [
+    "CPed::Constructor",
+    "SetLookFlag",
+    "SetAimFlag",
+    "ClearLookFlag",
+    "DoWeaponEffect"
+   ],
+   "note": "game time until head-look animation completes"
+  },
+  {
+   "name": "m_nAttackTimer",
+   "offset": "0x74C",
+   "offset_int": 1868,
+   "size": 4,
+   "type_hint": "uint32_t",
+   "tier": "verified",
+   "evidence_va": "0x005E81B4",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "cooldown timer for melee attacks"
+  },
+  {
+   "name": "m_nDeathTime",
+   "offset": "0x750",
+   "offset_int": 1872,
+   "size": 4,
+   "type_hint": "int32_t",
+   "tier": "verified",
+   "evidence_va": "0x005E81C0",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "game time at which ped died; used to schedule corpse cleanup"
+  },
+  {
+   "name": "m_nBodypartToRemove",
+   "offset": "0x754",
+   "offset_int": 1876,
+   "size": 1,
+   "type_hint": "int8_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "bone ID scheduled for removal (head/limb) on next frame (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "field_755",
+   "offset": "0x755",
+   "offset_int": 1877,
+   "size": 1,
+   "type_hint": "int8_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "padding (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_nMoneyCount",
+   "offset": "0x756",
+   "offset_int": 1878,
+   "size": 2,
+   "type_hint": "int16_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "cash dropped when ped dies (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_Wobble",
+   "offset": "0x758",
+   "offset_int": 1880,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": "0x005E853F",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "drunk/dazed wobble magnitude"
+  },
+  {
+   "name": "m_WobbleSpeed",
+   "offset": "0x75C",
+   "offset_int": 1884,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "wobble oscillation speed (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_nLastWeaponDamage",
+   "offset": "0x760",
+   "offset_int": 1888,
+   "size": 4,
+   "type_hint": "eWeaponType",
+   "tier": "verified",
+   "evidence_va": "0x005E83F2",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "weapon type that last dealt damage to this ped"
+  },
+  {
+   "name": "m_pLastEntityDamage",
+   "offset": "0x764",
+   "offset_int": 1892,
+   "size": 4,
+   "type_hint": "CEntity*",
+   "tier": "verified",
+   "evidence_va": "0x005E83F9",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "last entity that dealt damage to this ped"
+  },
+  {
+   "name": "field_768",
+   "offset": "0x768",
+   "offset_int": 1896,
+   "size": 4,
+   "type_hint": "int32_t",
+   "tier": "verified",
+   "evidence_va": "0x005E83FF",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "unknown int (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_vecTurretOffset",
+   "offset": "0x76C",
+   "offset_int": 1900,
+   "size": 12,
+   "type_hint": "CVector",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "offset from vehicle for turret-riding peds (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_fTurretAngleA",
+   "offset": "0x778",
+   "offset_int": 1912,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "horizontal turret aim angle (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_fTurretAngleB",
+   "offset": "0x77C",
+   "offset_int": 1916,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "vertical turret aim angle (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_nTurretPosnMode",
+   "offset": "0x780",
+   "offset_int": 1920,
+   "size": 4,
+   "type_hint": "int32_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "access_fns": [],
+   "note": "turret/gunner position mode on vehicle"
+  },
+  {
+   "name": "m_nTurretAmmo",
+   "offset": "0x784",
+   "offset_int": 1924,
+   "size": 4,
+   "type_hint": "int32_t",
+   "tier": "verified",
+   "evidence_va": "0x005E840B",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "ammo count for vehicle-mounted turret weapon"
+  },
+  {
+   "name": "m_pCoverPoint",
+   "offset": "0x788",
+   "offset_int": 1928,
+   "size": 4,
+   "type_hint": "CCoverPoint*",
+   "tier": "verified",
+   "evidence_va": "0x005E8470",
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "currently occupied cover point (from cover system)"
+  },
+  {
+   "name": "m_pEnex",
+   "offset": "0x78C",
+   "offset_int": 1932,
+   "size": 4,
+   "type_hint": "CEnEx*",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "entrance/exit zone ped is currently using (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_fRemovalDistMultiplier",
+   "offset": "0x790",
+   "offset_int": 1936,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "multiplier for stream-out/removal distance; 1.0 default (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_StreamedScriptBrainToLoad",
+   "offset": "0x794",
+   "offset_int": 1940,
+   "size": 2,
+   "type_hint": "int16_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "ID of script brain to attach once loaded (streaming system; VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "field_796",
+   "offset": "0x796",
+   "offset_int": 1942,
+   "size": 2,
+   "type_hint": "char[2]",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "padding after m_StreamedScriptBrainToLoad (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "field_798",
+   "offset": "0x798",
+   "offset_int": 1944,
+   "size": 4,
+   "type_hint": "int32_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "unknown int at end of CPed own range; last field before class boundary at 0x79C. CPed own range 0x138..0x79B fully covered."
+  }
+ ],
+ "methods": [
+  {
+   "name": "CPed::Constructor",
+   "entry_va": "0x005E8030",
+   "tier": "verified"
+  },
+  {
+   "name": "CPed::Initialise",
+   "entry_va": "0x005DEBB0",
+   "tier": "verified"
+  },
+  {
+   "name": "SetStats",
+   "entry_va": "0x005DEBC0",
+   "tier": "verified"
+  },
+  {
+   "name": "SetMoveState",
+   "entry_va": "0x005DEC00",
+   "tier": "verified"
+  },
+  {
+   "name": "GiveWeapon",
+   "entry_va": "0x005DF220",
+   "tier": "verified"
+  },
+  {
+   "name": "SetCurrentWeapon",
+   "entry_va": "0x005DF4E0",
+   "tier": "verified"
+  },
+  {
+   "name": "GetCurrentWeapon",
+   "entry_va": "0x005DF510",
+   "tier": "verified"
+  },
+  {
+   "name": "ClearWeapons",
+   "entry_va": "0x005DF170",
+   "tier": "verified"
+  },
+  {
+   "name": "GetWeaponSlot",
+   "entry_va": "0x005DF200",
+   "tier": "verified"
+  },
+  {
+   "name": "AttachPedToBike",
+   "entry_va": "0x005DF560",
+   "tier": "verified"
+  }
+ ],
+ "provenance": "disassembly VALIDATE_OFFSET (91 macros, authoritative) + Capstone sweep of 35 CPed functions vs gta_sa.exe. VALIDATE_SIZE(CPed, 0x79C) = 1948 bytes. CPlayerPed is 0x7A4 = 1956 bytes (8 bytes own range). pad_71B confirmed by MSVC alignment: uint8_t x3 then CEntity* (4B aligned)."
+}

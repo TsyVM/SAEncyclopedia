@@ -1,0 +1,3201 @@
+{
+ "$schema": "class_catalogue.v1",
+ "generated": "tools/derive_class_catalogue.py",
+ "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+ "note": "Regroups C27's function_catalogue by class; every structural fact is asserted against gta_sa.exe's own disassembly.",
+ "summary": {
+  "total_named_functions": 367,
+  "distinct_classes": 74,
+  "heavy_classes": {
+   "CTheScripts": 34,
+   "CStreaming": 32,
+   "CPathFind": 27
+  },
+  "structural_facts_checked": 16,
+  "structural_facts_passed": 16
+ },
+ "structural_facts": [
+  {
+   "entry_va": "0x00464C90",
+   "method": "CTheScripts::StartNewScript[indexed]",
+   "fact": "CRunningScript object stride = 0xE0 (224 B); pool base 0xa8b430",
+   "verified": true
+  },
+  {
+   "entry_va": "0x00464D20",
+   "method": "CTheScripts::GetScriptIndexFromPointer",
+   "fact": "pointer->index divides by the same 224 stride (reciprocal 0x92492493)",
+   "verified": true
+  },
+  {
+   "entry_va": "0x00464BB0",
+   "method": "CTheScripts::WipeLocalVariableMemoryForMissionScript",
+   "fact": "mission local-var block = 0x400 dwords (4 KB) zeroed at 0xa48960",
+   "verified": true
+  },
+  {
+   "entry_va": "0x00464D50",
+   "method": "CTheScripts::IsPlayerOnAMission",
+   "fact": "OnAMission flag sits at 0xa49960 = 0xa48960 + 0x1000, right after the block",
+   "verified": true
+  },
+  {
+   "entry_va": "0x0046A840",
+   "method": "CTheScripts::ClearAllVehicleModelsBlockedByScript",
+   "fact": "script-blocked vehicle-model list = 0x14 (20) dwords of -1 at 0xa448f0",
+   "verified": true
+  },
+  {
+   "entry_va": "0x0046A7C0",
+   "method": "CTheScripts::ClearAllSuppressedCarModels",
+   "fact": "script-suppressed car-model list = 0x28 (40) dwords of -1 at 0xa44940",
+   "verified": true
+  },
+  {
+   "entry_va": "0x0046ABC0",
+   "method": "CTheScripts::RemoveFromWaitingForScriptBrainArray",
+   "fact": "WaitingForScriptBrain array = 0x96 (150) entries x 8 B at 0xa476b0",
+   "verified": true
+  },
+  {
+   "entry_va": "0x00407A40",
+   "method": "CStreaming::ClearFlagForAll",
+   "fact": "streaming-info record stride 0x14, flags byte at base+6 (0x8e4cc6), array ends 0x9654b6 - independently reproduces C2",
+   "verified": true
+  },
+  {
+   "entry_va": "0x00407F80",
+   "method": "CStreaming::WeAreTryingToPhaseVehicleOut",
+   "fact": "loadState field at record+0x10 (0x8e4cd0), ==1 means loaded",
+   "verified": true
+  },
+  {
+   "entry_va": "0x00407610",
+   "method": "CStreaming::AddImageToList",
+   "fact": "IMG archive list = 8 entries x 0x30 (48 B) at 0x8e48d8..0x8e4a58",
+   "verified": true
+  },
+  {
+   "entry_va": "0x004096D0",
+   "method": "CStreaming::RenderEntity",
+   "fact": "render list is a doubly-linked list with head sentinel at 0x8e48a0",
+   "verified": true
+  },
+  {
+   "entry_va": "0x0044D230",
+   "method": "CPathFind::These2NodesAreAdjacent",
+   "fact": "path node stride = 0x1c (28 B); link-count = low nibble of node+0x18",
+   "verified": true
+  },
+  {
+   "entry_va": "0x0044D310",
+   "method": "CPathFind::ThisNodeWillLeadIntoADeadEnd",
+   "fact": "same 0x1c node stride, reached via the link table at 0x96fa94",
+   "verified": true
+  },
+  {
+   "entry_va": "0x0044D480",
+   "method": "CPathFind::TestForPedTrafficLight",
+   "fact": "same 0x1c stride + link-nibble in TestForPedTrafficLight",
+   "verified": true
+  },
+  {
+   "entry_va": "0x0044D790",
+   "method": "CPathFind::TestCrossesRoad",
+   "fact": "same 0x1c stride + link-nibble in TestCrossesRoad",
+   "verified": true
+  },
+  {
+   "entry_va": "0x0044D0F0",
+   "method": "CPathFind::UnLoadPathFindData",
+   "fact": "six per-area node-resource pointer arrays freed by area*4 index",
+   "verified": true
+  }
+ ],
+ "classes": {
+  "CTheScripts": [
+   {
+    "entry_va": "0x00464BB0",
+    "body_va": "0x01569F10",
+    "method": "WipeLocalVariableMemoryForMissionScript",
+    "body_extent": 32,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00464C20",
+    "body_va": "0x0156A2A0",
+    "method": "StartNewScript[last-idle]",
+    "body_extent": 112,
+    "direct_call_sites": 4,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00464C90",
+    "body_va": "0x0156E210",
+    "method": "StartNewScript[indexed]",
+    "body_extent": 160,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00464D20",
+    "body_va": "0x01562030",
+    "method": "GetScriptIndexFromPointer",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00464D40",
+    "body_va": "0x01565610",
+    "method": "StartTestScript",
+    "body_extent": 16,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00464D50",
+    "body_va": "0x0156AA10",
+    "method": "IsPlayerOnAMission",
+    "body_extent": 32,
+    "direct_call_sites": 26,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0046A7C0",
+    "body_va": "0x0156F400",
+    "method": "ClearAllSuppressedCarModels",
+    "body_extent": 32,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0046A840",
+    "body_va": "0x01565EA0",
+    "method": "ClearAllVehicleModelsBlockedByScript",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\u2705 verified (disassembly spot-check confirms plausible semantics)"
+   },
+   {
+    "entry_va": "0x0046AB60",
+    "body_va": "0x01565010",
+    "method": "AddToWaitingForScriptBrainArray",
+    "body_extent": 112,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0046ABC0",
+    "body_va": "0x01569CD0",
+    "method": "RemoveFromWaitingForScriptBrainArray",
+    "body_extent": 80,
+    "direct_call_sites": 3,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00470370",
+    "body_va": "0x0156E5F0",
+    "method": "ReinitialiseSwitchStatementData",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004703C0",
+    "body_va": "0x01561B80",
+    "method": "UseSwitchJumpTable",
+    "body_extent": 208,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00470960",
+    "body_va": "0x01562910",
+    "method": "InitialiseAllConnectLodObjects",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00470980",
+    "body_va": "0x015661A0",
+    "method": "AddToListOfConnectedLodObjects",
+    "body_extent": 160,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00470A20",
+    "body_va": "0x0156D9F0",
+    "method": "ScriptConnectLodsFunction",
+    "body_extent": 112,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00474730",
+    "body_va": "0x01562530",
+    "method": "InitialiseSpecialAnimGroupsAttachedToCharModels",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00474750",
+    "body_va": "0x01565D70",
+    "method": "AddToListOfSpecialAnimGroupsAttachedToCharModels",
+    "body_extent": 176,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004810C0",
+    "body_va": "0x01561250",
+    "method": "GetUniqueScriptThingIndex",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004810E0",
+    "body_va": "0x015647C0",
+    "method": "DrawScriptSpheres",
+    "body_extent": 96,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00481140",
+    "body_va": "0x01569840",
+    "method": "AddToBuildingSwapArray",
+    "body_extent": 192,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00481200",
+    "body_va": "0x0156DF60",
+    "method": "AddToInvisibilitySwapArray",
+    "body_extent": 144,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004812D0",
+    "body_va": "0x015652D0",
+    "method": "UndoEntityInvisibilitySettings",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00483B30",
+    "body_va": "0x0156E050",
+    "method": "AddScriptSphere",
+    "body_extent": 112,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00483BA0",
+    "body_va": "0x01561960",
+    "method": "RemoveScriptSphere",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00486670",
+    "body_va": "0x01565CA0",
+    "method": "CleanUpThisVehicle",
+    "body_extent": 112,
+    "direct_call_sites": 4,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004866C0",
+    "body_va": "0x0156B890",
+    "method": "CleanUpThisObject",
+    "body_extent": 96,
+    "direct_call_sites": 3,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00486720",
+    "body_va": "0x0156F5A0",
+    "method": "ReadObjectNamesFromScript",
+    "body_extent": 112,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00486780",
+    "body_va": "0x01562660",
+    "method": "UpdateObjectIndices",
+    "body_extent": 64,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004867C0",
+    "body_va": "0x01565E20",
+    "method": "ReadMultiScriptFileOffsetsFromScript",
+    "body_extent": 128,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00492F90",
+    "body_va": "0x0156B9B0",
+    "method": "AddScriptEffectSystem",
+    "body_extent": 64,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00492FD0",
+    "body_va": "0x0156F420",
+    "method": "RemoveScriptEffectSystem",
+    "body_extent": 48,
+    "direct_call_sites": 3,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00493000",
+    "body_va": "0x015692C0",
+    "method": "AddScriptSearchLight",
+    "body_extent": 352,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004934F0",
+    "body_va": "0x01565770",
+    "method": "AttachSearchlightToSearchlightObject",
+    "body_extent": 240,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004936C0",
+    "body_va": "0x0156B9F0",
+    "method": "RemoveScriptCheckpoint",
+    "body_extent": 112,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CStreaming": [
+   {
+    "entry_va": "0x00407610",
+    "body_va": "0x01567B90",
+    "method": "AddImageToList",
+    "body_extent": 3392,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004076A0",
+    "body_va": "0x0156D7A0",
+    "method": "IsVeryBusy",
+    "body_extent": 32,
+    "direct_call_sites": 7,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00407820",
+    "body_va": "0x0156A100",
+    "method": "HasVehicleUpgradeLoaded",
+    "body_extent": 64,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00407A40",
+    "body_va": "0x01566490",
+    "method": "ClearFlagForAll",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00407C00",
+    "body_va": "0x0156C9E0",
+    "method": "GetDefaultCopModel",
+    "body_extent": 80,
+    "direct_call_sites": 3,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00407D10",
+    "body_va": "0x015703D0",
+    "method": "DisableCopBikes",
+    "body_extent": 16,
+    "direct_call_sites": 4,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00407D20",
+    "body_va": "0x01563A50",
+    "method": "GetDefaultMedicModel",
+    "body_extent": 16,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00407D40",
+    "body_va": "0x0156CD70",
+    "method": "GetDefaultFiremanModel",
+    "body_extent": 16,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00407DD0",
+    "body_va": "0x015704A0",
+    "method": "IsCarModelNeededInCurrentZone",
+    "body_extent": null,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00407F00",
+    "body_va": "0x015642C0",
+    "method": "HasSpecialCharLoaded",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00407F80",
+    "body_va": "0x01567B60",
+    "method": "WeAreTryingToPhaseVehicleOut",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00408000",
+    "body_va": "0x015662F0",
+    "method": "AddToLoadedVehiclesList",
+    "body_extent": 192,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004080F0",
+    "body_va": "0x0156C0A0",
+    "method": "RemoveCarModel",
+    "body_extent": 96,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004084B0",
+    "body_va": "0x01563AB0",
+    "method": "Shutdown",
+    "body_extent": 64,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00408C70",
+    "body_va": "0x0156C970",
+    "method": "RequestVehicleUpgrade",
+    "body_extent": 64,
+    "direct_call_sites": 3,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004096D0",
+    "body_va": "0x0156D750",
+    "method": "RenderEntity",
+    "body_extent": 80,
+    "direct_call_sites": 1,
+    "confidence": "\u2705 verified (disassembly spot-check confirms plausible semantics)"
+   },
+   {
+    "entry_va": "0x00409710",
+    "body_va": "0x01561520",
+    "method": "RemoveEntity",
+    "body_extent": 96,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00409A90",
+    "body_va": "0x015664B0",
+    "method": "AreTexturesUsedByRequestedModels",
+    "body_extent": 368,
+    "direct_call_sites": 4,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0040A080",
+    "body_va": "0x015663B0",
+    "method": "RequestFile",
+    "body_extent": 176,
+    "direct_call_sites": 3,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0040A120",
+    "body_va": "0x01566460",
+    "method": "LoadInitialWeapons",
+    "body_extent": 48,
+    "direct_call_sites": 3,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0040A150",
+    "body_va": "0x0156C100",
+    "method": "StreamCopModels",
+    "body_extent": 448,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0040A400",
+    "body_va": "0x01570230",
+    "method": "StreamFireEngineAndFireman",
+    "body_extent": 416,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0040B080",
+    "body_va": "0x015629D0",
+    "method": "RemoveCurrentZonesModels",
+    "body_extent": 688,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0040B340",
+    "body_va": "0x01566EF0",
+    "method": "RemoveLoadedZoneModel",
+    "body_extent": 96,
+    "direct_call_sites": 3,
+    "confidence": "\u2705 verified (disassembly spot-check confirms plausible semantics)"
+   },
+   {
+    "entry_va": "0x0040B3A0",
+    "body_va": "0x0156CA30",
+    "method": "RemoveInappropriatePedModels",
+    "body_extent": 176,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0040B4F0",
+    "body_va": "0x01563B30",
+    "method": "StreamOneNewCar",
+    "body_extent": 432,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0040BA70",
+    "body_va": "0x0156C5B0",
+    "method": "PossiblyStreamCarOutAfterCreation",
+    "body_extent": 64,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0040BDA0",
+    "body_va": "0x015703E0",
+    "method": "StreamPedsIntoRandomSlots",
+    "body_extent": 192,
+    "direct_call_sites": 13,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0040CF80",
+    "body_va": "0x015645F0",
+    "method": "RemoveAllUnusedModels",
+    "body_extent": 80,
+    "direct_call_sites": 0,
+    "confidence": "\u2705 verified (disassembly spot-check confirms plausible semantics)"
+   },
+   {
+    "entry_va": "0x0040D3D0",
+    "body_va": "0x015638D0",
+    "method": "LoadInitialPeds",
+    "body_extent": 32,
+    "direct_call_sites": 3,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0040E3A0",
+    "body_va": "0x015670A0",
+    "method": "LoadRequestedModels",
+    "body_extent": 208,
+    "direct_call_sites": 10,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0040E560",
+    "body_va": "0x0156D000",
+    "method": "ReInit",
+    "body_extent": 272,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CPathFind": [
+   {
+    "entry_va": "0x0044D080",
+    "body_va": "0x01560DC0",
+    "method": "Init",
+    "body_extent": 96,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0044D0F0",
+    "body_va": "0x01563FB0",
+    "method": "UnLoadPathFindData",
+    "body_extent": 192,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0044D230",
+    "body_va": "0x01569710",
+    "method": "These2NodesAreAdjacent",
+    "body_extent": 96,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0044D310",
+    "body_va": "0x01569F30",
+    "method": "ThisNodeWillLeadIntoADeadEnd",
+    "body_extent": 160,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0044D3B0",
+    "body_va": "0x0156DE10",
+    "method": "TidyUpNodeSwitchesAfterMission",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0044D3E0",
+    "body_va": "0x01561710",
+    "method": "ThisNodeHasToBeSwitchedOff",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0044D400",
+    "body_va": "0x01565420",
+    "method": "UnMarkAllRoadNodesAsDontWander",
+    "body_extent": 80,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0044D480",
+    "body_va": "0x0156A400",
+    "method": "TestForPedTrafficLight",
+    "body_extent": 160,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0044D790",
+    "body_va": "0x01565AF0",
+    "method": "TestCrossesRoad",
+    "body_extent": 160,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0044DCD0",
+    "body_va": "0x0156DE80",
+    "method": "SetPathsNeededAtPosition",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0044DD00",
+    "body_va": "0x01561B10",
+    "method": "ReleaseRequestedNodes",
+    "body_extent": 16,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0044DE00",
+    "body_va": "0x01565690",
+    "method": "LoadSceneForPathNodes",
+    "body_extent": 128,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0044DE80",
+    "body_va": "0x0156AD40",
+    "method": "StartNewInterior",
+    "body_extent": 80,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0044DED0",
+    "body_va": "0x0156EC90",
+    "method": "AddInteriorLink",
+    "body_extent": 96,
+    "direct_call_sites": 21,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0044E000",
+    "body_va": "0x01560C20",
+    "method": "AddDynamicLinkBetween2Nodes_For1Node",
+    "body_extent": 416,
+    "direct_call_sites": 4,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0044E1A0",
+    "body_va": "0x01564320",
+    "method": "RemoveInterior",
+    "body_extent": 720,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0044E4E0",
+    "body_va": "0x0156A600",
+    "method": "ReInit",
+    "body_extent": 16,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004504F0",
+    "body_va": "0x0156A990",
+    "method": "CountNeighboursToBeSwitchedOff",
+    "body_extent": 112,
+    "direct_call_sites": 0,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00450560",
+    "body_va": "0x0156ECF0",
+    "method": "MarkRoadNodeAsDontWander",
+    "body_extent": 128,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00450950",
+    "body_va": "0x01562750",
+    "method": "Shutdown",
+    "body_extent": 80,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00450D70",
+    "body_va": "0x0156A6B0",
+    "method": "MakeRequestForNodesToBeLoaded",
+    "body_extent": 64,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00451350",
+    "body_va": "0x0156A180",
+    "method": "FindLinkBetweenNodes",
+    "body_extent": 160,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00452090",
+    "body_va": "0x0156D150",
+    "method": "Find2NodesForCarCreation",
+    "body_extent": 224,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00452160",
+    "body_va": "0x015646A0",
+    "method": "SwitchOffNodeAndNeighbours",
+    "body_extent": 272,
+    "direct_call_sites": 3,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00452760",
+    "body_va": "0x0156B7D0",
+    "method": "ComputeRoute",
+    "body_extent": 192,
+    "direct_call_sites": 3,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004529F0",
+    "body_va": "0x0156F750",
+    "method": "LoadPathFindData[FromStream]",
+    "body_extent": 720,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00452F00",
+    "body_va": "0x01565860",
+    "method": "SwitchPedRoadsOffInArea",
+    "body_extent": 64,
+    "direct_call_sites": 3,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CGarages": [
+   {
+    "entry_va": "0x004471B0",
+    "body_va": "0x01566E00",
+    "method": "Shutdown",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00447680",
+    "body_va": "0x0156DCF0",
+    "method": "GetGarageNumberByName",
+    "body_extent": 80,
+    "direct_call_sites": 9,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004476D0",
+    "body_va": "0x01561690",
+    "method": "ChangeGarageType",
+    "body_extent": 80,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004479A0",
+    "body_va": "0x0156B1C0",
+    "method": "IsCarSprayable",
+    "body_extent": 80,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00447B80",
+    "body_va": "0x0156CC60",
+    "method": "TriggerMessage",
+    "body_extent": 224,
+    "direct_call_sites": 17,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00447C40",
+    "body_va": "0x01560BD0",
+    "method": "SetTargetCarForMissionGarage",
+    "body_extent": 80,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00447CB0",
+    "body_va": "0x01563E70",
+    "method": "DeActivateGarage",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00447CD0",
+    "body_va": "0x015677F0",
+    "method": "ActivateGarage",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00447D00",
+    "body_va": "0x0156D2D0",
+    "method": "IsGarageOpen",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00447D30",
+    "body_va": "0x01560F70",
+    "method": "IsGarageClosed",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00448B30",
+    "body_va": "0x01563A10",
+    "method": "AllRespraysCloseOrOpen",
+    "body_extent": 48,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00449E60",
+    "body_va": "0x01569150",
+    "method": "PlayerArrestedOrDied",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0044A210",
+    "body_va": "0x01567330",
+    "method": "CountCarsInHideoutGarage",
+    "body_extent": 384,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CReplay": [
+   {
+    "entry_va": "0x0045B150",
+    "body_va": "0x01564640",
+    "method": "DisableReplays",
+    "body_extent": 16,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0045B160",
+    "body_va": "0x01568BC0",
+    "method": "EnableReplays",
+    "body_extent": 16,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0045C440",
+    "body_va": "0x0156E610",
+    "method": "ShouldStandardCameraBeProcessed",
+    "body_extent": 16,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0045CEA0",
+    "body_va": "0x0156ED70",
+    "method": "DealWithNewPedPacket",
+    "body_extent": 512,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0045D4B0",
+    "body_va": "0x0156A8C0",
+    "method": "StreamAllNecessaryCarsAndPeds",
+    "body_extent": 144,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0045D6C0",
+    "body_va": "0x0156F180",
+    "method": "FindFirstFocusCoordinate",
+    "body_extent": 160,
+    "direct_call_sites": 0,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0045DDE0",
+    "body_va": "0x01565580",
+    "method": "IsThisPedUsedInRecording",
+    "body_extent": 96,
+    "direct_call_sites": 0,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0045EBB0",
+    "body_va": "0x0156DAB0",
+    "method": "RecordVehicleDeleted",
+    "body_extent": 144,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0045EC20",
+    "body_va": "0x01561870",
+    "method": "RecordPedDeleted",
+    "body_extent": 144,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0045EF20",
+    "body_va": "0x0156B3A0",
+    "method": "InitialisePedPoolConversionTable",
+    "body_extent": 128,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0045F180",
+    "body_va": "0x015689D0",
+    "method": "StoreStuffInMem",
+    "body_extent": 496,
+    "direct_call_sites": 0,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004600F0",
+    "body_va": "0x0156D320",
+    "method": "TriggerPlayback",
+    "body_extent": 672,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004604A0",
+    "body_va": "0x01562050",
+    "method": "PlayBackThisFrame",
+    "body_extent": 96,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CShopping": [
+   {
+    "entry_va": "0x0049AB10",
+    "body_va": "0x0156E330",
+    "method": "GetItemIndex",
+    "body_extent": 32,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0049AB30",
+    "body_va": "0x01561A10",
+    "method": "GetKey",
+    "body_extent": 128,
+    "direct_call_sites": 4,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0049ADA0",
+    "body_va": "0x0156F0D0",
+    "method": "GetNameTag",
+    "body_extent": 64,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0049ADE0",
+    "body_va": "0x0156F080",
+    "method": "GetExtraInfo",
+    "body_extent": 80,
+    "direct_call_sites": 1,
+    "confidence": "\u2705 verified (disassembly spot-check confirms plausible semantics)"
+   },
+   {
+    "entry_va": "0x0049AE30",
+    "body_va": "0x015623F0",
+    "method": "RemoveLoadedShop",
+    "body_extent": 64,
+    "direct_call_sites": 3,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0049AE70",
+    "body_va": "0x015659E0",
+    "method": "FindSection",
+    "body_extent": 160,
+    "direct_call_sites": 7,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0049AF10",
+    "body_va": "0x0156B920",
+    "method": "GetNextSection",
+    "body_extent": 144,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0049B200",
+    "body_va": "0x0156E2F0",
+    "method": "StoreClothesState",
+    "body_extent": 64,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0049B240",
+    "body_va": "0x01565320",
+    "method": "RestoreClothesState",
+    "body_extent": 64,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0049B5E0",
+    "body_va": "0x0156B770",
+    "method": "HasPlayerBought",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0049B610",
+    "body_va": "0x0156F3D0",
+    "method": "SetPlayerHasBought",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0049B640",
+    "body_va": "0x015624D0",
+    "method": "ShutdownForRestart",
+    "body_extent": 96,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0049BEF0",
+    "body_va": "0x0156B6F0",
+    "method": "UpdateStats",
+    "body_extent": 128,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CIplStore": [
+   {
+    "entry_va": "0x004045B0",
+    "body_va": "0x01567820",
+    "method": "AddIplsNeededAtPosn",
+    "body_extent": 48,
+    "direct_call_sites": 4,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004045E0",
+    "body_va": "0x0156CFF0",
+    "method": "ClearIplsNeededAtPosn",
+    "body_extent": 16,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00404780",
+    "body_va": "0x015649E0",
+    "method": "GetNewIplEntityIndexArray",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004047B0",
+    "body_va": "0x01569770",
+    "method": "GetIplEntityIndexArray",
+    "body_extent": 16,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00404C90",
+    "body_va": "0x01563730",
+    "method": "IncludeEntity",
+    "body_extent": 176,
+    "direct_call_sites": 5,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00405850",
+    "body_va": "0x01565190",
+    "method": "RequestIplAndIgnore",
+    "body_extent": 64,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00405890",
+    "body_va": "0x0156A140",
+    "method": "RemoveIplAndIgnore",
+    "body_extent": 64,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004058D0",
+    "body_va": "0x0156DE30",
+    "method": "RemoveIplWhenFarAway",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00405AC0",
+    "body_va": "0x0156C470",
+    "method": "AddIplSlot",
+    "body_extent": 144,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00405B60",
+    "body_va": "0x0156C5F0",
+    "method": "RemoveIplSlot",
+    "body_extent": 160,
+    "direct_call_sites": 0,
+    "confidence": "\u2705 verified (disassembly spot-check confirms plausible semantics)"
+   },
+   {
+    "entry_va": "0x00405FA0",
+    "body_va": "0x015610B0",
+    "method": "Shutdown",
+    "body_extent": 256,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CRunningScript": [
+   {
+    "entry_va": "0x00463CA0",
+    "body_va": "0x0156E2B0",
+    "method": "GetPointerToLocalVariable",
+    "body_extent": 32,
+    "direct_call_sites": 3,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00463CF0",
+    "body_va": "0x0156E350",
+    "method": "ReadArrayInformation",
+    "body_extent": 96,
+    "direct_call_sites": 6,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00464700",
+    "body_va": "0x0156F340",
+    "method": "GetIndexOfGlobalVariable",
+    "body_extent": 144,
+    "direct_call_sites": 12,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004648E0",
+    "body_va": "0x015626B0",
+    "method": "Init",
+    "body_extent": 160,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00464BD0",
+    "body_va": "0x0156DD60",
+    "method": "RemoveScriptFromList",
+    "body_extent": 48,
+    "direct_call_sites": 3,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00464C00",
+    "body_va": "0x01561990",
+    "method": "AddScriptToList",
+    "body_extent": 32,
+    "direct_call_sites": 3,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00464D70",
+    "body_va": "0x0156E7B0",
+    "method": "IsPedDead",
+    "body_extent": 48,
+    "direct_call_sites": 6,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00464DA0",
+    "body_va": "0x015620B0",
+    "method": "UpdatePC",
+    "body_extent": 32,
+    "direct_call_sites": 4,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0046AF50",
+    "body_va": "0x0156B440",
+    "method": "ScriptTaskPickUpObject",
+    "body_extent": 688,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00470150",
+    "body_va": "0x01569460",
+    "method": "PlayAnimScriptCommand",
+    "body_extent": 688,
+    "direct_call_sites": 4,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00485A50",
+    "body_va": "0x01564F00",
+    "method": "DoDeathArrestCheck",
+    "body_extent": 208,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CVehicleRecording": [
+   {
+    "entry_va": "0x00459400",
+    "body_va": "0x0156E770",
+    "method": "ShutDown",
+    "body_extent": 64,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004594C0",
+    "body_va": "0x01561F20",
+    "method": "IsPlaybackGoingOnForCar",
+    "body_extent": 224,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00459740",
+    "body_va": "0x01565B90",
+    "method": "PausePlaybackRecordedCar",
+    "body_extent": 272,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00459850",
+    "body_va": "0x0156BA60",
+    "method": "UnpausePlaybackRecordedCar",
+    "body_extent": 272,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00459F80",
+    "body_va": "0x0156F110",
+    "method": "RegisterRecordingFile",
+    "body_extent": 112,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0045A020",
+    "body_va": "0x0156D110",
+    "method": "RequestRecordingFile",
+    "body_extent": 64,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0045A060",
+    "body_va": "0x01560E90",
+    "method": "HasRecordingFileBeenLoaded",
+    "body_extent": 64,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0045A0A0",
+    "body_va": "0x015640F0",
+    "method": "RemoveRecordingFile",
+    "body_extent": 80,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0045A160",
+    "body_va": "0x015688F0",
+    "method": "RemoveAllRecordingsThatArentUsed",
+    "body_extent": 80,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0045A8F0",
+    "body_va": "0x0156F510",
+    "method": "Load",
+    "body_extent": 144,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0045A980",
+    "body_va": "0x01565F10",
+    "method": "StartPlaybackRecordedCar",
+    "body_extent": 432,
+    "direct_call_sites": 3,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CColStore": [
+   {
+    "entry_va": "0x004103A0",
+    "body_va": "0x015672B0",
+    "method": "AddCollisionNeededAtPosn",
+    "body_extent": 48,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004104E0",
+    "body_va": "0x0156CF50",
+    "method": "SetCollisionRequired",
+    "body_extent": 128,
+    "direct_call_sites": 4,
+    "confidence": "\u2705 verified (disassembly spot-check confirms plausible semantics)"
+   },
+   {
+    "entry_va": "0x004106D0",
+    "body_va": "0x015613A0",
+    "method": "LoadCol[2]",
+    "body_extent": 96,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00410730",
+    "body_va": "0x01564E90",
+    "method": "RemoveCol",
+    "body_extent": 112,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004107A0",
+    "body_va": "0x01569960",
+    "method": "AddRef",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004107D0",
+    "body_va": "0x0156DBE0",
+    "method": "RemoveRef",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00410800",
+    "body_va": "0x01565240",
+    "method": "GetBoundingBox",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00410820",
+    "body_va": "0x0156A260",
+    "method": "IncludeModelIndex",
+    "body_extent": 64,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00411140",
+    "body_va": "0x01563290",
+    "method": "AddColSlot",
+    "body_extent": 720,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00411330",
+    "body_va": "0x01567210",
+    "method": "RemoveColSlot",
+    "body_extent": 160,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CEntryExitManager": [
+   {
+    "entry_va": "0x0043E410",
+    "body_va": "0x01564090",
+    "method": "AddEntryExitToStack",
+    "body_extent": 96,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0043ECF0",
+    "body_va": "0x01560930",
+    "method": "SetAreaCodeForVisibleObjects",
+    "body_extent": 144,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0043ED80",
+    "body_va": "0x015678A0",
+    "method": "ResetAreaCodeForVisibleObjects",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0043F0A0",
+    "body_va": "0x015631C0",
+    "method": "PostEntryExitsCreation",
+    "body_extent": 144,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0043F150",
+    "body_va": "0x01566880",
+    "method": "GetPositionRelativeToOutsideWorld",
+    "body_extent": 48,
+    "direct_call_sites": 3,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0043F180",
+    "body_va": "0x0156C6D0",
+    "method": "EnableBurglaryHouses",
+    "body_extent": 112,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0043F880",
+    "body_va": "0x0156A6F0",
+    "method": "Init",
+    "body_extent": 208,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0043FD50",
+    "body_va": "0x01560ED0",
+    "method": "DeleteOne",
+    "body_extent": 96,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00440B90",
+    "body_va": "0x01563940",
+    "method": "Shutdown",
+    "body_extent": 208,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00440C40",
+    "body_va": "0x01567550",
+    "method": "ShutdownForRestart",
+    "body_extent": 208,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CGameLogic": [
+   {
+    "entry_va": "0x00441210",
+    "body_va": "0x01563910",
+    "method": "InitAtStartOfGame",
+    "body_extent": 48,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00441240",
+    "body_va": "0x015672E0",
+    "method": "ForceDeathRestart",
+    "body_extent": 80,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00441390",
+    "body_va": "0x0156CF30",
+    "method": "IsCoopGameGoingOn",
+    "body_extent": 32,
+    "direct_call_sites": 32,
+    "confidence": "\u2705 verified (disassembly spot-check confirms plausible semantics)"
+   },
+   {
+    "entry_va": "0x00441560",
+    "body_va": "0x01561270",
+    "method": "ClearSkip",
+    "body_extent": 112,
+    "direct_call_sites": 6,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004415C0",
+    "body_va": "0x01564860",
+    "method": "SkipCanBeActivated",
+    "body_extent": 320,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004416C0",
+    "body_va": "0x01569C30",
+    "method": "IsSkipWaitingForScriptToFadeIn",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00441D30",
+    "body_va": "0x01560F90",
+    "method": "RestorePedsWeapons",
+    "body_extent": 128,
+    "direct_call_sites": 3,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00442020",
+    "body_va": "0x0156FF70",
+    "method": "IsPlayerUse2PlayerControls",
+    "body_extent": 64,
+    "direct_call_sites": 5,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004423C0",
+    "body_va": "0x01563E90",
+    "method": "SetUpSkip",
+    "body_extent": 192,
+    "direct_call_sites": 4,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004428B0",
+    "body_va": "0x0156AA30",
+    "method": "DoWeaponStuffAtStartOf2PlayerGame",
+    "body_extent": 272,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CConversations": [
+   {
+    "entry_va": "0x0043A7B0",
+    "body_va": "0x0156DFF0",
+    "method": "Clear",
+    "body_extent": 96,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0043A810",
+    "body_va": "0x01561CC0",
+    "method": "AwkwardSay",
+    "body_extent": 48,
+    "direct_call_sites": 0,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0043A840",
+    "body_va": "0x01565550",
+    "method": "StartSettingUpConversation",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0043A870",
+    "body_va": "0x0156A7C0",
+    "method": "SetUpConversationNode",
+    "body_extent": 256,
+    "direct_call_sites": 4,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0043A960",
+    "body_va": "0x0156ADC0",
+    "method": "RemoveConversationForPed",
+    "body_extent": 80,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0043AAC0",
+    "body_va": "0x01570080",
+    "method": "IsConversationGoingOn",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0043B000",
+    "body_va": "0x0156C500",
+    "method": "IsConversationAtNode",
+    "body_extent": 176,
+    "direct_call_sites": 1,
+    "confidence": "\u2705 verified (disassembly spot-check confirms plausible semantics)"
+   },
+   {
+    "entry_va": "0x0043B0B0",
+    "body_va": "0x01563250",
+    "method": "IsPlayerInPositionForConversation",
+    "body_extent": 64,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0043C590",
+    "body_va": "0x0156D7C0",
+    "method": "Update",
+    "body_extent": 144,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CGangWars": [
+   {
+    "entry_va": "0x00443920",
+    "body_va": "0x0156B150",
+    "method": "InitAtStartOfGame",
+    "body_extent": 48,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004439C0",
+    "body_va": "0x0156EFF0",
+    "method": "DontCreateCivilians",
+    "body_extent": 16,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00443AC0",
+    "body_va": "0x01563620",
+    "method": "GangWarFightingGoingOn",
+    "body_extent": 176,
+    "direct_call_sites": 9,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00443F80",
+    "body_va": "0x015699C0",
+    "method": "CanPlayerStartAGangWarHere",
+    "body_extent": 112,
+    "direct_call_sites": 3,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00443FF0",
+    "body_va": "0x0156DD40",
+    "method": "ClearSpecificZonesToTriggerGangWar",
+    "body_extent": 32,
+    "direct_call_sites": 3,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004444B0",
+    "body_va": "0x01564200",
+    "method": "ClearTheStreets",
+    "body_extent": 128,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00444530",
+    "body_va": "0x01568E00",
+    "method": "TellGangMembersTo",
+    "body_extent": 768,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00445C30",
+    "body_va": "0x015609C0",
+    "method": "ReleasePedsInAttackWave",
+    "body_extent": 528,
+    "direct_call_sites": 8,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00445F50",
+    "body_va": "0x01565090",
+    "method": "StrengthenPlayerInfluenceInZone",
+    "body_extent": 128,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CPickups": [
+   {
+    "entry_va": "0x00454A70",
+    "body_va": "0x01564650",
+    "method": "Init",
+    "body_extent": 80,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00454AC0",
+    "body_va": "0x01568BD0",
+    "method": "ModelForWeapon",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00454B40",
+    "body_va": "0x0156DA60",
+    "method": "IsPickUpPickedUp",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004551C0",
+    "body_va": "0x0156D870",
+    "method": "FindPickUpForThisObject",
+    "body_extent": 64,
+    "direct_call_sites": 3,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00455240",
+    "body_va": "0x01561580",
+    "method": "AddToCollectedPickupsArray",
+    "body_extent": 64,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004552A0",
+    "body_va": "0x01564BB0",
+    "method": "GetActualPickupIndex",
+    "body_extent": 48,
+    "direct_call_sites": 11,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004554C0",
+    "body_va": "0x0156A950",
+    "method": "PlayerCanPickUpThisWeaponTypeAtThisMoment",
+    "body_extent": 64,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00455680",
+    "body_va": "0x0156B360",
+    "method": "UpdateMoneyPerDay",
+    "body_extent": 64,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00457380",
+    "body_va": "0x0156DF10",
+    "method": "GenerateNewOne_WeaponType",
+    "body_extent": 80,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CDarkel": [
+   {
+    "entry_va": "0x0043CEB0",
+    "body_va": "0x015647B0",
+    "method": "Init",
+    "body_extent": 16,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0043D1F0",
+    "body_va": "0x015635C0",
+    "method": "FrenzyOnGoing",
+    "body_extent": 32,
+    "direct_call_sites": 8,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0043D2F0",
+    "body_va": "0x01567170",
+    "method": "ThisPedShouldBeKilledForFrenzy",
+    "body_extent": 96,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0043D350",
+    "body_va": "0x0156CED0",
+    "method": "ThisVehicleShouldBeKilledForFrenzy",
+    "body_extent": 96,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0043D6A0",
+    "body_va": "0x01561630",
+    "method": "ResetModelsKilledByPlayer",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0043D6C0",
+    "body_va": "0x01564C20",
+    "method": "QueryModelsKilledByPlayer",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0043D6E0",
+    "body_va": "0x01569900",
+    "method": "FindTotalPedsKilledByPlayer",
+    "body_extent": 96,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CScriptsForBrains": [
+   {
+    "entry_va": "0x0046A8C0",
+    "body_va": "0x0156BB70",
+    "method": "Init",
+    "body_extent": 64,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0046A900",
+    "body_va": "0x0156FA50",
+    "method": "SwitchAllObjectBrainsWithThisID",
+    "body_extent": 48,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0046A9C0",
+    "body_va": "0x015628A0",
+    "method": "AddNewStreamedScriptBrainForCodeUse",
+    "body_extent": 112,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0046AA30",
+    "body_va": "0x01569100",
+    "method": "GetIndexOfScriptBrainWithThisName",
+    "body_extent": 80,
+    "direct_call_sites": 0,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0046AB20",
+    "body_va": "0x01561650",
+    "method": "HasAttractorScriptBrainWithThisNameLoaded",
+    "body_extent": 64,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0046B390",
+    "body_va": "0x0156A340",
+    "method": "StartAttractorScriptBrainWithThisName",
+    "body_extent": 96,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0046CED0",
+    "body_va": "0x01562360",
+    "method": "StartOrRequestNewStreamedScriptBrainWithThisName",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CStreamedScripts": [
+   {
+    "entry_va": "0x00470660",
+    "body_va": "0x01562430",
+    "method": "Initialise",
+    "body_extent": 64,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004706A0",
+    "body_va": "0x01565AD0",
+    "method": "ReInitialise",
+    "body_extent": 32,
+    "direct_call_sites": 0,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004706C0",
+    "body_va": "0x0156B7A0",
+    "method": "RegisterScript",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00470750",
+    "body_va": "0x0156F450",
+    "method": "ReadStreamedScriptData",
+    "body_extent": 192,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00470840",
+    "body_va": "0x01565EC0",
+    "method": "LoadStreamedScript",
+    "body_extent": 80,
+    "direct_call_sites": 1,
+    "confidence": "\u2705 verified (disassembly spot-check confirms plausible semantics)"
+   },
+   {
+    "entry_va": "0x00470890",
+    "body_va": "0x0156BFB0",
+    "method": "StartNewStreamedScript",
+    "body_extent": 80,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004708E0",
+    "body_va": "0x0156F710",
+    "method": "RemoveStreamedScriptFromMemory",
+    "body_extent": 32,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CCarAI": [
+   {
+    "entry_va": "0x0041BFA0",
+    "body_va": "0x015612E0",
+    "method": "BackToCruisingIfNoWantedLevel",
+    "body_extent": 192,
+    "direct_call_sites": 11,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0041C050",
+    "body_va": "0x0156FB90",
+    "method": "CarHasReasonToStop",
+    "body_extent": 32,
+    "direct_call_sites": 4,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0041C4A0",
+    "body_va": "0x01563CE0",
+    "method": "AddAmbulanceOccupants",
+    "body_extent": 400,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0041C600",
+    "body_va": "0x01568C10",
+    "method": "AddFiretruckOccupants",
+    "body_extent": 384,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0041C760",
+    "body_va": "0x01569A30",
+    "method": "TellOccupantsToLeaveCar",
+    "body_extent": 352,
+    "direct_call_sites": 9,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0041CA50",
+    "body_va": "0x0156FFB0",
+    "method": "FindPoliceBoatMissionForWantedLevel",
+    "body_extent": 96,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "COnscreenTimer": [
+   {
+    "entry_va": "0x0044CD50",
+    "body_va": "0x0156E3E0",
+    "method": "AddClock",
+    "body_extent": 464,
+    "direct_call_sites": 3,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0044CDA0",
+    "body_va": "0x01561C50",
+    "method": "AddCounter",
+    "body_extent": 112,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0044CE60",
+    "body_va": "0x01565730",
+    "method": "ClearClock",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0044CE80",
+    "body_va": "0x0156AD90",
+    "method": "ClearCounter",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0044CEB0",
+    "body_va": "0x0156EC20",
+    "method": "SetCounterFlashWhenFirstDisplayed",
+    "body_extent": 48,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0044CEE0",
+    "body_va": "0x01562130",
+    "method": "SetClockBeepCountdownSecs",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CCollision": [
+   {
+    "entry_va": "0x00411E30",
+    "body_va": "0x015678D0",
+    "method": "SortOutCollisionAfterLoad",
+    "body_extent": 64,
+    "direct_call_sites": 3,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004152C0",
+    "body_va": "0x01566DA0",
+    "method": "IsThisVehicleSittingOnMe",
+    "body_extent": 96,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004154A0",
+    "body_va": "0x01567650",
+    "method": "CheckPeds",
+    "body_extent": 144,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00415540",
+    "body_va": "0x0156D280",
+    "method": "ResetMadeInvisibleObjects",
+    "body_extent": 80,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00417730",
+    "body_va": "0x01564C40",
+    "method": "TestLineOfSight",
+    "body_extent": 592,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CStreamingInfo": [
+   {
+    "entry_va": "0x00407460",
+    "body_va": "0x01567520",
+    "method": "Init",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00407480",
+    "body_va": "0x015674C0",
+    "method": "AddToList",
+    "body_extent": 96,
+    "direct_call_sites": 12,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004074E0",
+    "body_va": "0x0156CE90",
+    "method": "RemoveFromList",
+    "body_extent": 64,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004075A0",
+    "body_va": "0x01560E50",
+    "method": "GetCdPosnAndSize",
+    "body_extent": 64,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004075E0",
+    "body_va": "0x01564070",
+    "method": "SetCdPosnAndSize",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CStuckCarCheck": [
+   {
+    "entry_va": "0x00463B80",
+    "body_va": "0x0156DC70",
+    "method": "RemoveCarFromCheck",
+    "body_extent": 128,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00463C00",
+    "body_va": "0x015619B0",
+    "method": "HasCarBeenStuckForAWhile",
+    "body_extent": 64,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00463C40",
+    "body_va": "0x01565300",
+    "method": "ClearStuckFlagForCar",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00463C70",
+    "body_va": "0x0156A310",
+    "method": "IsCarInStuckCarArray",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00465970",
+    "body_va": "0x015627A0",
+    "method": "AddCarToCheck",
+    "body_extent": 208,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CTagManager": [
+   {
+    "entry_va": "0x0049CC50",
+    "body_va": "0x0156AC60",
+    "method": "Init",
+    "body_extent": 16,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0049CC60",
+    "body_va": "0x0156E900",
+    "method": "ShutdownForRestart",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0049CC90",
+    "body_va": "0x01562110",
+    "method": "AddTag",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0049CDE0",
+    "body_va": "0x0156B330",
+    "method": "UpdateNumTagged",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0049CE10",
+    "body_va": "0x0156F270",
+    "method": "SetupAtomic",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CCarCtrl": [
+   {
+    "entry_va": "0x00421740",
+    "body_va": "0x015616E0",
+    "method": "InitSequence",
+    "body_extent": 48,
+    "direct_call_sites": 3,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00423ED0",
+    "body_va": "0x01561040",
+    "method": "RemoveFromInterestingVehicleList",
+    "body_extent": 48,
+    "direct_call_sites": 4,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0042C250",
+    "body_va": "0x015636D0",
+    "method": "IsAnyoneParking",
+    "body_extent": 96,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0042FBC0",
+    "body_va": "0x01570100",
+    "method": "ScriptGenerateOneEmergencyServicesCar",
+    "body_extent": 144,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CCollisionData": [
+   {
+    "entry_va": "0x0040F070",
+    "body_va": "0x0156FAE0",
+    "method": "RemoveCollisionVolumes",
+    "body_extent": 176,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0040F120",
+    "body_va": "0x01562C90",
+    "method": "Copy",
+    "body_extent": 1328,
+    "direct_call_sites": 0,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0040F6C0",
+    "body_va": "0x01568990",
+    "method": "SetLinkPtr",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0040F6E0",
+    "body_va": "0x0156D850",
+    "method": "GetLinkPtr",
+    "body_extent": 32,
+    "direct_call_sites": 3,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CPed": [
+   {
+    "entry_va": "0x0043ABA0",
+    "body_va": "0x0156CAE0",
+    "method": "PedIsReadyForConversation",
+    "body_extent": 192,
+    "direct_call_sites": 4,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004590F0",
+    "body_va": "0x01564140",
+    "method": "CreateDeadPedMoney",
+    "body_extent": 192,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00459180",
+    "body_va": "0x01568940",
+    "method": "CreateDeadPedPickupCoors",
+    "body_extent": 80,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00481090",
+    "body_va": "0x0156D8B0",
+    "method": "SetStayInSamePlace",
+    "body_extent": 32,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CPickup": [
+   {
+    "entry_va": "0x00454BE0",
+    "body_va": "0x0156DB40",
+    "method": "ExtractAmmoFromPickup",
+    "body_extent": 160,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00455500",
+    "body_va": "0x0156EC50",
+    "method": "FindTextIndexForString",
+    "body_extent": 64,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00455540",
+    "body_va": "0x01565750",
+    "method": "FindStringForTextIndex",
+    "body_extent": 32,
+    "direct_call_sites": 4,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004588B0",
+    "body_va": "0x01562550",
+    "method": "ProcessGunShot",
+    "body_extent": 224,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CRestart": [
+   {
+    "entry_va": "0x00460630",
+    "body_va": "0x015658E0",
+    "method": "Initialise",
+    "body_extent": 256,
+    "direct_call_sites": 3,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004607D0",
+    "body_va": "0x0156B8F0",
+    "method": "OverrideNextRestart",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00460810",
+    "body_va": "0x0156F610",
+    "method": "SetRespawnPointForDurationOfMission",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00460840",
+    "body_va": "0x015626A0",
+    "method": "ClearRespawnPointForDurationOfMission",
+    "body_extent": 16,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CScriptResourceManager": [
+   {
+    "entry_va": "0x00470480",
+    "body_va": "0x01565710",
+    "method": "Initialise",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004704B0",
+    "body_va": "0x0156ACE0",
+    "method": "AddToResourceManager",
+    "body_extent": 96,
+    "direct_call_sites": 4,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00470510",
+    "body_va": "0x0156B210",
+    "method": "RemoveFromResourceManager",
+    "body_extent": 288,
+    "direct_call_sites": 4,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00470620",
+    "body_va": "0x0156F2A0",
+    "method": "HasResourceBeenRequested",
+    "body_extent": 64,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CStuntJumpManager": [
+   {
+    "entry_va": "0x0049CA50",
+    "body_va": "0x0156DDB0",
+    "method": "Init",
+    "body_extent": 96,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0049CB10",
+    "body_va": "0x0156E3B0",
+    "method": "ShutdownForRestart",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0049CB40",
+    "body_va": "0x01561A90",
+    "method": "AddOne",
+    "body_extent": 128,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0049CBC0",
+    "body_va": "0x01565470",
+    "method": "Shutdown",
+    "body_extent": 112,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CdStream": [
+   {
+    "entry_va": "0x004063E0",
+    "body_va": "0x01563850",
+    "method": "CdStreamGetStatus",
+    "body_extent": 128,
+    "direct_call_sites": 7,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00406460",
+    "body_va": "0x0156CD80",
+    "method": "CdStreamSync",
+    "body_extent": 160,
+    "direct_call_sites": 5,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004067B0",
+    "body_va": "0x01564A90",
+    "method": "CdStreamOpen",
+    "body_extent": 288,
+    "direct_call_sites": 4,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00406A20",
+    "body_va": "0x0156C2C0",
+    "method": "CdStreamRead",
+    "body_extent": 432,
+    "direct_call_sites": 6,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CCheat": [
+   {
+    "entry_va": "0x00407410",
+    "body_va": "0x01563A60",
+    "method": "IsZoneStreamingAllowed",
+    "body_extent": 80,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00438450",
+    "body_va": "0x01560F40",
+    "method": "ResetCheats",
+    "body_extent": 48,
+    "direct_call_sites": 4,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00439AF0",
+    "body_va": "0x01566D70",
+    "method": "DoCheats",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CColModel": [
+   {
+    "entry_va": "0x0040F740",
+    "body_va": "0x01564A10",
+    "method": "MakeMultipleAlloc",
+    "body_extent": 128,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0040F810",
+    "body_va": "0x0156DEB0",
+    "method": "AllocateData[void]",
+    "body_extent": 96,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0040F870",
+    "body_va": "0x01561730",
+    "method": "AllocateData[params]",
+    "body_extent": 320,
+    "direct_call_sites": 17,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CEntity": [
+   {
+    "entry_va": "0x00446F90",
+    "body_va": "0x01569BF0",
+    "method": "UpdateRwMatrix",
+    "body_extent": 64,
+    "direct_call_sites": 20,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004633E0",
+    "body_va": "0x015619F0",
+    "method": "GetIsStatic",
+    "body_extent": 32,
+    "direct_call_sites": 18,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0046A2D0",
+    "body_va": "0x01565110",
+    "method": "GetModellingMatrix",
+    "body_extent": 32,
+    "direct_call_sites": 8,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CRoadBlocks": [
+   {
+    "entry_va": "0x00460DF0",
+    "body_va": "0x0156AB70",
+    "method": "RegisterScriptRoadBlock",
+    "body_extent": 240,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00460EC0",
+    "body_va": "0x0156EF70",
+    "method": "ClearScriptRoadBlocks",
+    "body_extent": 32,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00461100",
+    "body_va": "0x01568D90",
+    "method": "Init",
+    "body_extent": 112,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CUpsideDownCarCheck": [
+   {
+    "entry_va": "0x004638D0",
+    "body_va": "0x0156BBB0",
+    "method": "AddCarToCheck",
+    "body_extent": 1024,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00463910",
+    "body_va": "0x0156FA20",
+    "method": "RemoveCarFromCheck",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00463940",
+    "body_va": "0x01562870",
+    "method": "HasCarBeenUpsideDownForAWhile",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CGarage": [
+   {
+    "entry_va": "0x00447D50",
+    "body_va": "0x01567910",
+    "method": "OpenThisGarage",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00447D70",
+    "body_va": "0x0156D5C0",
+    "method": "CloseThisGarage",
+    "body_extent": 16,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CIplDefPool": [
+   {
+    "entry_va": "0x00405900",
+    "body_va": "0x01561B20",
+    "method": "Constructor",
+    "body_extent": 96,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004059B0",
+    "body_va": "0x015654E0",
+    "method": "New",
+    "body_extent": 112,
+    "direct_call_sites": 0,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CPedToPlayerConversations": [
+   {
+    "entry_va": "0x0043AAE0",
+    "body_va": "0x015635E0",
+    "method": "Clear",
+    "body_extent": 48,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0043AB10",
+    "body_va": "0x01566F50",
+    "method": "EndConversation",
+    "body_extent": 304,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CSetPieces": [
+   {
+    "entry_va": "0x004994F0",
+    "body_va": "0x01562350",
+    "method": "Init",
+    "body_extent": 16,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0049AA00",
+    "body_va": "0x01569C50",
+    "method": "Update",
+    "body_extent": 128,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CTaskComplexSeekEntityRadiusAngleOffset": [
+   {
+    "entry_va": "0x00493730",
+    "body_va": "0x0156F640",
+    "method": "Constructor",
+    "body_extent": 208,
+    "direct_call_sites": 5,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00493890",
+    "body_va": "0x01566130",
+    "method": "Destructor",
+    "body_extent": 112,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CTrafficLights": [
+   {
+    "entry_va": "0x0049D2D0",
+    "body_va": "0x0156E5B0",
+    "method": "LightForCars1",
+    "body_extent": 64,
+    "direct_call_sites": 3,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x0049D310",
+    "body_va": "0x015620D0",
+    "method": "LightForCars2",
+    "body_extent": 64,
+    "direct_call_sites": 3,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CTxdStore": [
+   {
+    "entry_va": "0x00408340",
+    "body_va": "0x0156C9B0",
+    "method": "GetTxd",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x00408370",
+    "body_va": "0x015700A0",
+    "method": "GetParentTxdSlot",
+    "body_extent": 48,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CWorld": [
+   {
+    "entry_va": "0x00407260",
+    "body_va": "0x01566820",
+    "method": "GetSector",
+    "body_extent": 64,
+    "direct_call_sites": 12,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   },
+   {
+    "entry_va": "0x004072A0",
+    "body_va": "0x0156C6B0",
+    "method": "GetRepeatSector",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CBaseModelInfo": [
+   {
+    "entry_va": "0x004212C0",
+    "body_va": "0x0156C780",
+    "method": "SwaysInWind",
+    "body_extent": 496,
+    "direct_call_sites": 3,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CBox": [
+   {
+    "entry_va": "0x0040EDE0",
+    "body_va": "0x01563AF0",
+    "method": "Set",
+    "body_extent": 64,
+    "direct_call_sites": 26,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CColLine": [
+   {
+    "entry_va": "0x0040EF10",
+    "body_va": "0x0156D710",
+    "method": "Set",
+    "body_extent": 64,
+    "direct_call_sites": 4,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CCollisionPlugin": [
+   {
+    "entry_va": "0x0041B310",
+    "body_va": "0x015671D0",
+    "method": "PluginAttach",
+    "body_extent": 64,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CConversationForPed": [
+   {
+    "entry_va": "0x0043C190",
+    "body_va": "0x015668B0",
+    "method": "Update",
+    "body_extent": 1184,
+    "direct_call_sites": 0,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CEntryExit": [
+   {
+    "entry_va": "0x0043E650",
+    "body_va": "0x01569780",
+    "method": "GetEntryExitToDisplayNameOf",
+    "body_extent": 80,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CEventAcquaintancePedHate": [
+   {
+    "entry_va": "0x00420E70",
+    "body_va": "0x01561070",
+    "method": "Constructor2",
+    "body_extent": 32,
+    "direct_call_sites": 8,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CEventLeaderEnteredCarAsDriver": [
+   {
+    "entry_va": "0x0048E1C0",
+    "body_va": "0x0156DC10",
+    "method": "Constructor",
+    "body_extent": 96,
+    "direct_call_sites": 5,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CEventLeaderEntryExit": [
+   {
+    "entry_va": "0x0043E1C0",
+    "body_va": "0x01566D50",
+    "method": "Constructor",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\u2705 verified (disassembly spot-check confirms plausible semantics)"
+   }
+  ],
+  "CObjectPool": [
+   {
+    "entry_va": "0x00404870",
+    "body_va": "0x0156DE60",
+    "method": "GetAt",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CPedIntelligence": [
+   {
+    "entry_va": "0x004893E0",
+    "body_va": "0x0156AA00",
+    "method": "GetPedEntities",
+    "body_extent": 16,
+    "direct_call_sites": 2,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CPlaceable": [
+   {
+    "entry_va": "0x00420B80",
+    "body_va": "0x01566E30",
+    "method": "SetPosn[xyz]",
+    "body_extent": 64,
+    "direct_call_sites": 7,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CPlayerPed": [
+   {
+    "entry_va": "0x0041BE60",
+    "body_va": "0x0156D300",
+    "method": "GetWantedLevel",
+    "body_extent": 32,
+    "direct_call_sites": 26,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CPopulation": [
+   {
+    "entry_va": "0x00406F50",
+    "body_va": "0x015642E0",
+    "method": "DoesCarGroupHaveModelId",
+    "body_extent": 64,
+    "direct_call_sites": 0,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CTaskComplexDiveFromAttachedEntityAndGetUp": [
+   {
+    "entry_va": "0x00492E20",
+    "body_va": "0x01565A80",
+    "method": "Constructor",
+    "body_extent": 80,
+    "direct_call_sites": 4,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CTaskComplexLeaveAnyCar": [
+   {
+    "entry_va": "0x00421150",
+    "body_va": "0x015667C0",
+    "method": "Constructor",
+    "body_extent": 48,
+    "direct_call_sites": 11,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CTaskComplexSeekEntityStandard": [
+   {
+    "entry_va": "0x0046AC10",
+    "body_va": "0x0156E100",
+    "method": "Constructor",
+    "body_extent": 208,
+    "direct_call_sites": 22,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CTaskSimpleCower": [
+   {
+    "entry_va": "0x0048DE70",
+    "body_va": "0x0156F220",
+    "method": "Constructor",
+    "body_extent": 48,
+    "direct_call_sites": 4,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CTaskSimpleHandsUp": [
+   {
+    "entry_va": "0x0048E970",
+    "body_va": "0x01566240",
+    "method": "Constructor",
+    "body_extent": 64,
+    "direct_call_sites": 5,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CTaskSimpleLeaveGroup": [
+   {
+    "entry_va": "0x00463540",
+    "body_va": "0x0156AE30",
+    "method": "Constructor",
+    "body_extent": 32,
+    "direct_call_sites": 5,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CTaskSimpleLookAbout": [
+   {
+    "entry_va": "0x0048E0A0",
+    "body_va": "0x01564820",
+    "method": "Constructor",
+    "body_extent": 64,
+    "direct_call_sites": 6,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CTaskSimplePause": [
+   {
+    "entry_va": "0x0048E750",
+    "body_va": "0x01562630",
+    "method": "Constructor",
+    "body_extent": 48,
+    "direct_call_sites": 27,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CTaskSimpleSay": [
+   {
+    "entry_va": "0x0048E360",
+    "body_va": "0x015655E0",
+    "method": "Constructor",
+    "body_extent": 48,
+    "direct_call_sites": 20,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CTaskSimpleSetCharDecisionMaker": [
+   {
+    "entry_va": "0x0046A470",
+    "body_va": "0x01565670",
+    "method": "Constructor",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CTaskSimpleSetCharIgnoreWeaponRangeFlag": [
+   {
+    "entry_va": "0x00474620",
+    "body_va": "0x0156F2E0",
+    "method": "Constructor",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CTaskSimpleUninterruptable": [
+   {
+    "entry_va": "0x0043E2E0",
+    "body_va": "0x0156CBA0",
+    "method": "Constructor",
+    "body_extent": 32,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CTaskSimpleUseAtm": [
+   {
+    "entry_va": "0x0048DFE0",
+    "body_va": "0x01565D10",
+    "method": "Constructor",
+    "body_extent": 48,
+    "direct_call_sites": 2,
+    "confidence": "\u2705 verified (disassembly spot-check confirms plausible semantics)"
+   }
+  ],
+  "CTaskTimer": [
+   {
+    "entry_va": "0x00420E30",
+    "body_va": "0x0156D5D0",
+    "method": "IsOutOfTime",
+    "body_extent": 64,
+    "direct_call_sites": 27,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ],
+  "CTempColModels": [
+   {
+    "entry_va": "0x0041B360",
+    "body_va": "0x0156CBC0",
+    "method": "Shutdown",
+    "body_extent": 160,
+    "direct_call_sites": 1,
+    "confidence": "\ud83d\udd37 external-derived (unverified by disassembly)"
+   }
+  ]
+ }
+}

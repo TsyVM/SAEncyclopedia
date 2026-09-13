@@ -1,0 +1,53 @@
+{
+  "chapter": "C40",
+  "subject": "CZone region system — zone types, navigation names, and gang turf zones",
+  "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+
+  "overview": "GTA:SA defines three overlapping zone systems: (1) INFO zones (map name display, like 'Idlewood'), (2) NAV zones (navigation names used by GPS 'go to' logic), and (3) gang territory zones (320 rectangular areas that can be owned and contested). All zone data is loaded from data/ZONES.DAT. The active zone is determined by a point-in-zone test run per frame.",
+
+  "zone_types": {
+    "ZONE_TYPE_DEFAULT":  { "id": 0, "description": "No special type — generic zone boundary" },
+    "ZONE_TYPE_NAVMESH":  { "id": 1, "description": "Navigation name zone — displayed on map/radar when inside" },
+    "ZONE_TYPE_INFO":     { "id": 2, "description": "Map info zone — larger geographic region label (e.g. 'Los Santos')" }
+  },
+
+  "CZone_layout": {
+    "description": "Each zone is an axis-aligned bounding box with metadata.",
+    "size_bytes": 56,
+    "fields": [
+      { "name": "m_szName",        "offset": 0,  "size": 8,  "type": "char[8]",  "description": "Short zone name key used to look up the GXT display string" },
+      { "name": "m_fMinX",         "offset": 8,  "size": 4,  "type": "float",    "description": "AABB minimum X" },
+      { "name": "m_fMinY",         "offset": 12, "size": 4,  "type": "float",    "description": "AABB minimum Y" },
+      { "name": "m_fMinZ",         "offset": 16, "size": 4,  "type": "float",    "description": "AABB minimum Z" },
+      { "name": "m_fMaxX",         "offset": 20, "size": 4,  "type": "float",    "description": "AABB maximum X" },
+      { "name": "m_fMaxY",         "offset": 24, "size": 4,  "type": "float",    "description": "AABB maximum Y" },
+      { "name": "m_fMaxZ",         "offset": 28, "size": 4,  "type": "float",    "description": "AABB maximum Z" },
+      { "name": "m_nZoneType",     "offset": 32, "size": 4,  "type": "int32",    "description": "Zone type enum (0-2)" },
+      { "name": "m_nChildZone",    "offset": 36, "size": 4,  "type": "int32",    "description": "Index of a smaller nested zone (child), or -1" },
+      { "name": "m_nParentZone",   "offset": 40, "size": 4,  "type": "int32",    "description": "Index of the containing parent zone (e.g. 'Los Santos' for any LS neighbourhood)" },
+      { "name": "m_nGangInfo",     "offset": 44, "size": 4,  "type": "uint32",   "description": "Packed gang density per gang — 4 bits per gang, used to set ambient gang spawn rates" },
+      { "name": "PADDING",         "offset": 48, "size": 8,  "type": "uint8[8]", "description": "Trailing padding / unused" }
+    ],
+    "tier": "verified"
+  },
+
+  "zone_globals": {
+    "CTheZones_m_aZone": { "va": "0xBA7B00", "type": "CZone[25]", "description": "Array of 25 main navigation zones; the 'active zone' is the smallest zone that contains the player" },
+    "CTheZones_m_NumZones": { "va": "0xBA7AE0", "type": "int32", "description": "Total loaded zone count (nav + info types combined)" },
+    "tier": "verified"
+  },
+
+  "gang_territory_vs_zones": {
+    "description": "Gang territory uses a SEPARATE 320-zone rectangular grid (see gang_territory_structure.json). Those are NOT CZone objects — they are CGangWars zones stored at 0xC8B280 with separate ownership tracking. Navigation zones (CZone) can overlap with gang turf but represent different data.",
+    "cross_reference": "gang_territory_structure.json for turf ownership; this file for geographical display names"
+  },
+
+  "zones_dat_format": {
+    "path": "data/ZONES.DAT",
+    "line_format": "zoneName  x1 y1 z1  x2 y2 z2  type  level",
+    "type_column": "Same enum as CZone::m_nZoneType",
+    "level_column": "0 = bottom level; 1 = city-scale parent zone",
+    "example": "LOSAN  -2997.06 -2895.49 -100.0  1703.04 3001.74 200.0  1  0  ; Los Santos navigation zone"
+  }
+}

@@ -1,0 +1,1474 @@
+{
+ "chapter": "C41",
+ "class_name": "CPed",
+ "size_bytes": 6472,
+ "base_chain": "CEntity -> CPhysical(0x138) -> CPed(0x1948)",
+ "own_range": "0x138..0x1948",
+ "fields": [
+  {
+   "name": "field_0x138",
+   "offset": "0x138",
+   "offset_int": 312,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E8057",
+   "access_count": 2,
+   "access_fns": [
+    "CPed::Constructor",
+    "AttachPedToBike"
+   ],
+   "note": "hit in 2 function(s): CPed::Constructor, AttachPedToBike"
+  },
+  {
+   "name": "field_0x13c",
+   "offset": "0x13C",
+   "offset_int": 316,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005DF57B",
+   "access_count": 1,
+   "access_fns": [
+    "AttachPedToBike"
+   ],
+   "note": "hit in 1 function(s): AttachPedToBike"
+  },
+  {
+   "name": "field_0x144",
+   "offset": "0x144",
+   "offset_int": 324,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005DF65E",
+   "access_count": 4,
+   "access_fns": [
+    "AttachPedToBike"
+   ],
+   "note": "hit in 1 function(s): AttachPedToBike"
+  },
+  {
+   "name": "field_0x148",
+   "offset": "0x148",
+   "offset_int": 328,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E8086",
+   "access_count": 5,
+   "access_fns": [
+    "CPed::Constructor",
+    "AttachPedToBike"
+   ],
+   "note": "hit in 2 function(s): CPed::Constructor, AttachPedToBike"
+  },
+  {
+   "name": "field_0x14c",
+   "offset": "0x14C",
+   "offset_int": 332,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E808C",
+   "access_count": 3,
+   "access_fns": [
+    "CPed::Constructor",
+    "AttachPedToBike"
+   ],
+   "note": "hit in 2 function(s): CPed::Constructor, AttachPedToBike"
+  },
+  {
+   "name": "field_0x158",
+   "offset": "0x158",
+   "offset_int": 344,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005DF638",
+   "access_count": 1,
+   "access_fns": [
+    "AttachPedToBike"
+   ],
+   "note": "hit in 1 function(s): AttachPedToBike"
+  },
+  {
+   "name": "field_0x1d2",
+   "offset": "0x1D2",
+   "offset_int": 466,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005DFDD6",
+   "access_count": 1,
+   "access_fns": [
+    "ClearLookFlagPostCallback"
+   ],
+   "note": "hit in 1 function(s): ClearLookFlagPostCallback"
+  },
+  {
+   "name": "field_0x294",
+   "offset": "0x294",
+   "offset_int": 660,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E80B1",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x384",
+   "offset": "0x384",
+   "offset_int": 900,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005DFB90",
+   "access_count": 1,
+   "access_fns": [
+    "RemoveWeaponAnims"
+   ],
+   "note": "hit in 1 function(s): RemoveWeaponAnims"
+  },
+  {
+   "name": "field_0x394",
+   "offset": "0x394",
+   "offset_int": 916,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E80C1",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x460",
+   "offset": "0x460",
+   "offset_int": 1120,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E8411",
+   "access_count": 3,
+   "access_fns": [
+    "CPed::Constructor",
+    "RemoveWeaponAnims",
+    "ClearLookFlagPostCallback"
+   ],
+   "note": "hit in 3 function(s): CPed::Constructor, RemoveWeaponAnims, ClearLookFlagPostCallback"
+  },
+  {
+   "name": "field_0x464",
+   "offset": "0x464",
+   "offset_int": 1124,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005DF9E6",
+   "access_count": 1,
+   "access_fns": [
+    "RemoveWeaponAnims"
+   ],
+   "note": "hit in 1 function(s): RemoveWeaponAnims"
+  },
+  {
+   "name": "field_0x468",
+   "offset": "0x468",
+   "offset_int": 1128,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E8417",
+   "access_count": 3,
+   "access_fns": [
+    "CPed::Constructor",
+    "RemoveWeaponAnims"
+   ],
+   "note": "hit in 2 function(s): CPed::Constructor, RemoveWeaponAnims"
+  },
+  {
+   "name": "field_0x46c",
+   "offset": "0x46C",
+   "offset_int": 1132,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E8200",
+   "access_count": 18,
+   "access_fns": [
+    "CPed::Constructor",
+    "IsPedInControl",
+    "SetLookFlag",
+    "SetAimFlag",
+    "ClearLookFlag",
+    "IsOnBike",
+    "RemoveWeaponAnims",
+    "SetStayInSamePlace",
+    "PedIsReadyForConversation"
+   ],
+   "note": "hit in 9 function(s): CPed::Constructor, IsPedInControl, SetLookFlag, SetAimFlag"
+  },
+  {
+   "name": "field_0x470",
+   "offset": "0x470",
+   "offset_int": 1136,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E82EF",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x474",
+   "offset": "0x474",
+   "offset_int": 1140,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E82E4",
+   "access_count": 4,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x478",
+   "offset": "0x478",
+   "offset_int": 1144,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E8315",
+   "access_count": 4,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x47c",
+   "offset": "0x47C",
+   "offset_int": 1148,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E84A3",
+   "access_count": 5,
+   "access_fns": [
+    "CPed::Constructor",
+    "PedIsReadyForConversation"
+   ],
+   "note": "hit in 2 function(s): CPed::Constructor, PedIsReadyForConversation"
+  },
+  {
+   "name": "field_0x480",
+   "offset": "0x480",
+   "offset_int": 1152,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E84B6",
+   "access_count": 4,
+   "access_fns": [
+    "CPed::Constructor",
+    "ClearLookFlag",
+    "IsOnBike",
+    "GetCurrentWeapon"
+   ],
+   "note": "hit in 4 function(s): CPed::Constructor, ClearLookFlag, IsOnBike, GetCurrentWeapon"
+  },
+  {
+   "name": "field_0x484",
+   "offset": "0x484",
+   "offset_int": 1156,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E8199",
+   "access_count": 4,
+   "access_fns": [
+    "CPed::Constructor",
+    "SetMoveState",
+    "IsOnBike",
+    "IsOnFoot"
+   ],
+   "note": "hit in 4 function(s): CPed::Constructor, SetMoveState, IsOnBike, IsOnFoot"
+  },
+  {
+   "name": "field_0x4d8",
+   "offset": "0x4D8",
+   "offset_int": 1240,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E8111",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x4dc",
+   "offset": "0x4DC",
+   "offset_int": 1244,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E8117",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x4e0",
+   "offset": "0x4E0",
+   "offset_int": 1248,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E811D",
+   "access_count": 3,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x4e4",
+   "offset": "0x4E4",
+   "offset_int": 1252,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E8363",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x4e8",
+   "offset": "0x4E8",
+   "offset_int": 1256,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E836C",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x4ec",
+   "offset": "0x4EC",
+   "offset_int": 1260,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E8375",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x4f0",
+   "offset": "0x4F0",
+   "offset_int": 1264,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E837E",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x4f4",
+   "offset": "0x4F4",
+   "offset_int": 1268,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E843C",
+   "access_count": 2,
+   "access_fns": [
+    "CPed::Constructor",
+    "SelectGoodNextWeapon"
+   ],
+   "note": "hit in 2 function(s): CPed::Constructor, SelectGoodNextWeapon"
+  },
+  {
+   "name": "field_0x4f8",
+   "offset": "0x4F8",
+   "offset_int": 1272,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E8442",
+   "access_count": 5,
+   "access_fns": [
+    "CPed::Constructor",
+    "SelectGoodNextWeapon",
+    "MakeChangesForNewWeapon",
+    "SetCurrentWeapon"
+   ],
+   "note": "hit in 4 function(s): CPed::Constructor, SelectGoodNextWeapon, MakeChangesForNewWeapon, SetCurrentWeapon"
+  },
+  {
+   "name": "field_0x4fc",
+   "offset": "0x4FC",
+   "offset_int": 1276,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E8448",
+   "access_count": 5,
+   "access_fns": [
+    "CPed::Constructor",
+    "ClearWeapons"
+   ],
+   "note": "hit in 2 function(s): CPed::Constructor, ClearWeapons"
+  },
+  {
+   "name": "field_0x500",
+   "offset": "0x500",
+   "offset_int": 1280,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E844E",
+   "access_count": 3,
+   "access_fns": [
+    "CPed::Constructor",
+    "ClearWeapons"
+   ],
+   "note": "hit in 2 function(s): CPed::Constructor, ClearWeapons"
+  },
+  {
+   "name": "field_0x504",
+   "offset": "0x504",
+   "offset_int": 1284,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E8454",
+   "access_count": 6,
+   "access_fns": [
+    "CPed::Constructor",
+    "SelectGoodNextWeapon",
+    "MakeChangesForNewWeapon"
+   ],
+   "note": "hit in 3 function(s): CPed::Constructor, SelectGoodNextWeapon, MakeChangesForNewWeapon"
+  },
+  {
+   "name": "field_0x506",
+   "offset": "0x506",
+   "offset_int": 1286,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E845B",
+   "access_count": 2,
+   "access_fns": [
+    "CPed::Constructor",
+    "SelectGoodNextWeapon"
+   ],
+   "note": "hit in 2 function(s): CPed::Constructor, SelectGoodNextWeapon"
+  },
+  {
+   "name": "field_0x508",
+   "offset": "0x508",
+   "offset_int": 1288,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E8462",
+   "access_count": 4,
+   "access_fns": [
+    "CPed::Constructor",
+    "SelectGoodNextWeapon",
+    "MakeChangesForNewWeapon"
+   ],
+   "note": "hit in 3 function(s): CPed::Constructor, SelectGoodNextWeapon, MakeChangesForNewWeapon"
+  },
+  {
+   "name": "field_0x50a",
+   "offset": "0x50A",
+   "offset_int": 1290,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E8469",
+   "access_count": 2,
+   "access_fns": [
+    "CPed::Constructor",
+    "SelectGoodNextWeapon"
+   ],
+   "note": "hit in 2 function(s): CPed::Constructor, SelectGoodNextWeapon"
+  },
+  {
+   "name": "field_0x50c",
+   "offset": "0x50C",
+   "offset_int": 1292,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E8132",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x518",
+   "offset": "0x518",
+   "offset_int": 1304,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005DEC1D",
+   "access_count": 2,
+   "access_fns": [
+    "SetMoveState"
+   ],
+   "note": "hit in 1 function(s): SetMoveState"
+  },
+  {
+   "name": "field_0x528",
+   "offset": "0x528",
+   "offset_int": 1320,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005DEE35",
+   "access_count": 2,
+   "access_fns": [
+    "SetLookFlag",
+    "ClearLookFlag"
+   ],
+   "note": "hit in 2 function(s): SetLookFlag, ClearLookFlag"
+  },
+  {
+   "name": "field_0x52c",
+   "offset": "0x52C",
+   "offset_int": 1324,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E81A8",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x530",
+   "offset": "0x530",
+   "offset_int": 1328,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E81F4",
+   "access_count": 10,
+   "access_fns": [
+    "CPed::Constructor",
+    "IsPedInControl",
+    "SetLookFlag",
+    "IsWaiting",
+    "IsWaitingForBus",
+    "IsInVehicle",
+    "IsInBoat",
+    "IsInPlane",
+    "IsInHeli"
+   ],
+   "note": "hit in 9 function(s): CPed::Constructor, IsPedInControl, SetLookFlag, IsWaiting"
+  },
+  {
+   "name": "field_0x534",
+   "offset": "0x534",
+   "offset_int": 1332,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E81FA",
+   "access_count": 2,
+   "access_fns": [
+    "CPed::Constructor",
+    "SetMoveState"
+   ],
+   "note": "hit in 2 function(s): CPed::Constructor, SetMoveState"
+  },
+  {
+   "name": "field_0x538",
+   "offset": "0x538",
+   "offset_int": 1336,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E826C",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x540",
+   "offset": "0x540",
+   "offset_int": 1344,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E8157",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x544",
+   "offset": "0x544",
+   "offset_int": 1348,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E815D",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x548",
+   "offset": "0x548",
+   "offset_int": 1352,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E816C",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x54c",
+   "offset": "0x54C",
+   "offset_int": 1356,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E8430",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x550",
+   "offset": "0x550",
+   "offset_int": 1360,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E81C6",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x554",
+   "offset": "0x554",
+   "offset_int": 1364,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E81CC",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x558",
+   "offset": "0x558",
+   "offset_int": 1368,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E8228",
+   "access_count": 6,
+   "access_fns": [
+    "CPed::Constructor",
+    "GetLocalDirection",
+    "RemoveWeaponAnims"
+   ],
+   "note": "hit in 3 function(s): CPed::Constructor, GetLocalDirection, RemoveWeaponAnims"
+  },
+  {
+   "name": "field_0x55c",
+   "offset": "0x55C",
+   "offset_int": 1372,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E8242",
+   "access_count": 2,
+   "access_fns": [
+    "CPed::Constructor",
+    "RemoveWeaponAnims"
+   ],
+   "note": "hit in 2 function(s): CPed::Constructor, RemoveWeaponAnims"
+  },
+  {
+   "name": "field_0x560",
+   "offset": "0x560",
+   "offset_int": 1376,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E822E",
+   "access_count": 2,
+   "access_fns": [
+    "CPed::Constructor",
+    "ClearAimFlag"
+   ],
+   "note": "hit in 2 function(s): CPed::Constructor, ClearAimFlag"
+  },
+  {
+   "name": "field_0x564",
+   "offset": "0x564",
+   "offset_int": 1380,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E8238",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x568",
+   "offset": "0x568",
+   "offset_int": 1384,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E8248",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x56c",
+   "offset": "0x56C",
+   "offset_int": 1388,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E81D2",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x578",
+   "offset": "0x578",
+   "offset_int": 1400,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E81E2",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x584",
+   "offset": "0x584",
+   "offset_int": 1412,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E8294",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x588",
+   "offset": "0x588",
+   "offset_int": 1416,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E829A",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x58c",
+   "offset": "0x58C",
+   "offset_int": 1420,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E81A2",
+   "access_count": 8,
+   "access_fns": [
+    "CPed::Constructor",
+    "RemoveWeaponAnims",
+    "ClearLookFlagPostCallback"
+   ],
+   "note": "hit in 3 function(s): CPed::Constructor, RemoveWeaponAnims, ClearLookFlagPostCallback"
+  },
+  {
+   "name": "field_0x590",
+   "offset": "0x590",
+   "offset_int": 1424,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E8436",
+   "access_count": 4,
+   "access_fns": [
+    "CPed::Constructor",
+    "RemoveWeaponAnims"
+   ],
+   "note": "hit in 2 function(s): CPed::Constructor, RemoveWeaponAnims"
+  },
+  {
+   "name": "field_0x594",
+   "offset": "0x594",
+   "offset_int": 1428,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E8260",
+   "access_count": 3,
+   "access_fns": [
+    "CPed::Constructor",
+    "RemoveWeaponAnims"
+   ],
+   "note": "hit in 2 function(s): CPed::Constructor, RemoveWeaponAnims"
+  },
+  {
+   "name": "field_0x598",
+   "offset": "0x598",
+   "offset_int": 1432,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E8172",
+   "access_count": 5,
+   "access_fns": [
+    "CPed::Constructor",
+    "ClearLookFlagPostCallback"
+   ],
+   "note": "hit in 2 function(s): CPed::Constructor, ClearLookFlagPostCallback"
+  },
+  {
+   "name": "field_0x59c",
+   "offset": "0x59C",
+   "offset_int": 1436,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005DEBCF",
+   "access_count": 2,
+   "access_fns": [
+    "CPed::Initialise",
+    "SetStats"
+   ],
+   "note": "hit in 2 function(s): CPed::Initialise, SetStats"
+  },
+  {
+   "name": "field_0x5a0",
+   "offset": "0x5A0",
+   "offset_int": 1440,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E8165",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x5a4",
+   "offset": "0x5A4",
+   "offset_int": 1444,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E839E",
+   "access_count": 5,
+   "access_fns": [
+    "CPed::Constructor",
+    "GiveWeapon",
+    "GiveDelayedWeapon"
+   ],
+   "note": "hit in 3 function(s): CPed::Constructor, GiveWeapon, GiveDelayedWeapon"
+  },
+  {
+   "name": "field_0x5a8",
+   "offset": "0x5A8",
+   "offset_int": 1448,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005DF2C6",
+   "access_count": 2,
+   "access_fns": [
+    "GiveDelayedWeapon"
+   ],
+   "note": "hit in 1 function(s): GiveDelayedWeapon"
+  },
+  {
+   "name": "field_0x5ac",
+   "offset": "0x5AC",
+   "offset_int": 1452,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005DF243",
+   "access_count": 5,
+   "access_fns": [
+    "GiveWeapon",
+    "GiveDelayedWeapon"
+   ],
+   "note": "hit in 2 function(s): GiveWeapon, GiveDelayedWeapon"
+  },
+  {
+   "name": "field_0x64c",
+   "offset": "0x64C",
+   "offset_int": 1612,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005DFAA4",
+   "access_count": 1,
+   "access_fns": [
+    "RemoveWeaponAnims"
+   ],
+   "note": "hit in 1 function(s): RemoveWeaponAnims"
+  },
+  {
+   "name": "field_0x70c",
+   "offset": "0x70C",
+   "offset_int": 1804,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E8389",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x710",
+   "offset": "0x710",
+   "offset_int": 1808,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E838F",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x718",
+   "offset": "0x718",
+   "offset_int": 1816,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E8398",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x719",
+   "offset": "0x719",
+   "offset_int": 1817,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E8259",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x71a",
+   "offset": "0x71A",
+   "offset_int": 1818,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E83EB",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x71c",
+   "offset": "0x71C",
+   "offset_int": 1820,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E8282",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x72c",
+   "offset": "0x72C",
+   "offset_int": 1836,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E83CA",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x72d",
+   "offset": "0x72D",
+   "offset_int": 1837,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E83D1",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x72e",
+   "offset": "0x72E",
+   "offset_int": 1838,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E83D8",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x72f",
+   "offset": "0x72F",
+   "offset_int": 1839,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E842A",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x730",
+   "offset": "0x730",
+   "offset_int": 1840,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E8272",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x734",
+   "offset": "0x734",
+   "offset_int": 1844,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E8278",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x738",
+   "offset": "0x738",
+   "offset_int": 1848,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E8288",
+   "access_count": 4,
+   "access_fns": [
+    "CPed::Constructor",
+    "SetLookFlag",
+    "SetAimFlag"
+   ],
+   "note": "hit in 3 function(s): CPed::Constructor, SetLookFlag, SetAimFlag"
+  },
+  {
+   "name": "field_0x73c",
+   "offset": "0x73C",
+   "offset_int": 1852,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E828E",
+   "access_count": 2,
+   "access_fns": [
+    "CPed::Constructor",
+    "SetLookFlag"
+   ],
+   "note": "hit in 2 function(s): CPed::Constructor, SetLookFlag"
+  },
+  {
+   "name": "field_0x740",
+   "offset": "0x740",
+   "offset_int": 1856,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E841D",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x744",
+   "offset": "0x744",
+   "offset_int": 1860,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E81AE",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x748",
+   "offset": "0x748",
+   "offset_int": 1864,
+   "size": null,
+   "type_hint": null,
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005E81BA",
+   "access_count": 7,
+   "access_fns": [
+    "CPed::Constructor",
+    "SetLookFlag",
+    "SetAimFlag",
+    "ClearLookFlag",
+    "DoWeaponEffect"
+   ],
+   "note": "hit in 5 function(s): CPed::Constructor, SetLookFlag, SetAimFlag, ClearLookFlag"
+  },
+  {
+   "name": "field_0x74c",
+   "offset": "0x74C",
+   "offset_int": 1868,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E81B4",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x750",
+   "offset": "0x750",
+   "offset_int": 1872,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E81C0",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x754",
+   "offset": "0x754",
+   "offset_int": 1876,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E82CC",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x756",
+   "offset": "0x756",
+   "offset_int": 1878,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E8423",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x758",
+   "offset": "0x758",
+   "offset_int": 1880,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E853F",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x760",
+   "offset": "0x760",
+   "offset_int": 1888,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E83F2",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x764",
+   "offset": "0x764",
+   "offset_int": 1892,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E83F9",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x768",
+   "offset": "0x768",
+   "offset_int": 1896,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E83FF",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x784",
+   "offset": "0x784",
+   "offset_int": 1924,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E840B",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x788",
+   "offset": "0x788",
+   "offset_int": 1928,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E8470",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x78c",
+   "offset": "0x78C",
+   "offset_int": 1932,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E8476",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x790",
+   "offset": "0x790",
+   "offset_int": 1936,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E8545",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x794",
+   "offset": "0x794",
+   "offset_int": 1940,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E854F",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x798",
+   "offset": "0x798",
+   "offset_int": 1944,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005E847C",
+   "access_count": 1,
+   "access_fns": [
+    "CPed::Constructor"
+   ],
+   "note": "hit in 1 function(s): CPed::Constructor"
+  },
+  {
+   "name": "field_0x814",
+   "offset": "0x814",
+   "offset_int": 2068,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005DF9CE",
+   "access_count": 1,
+   "access_fns": [
+    "RemoveWeaponAnims"
+   ],
+   "note": "hit in 1 function(s): RemoveWeaponAnims"
+  },
+  {
+   "name": "field_0x94c",
+   "offset": "0x94C",
+   "offset_int": 2380,
+   "size": null,
+   "type_hint": null,
+   "tier": "reasoned",
+   "evidence_va": "0x005DFAF3",
+   "access_count": 1,
+   "access_fns": [
+    "RemoveWeaponAnims"
+   ],
+   "note": "hit in 1 function(s): RemoveWeaponAnims"
+  }
+ ],
+ "total_unique_offsets": 100,
+ "provenance": "Capstone sweep of disassembly anchor functions against gta_sa.exe"
+}

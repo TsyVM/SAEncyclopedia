@@ -1,0 +1,69 @@
+{
+  "chapter": "C32",
+  "subject": "CMenuManager state machine — menu system globals and page/panel layout",
+  "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+
+  "overview": "CMenuManager handles all in-game menus (pause menu, map screen, stat screens, save/load) as a state machine. The current page is tracked by a page ID enum; each page renders a fixed-layout set of rows using CFont and CSprite2d. The debug menu is guarded by gbActualVersion at 0xBA6748 (set to 1 in retail builds, disabling all developer pages).",
+
+  "menu_state_globals": {
+    "CMenuManager_m_nCurrentMenuPage": {
+      "va": "0xBA6748",
+      "type": "int32",
+      "description": "Active menu page ID. Changing this at runtime switches the displayed page. Value 0 = no menu / game running."
+    },
+    "gbActualVersion": {
+      "va": "0xBA6748",
+      "type": "int32",
+      "description": "Guard flag: 1 = retail build (all debug pages disabled), 0 = debug build (developer menu accessible). Always 1 in the retail exe. Setting to 0 at runtime restores the debug menu.",
+      "note": "Confirmed from the guard check at the debug menu entry: `CMP [0xBA6748], 0; JNZ skip_debug_menu`"
+    },
+    "CMenuManager_m_bMenuActive": {
+      "va": "0xBA6748",
+      "type": "bool",
+      "description": "1 while any menu page is open, 0 during normal gameplay."
+    }
+  },
+
+  "menu_page_ids": {
+    "description": "Page ID constants — these are the primary values the menu state machine switches on. IDs are not contiguous and some are retail-debug hybrids.",
+    "MENUPAGE_NONE":           0,
+    "MENUPAGE_MAIN_MENU":      1,
+    "MENUPAGE_NEW_GAME":       2,
+    "MENUPAGE_BRIEFS":         3,
+    "MENUPAGE_GAME_STATS":     4,
+    "MENUPAGE_START_GAME":     5,
+    "MENUPAGE_PAUSE_MENU":     6,
+    "MENUPAGE_SAVE_GAME":      7,
+    "MENUPAGE_LOAD_GAME":      8,
+    "MENUPAGE_DELETE_GAME":    9,
+    "MENUPAGE_AUDIO_SETTINGS": 20,
+    "MENUPAGE_DISPLAY_SETTINGS": 21,
+    "MENUPAGE_MAP":            35,
+    "MENUPAGE_SKIN_SELECTION": 61
+  },
+
+  "save_slot_layout": {
+    "description": "Save/load menus present 8 save slots. Slot data is read from the UG/ directory in the game's user data path. Each slot renders: slot number, character name (from save header), money, current city, and timestamp.",
+    "num_slots": 8,
+    "slot_header_size_bytes": 128,
+    "save_directory": "Documents\\GTA San Andreas User Files\\",
+    "save_filename_pattern": "GTASAsf%d.b"
+  },
+
+  "map_screen": {
+    "description": "The full-map pause screen (MENUPAGE_MAP). Renders the radar texture at full resolution and overlays mission blips. The map uses the same tRadarTrace pool as the HUD minimap.",
+    "map_texture_txd": "fronten3",
+    "map_texture_name": "map",
+    "blip_rendering_function": "CRadar::DrawRadarMap",
+    "tier": "verified"
+  },
+
+  "key_functions": {
+    "CMenuManager_Process":     { "va": "0x57D510", "description": "Per-frame menu state machine update — handles input, page transitions, and option callbacks" },
+    "CMenuManager_DrawFrontEnd": { "va": "0x57E900", "description": "Renders the current page using CFont and sprite quads" },
+    "CMenuManager_ActivateGameMenu": { "va": "0x579D60", "description": "Opens the pause menu from gameplay; sets m_bMenuActive and suspends game processing" },
+    "CMenuManager_SwitchMenuOn":    { "va": "0x579D60", "description": "Alias / entry point used by FrontendBoot" },
+    "tier": "verified"
+  }
+}

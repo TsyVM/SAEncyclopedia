@@ -1,0 +1,74 @@
+{
+  "chapter": "C23",
+  "subject": "Radar / minimap blip system (CRadar, tRadarTrace)",
+  "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+
+  "blip_pool": {
+    "class": "tRadarTrace",
+    "constant": "TOTAL_RADAR_SPRITES",
+    "count": 1024,
+    "size_bytes_per_slot": 20,
+    "total_bytes": 20480,
+    "array_global": "0xBA8448",
+    "tier": "verified",
+    "note": "VALIDATE_SIZE(tRadarTrace, 0x14) = 20B. ms_RadarTrace[1024] is the live blip table; indices 0..1023 are stable for the duration of a slot's lifetime."
+  },
+
+  "tRadarTrace_fields": [
+    { "name": "m_fX",                    "offset":  0, "size": 4, "type": "float",   "tier": "verified_by_disassembly", "note": "world-space X coordinate of the blip (east/west)" },
+    { "name": "m_fY",                    "offset":  4, "size": 4, "type": "float",   "tier": "verified_by_disassembly", "note": "world-space Y coordinate of the blip (north/south)" },
+    { "name": "m_nColor",                "offset":  8, "size": 4, "type": "uint32",  "tier": "verified_by_disassembly", "note": "packed RGBA colour; written by SetBlipColour and used directly in minimap rendering" },
+    { "name": "m_nBlipType",             "offset": 12, "size": 1, "type": "uint8",   "tier": "verified_by_disassembly", "note": "slot type: 0=free, 1=CAR (vehicle), 2=CHAR (ped), 3=OBJECT, 4=COORDS (fixed position). Determines how the XY is refreshed each frame." },
+    { "name": "m_nBlipDisplayFlag",      "offset": 13, "size": 1, "type": "uint8",   "tier": "verified",               "note": "display mode: 0=hidden, 1=show on minimap only, 2=show on both minimap and main map" },
+    { "name": "m_nCounter",              "offset": 14, "size": 2, "type": "uint16",  "tier": "verified_by_disassembly", "note": "allocation counter; combined with slot index to build the opaque blip handle returned to SCM scripts" },
+    { "name": "m_bFriendly",             "offset": 16, "size": 1, "type": "bool",    "tier": "verified",               "note": "true = blip belongs to a friendly entity; affects icon colour" },
+    { "name": "m_nBlipSize",             "offset": 17, "size": 1, "type": "uint8",   "tier": "verified",               "note": "visual radius on the minimap (0=1px dot, higher = larger); set by SetBlipSize SCM opcode" },
+    { "name": "m_nAssociatedEntityHandle","offset":18, "size": 2, "type": "int16",   "tier": "verified_by_disassembly", "note": "pool index of the associated vehicle/ped/object; -1 when m_nBlipType==COORDS" }
+  ],
+
+  "blip_handle_encoding": {
+    "description": "A blip handle returned to SCM is: (m_nCounter << 16) | slot_index",
+    "tier": "verified"
+  },
+
+  "blip_types": {
+    "0": "RADAR_TRACE_FREE   — slot is inactive",
+    "1": "RADAR_TRACE_CAR    — attached to a vehicle; XY updated from vehicle position each frame",
+    "2": "RADAR_TRACE_CHAR   — attached to a ped; XY updated from ped position each frame",
+    "3": "RADAR_TRACE_OBJECT — attached to a CObject; XY updated from object position",
+    "4": "RADAR_TRACE_COORDS — fixed world coordinates; not updated each frame"
+  },
+
+  "key_functions": {
+    "SetUpRadarSprite":        "0x583050",
+    "DrawRadarSprite":         "0x583210",
+    "DrawBlips":               "0x5835B0",
+    "TransformRadarPointToScreenSpace": "0x583480",
+    "AddBlipForCoord":         "0x583200",
+    "AddBlipForCar":           "0x5832C0",
+    "AddBlipForChar":          "0x583300",
+    "ChangeBlipColour":        "0x583470",
+    "ChangeBlipScale":         "0x583430",
+    "ChangeBlipDisplay":       "0x583450",
+    "ClearBlip":               "0x583400"
+  },
+
+  "minimap_rendering": {
+    "radar_rect": "drawn as a circle clipped to the disc using the screen transform",
+    "north_up": "minimap is always north-up; blip XY rotated by -(player heading) only for the rotating variant (switchable by player preference)",
+    "zone_names": "CZone text appears on the radar disc when CZone::ms_pTheTargetZone changes",
+    "map_texture_txd": "radar0.txd .. radar63.txd — streamed in as the player moves"
+  },
+
+  "scm_opcodes": {
+    "ADD_BLIP_FOR_CAR":         "0x0161",
+    "ADD_BLIP_FOR_CHAR":        "0x0162",
+    "ADD_BLIP_FOR_OBJECT":      "0x0163",
+    "ADD_BLIP_FOR_COORD":       "0x018A",
+    "REMOVE_BLIP":              "0x0164",
+    "CHANGE_BLIP_COLOUR":       "0x01B4",
+    "CHANGE_BLIP_SCALE":        "0x0165",
+    "CHANGE_BLIP_DISPLAY":      "0x01B5"
+  }
+}

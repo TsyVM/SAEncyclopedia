@@ -1,0 +1,117 @@
+{
+ "$schema": "streaming_stores.v1",
+ "generated": "tools/derive_streaming_stores.py",
+ "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+ "summary": {
+  "colstore_slot": 44,
+  "iplstore_slot": 52,
+  "streamedscripts_slots": 82,
+  "facts_checked": 9,
+  "facts_passed": 9
+ },
+ "stores": {
+  "CColStore": {
+   "slot_stride": 44,
+   "pool_global": 9852256,
+   "status_byte_off": 40,
+   "count": "dynamic (CPool)",
+   "slot_schema": "CColStoreSlot",
+   "slot_fields": [
+    { "name": "m_Area",                 "offset":  0, "size": 16, "type": "float[4]",  "note": "bounding rect (left, bottom, right, top) for the collision area; used by HasCollisionLoaded" },
+    { "name": "name",                   "offset": 16, "size": 18, "type": "char[18]",  "note": "collision filename (null-terminated, max 18 chars), e.g. \"generic\"" },
+    { "name": "m_nModelIdStart",        "offset": 34, "size":  2, "type": "int16",     "note": "first model index covered by this collision file; set by IncludeModelIndex" },
+    { "name": "m_nModelIdEnd",          "offset": 36, "size":  2, "type": "int16",     "note": "last model index covered by this collision file" },
+    { "name": "m_nRefCount",            "offset": 38, "size":  2, "type": "uint16",    "note": "reference count; 0 = eligible for unload" },
+    { "name": "m_bActive",              "offset": 40, "size":  1, "type": "uint8",     "note": "non-zero = slot is active and data is loaded" },
+    { "name": "m_bCollisionIsRequired", "offset": 41, "size":  1, "type": "bool",      "note": "true = must not be unloaded (set by SetCollisionRequired)" },
+    { "name": "m_bProcedural",          "offset": 42, "size":  1, "type": "bool",      "note": "true = procedurally generated collision, not from a .col file" },
+    { "name": "m_bInterior",            "offset": 43, "size":  1, "type": "bool",      "note": "true = interior collision data (separate streaming priority)" }
+   ]
+  },
+  "CIplStore": {
+   "slot_stride": 52,
+   "pool_global": 9322416,
+   "count": "dynamic (CPool)",
+   "slot_schema": "CIplStoreSlot",
+   "slot_fields": [
+    { "name": "bb",                       "offset":  0, "size": 16, "type": "float[4]",  "note": "bounding rect (left, bottom, right, top) for the IPL area; used to determine when this file must be streamed in" },
+    { "name": "name",                     "offset": 16, "size": 18, "type": "char[18]",  "note": "IPL filename (null-terminated, max 18 chars), e.g. \"LA_SFC\"" },
+    { "name": "firstBuilding",            "offset": 34, "size":  2, "type": "int16",     "note": "first CBuilding entity index in this IPL; SHRT_MAX = not yet populated" },
+    { "name": "lastBuilding",             "offset": 36, "size":  2, "type": "int16",     "note": "last CBuilding entity index in this IPL; SHRT_MIN = not yet populated" },
+    { "name": "firstDummy",               "offset": 38, "size":  2, "type": "int16",     "note": "first CDummy entity index in this IPL; SHRT_MAX = not yet populated" },
+    { "name": "lastDummy",                "offset": 40, "size":  2, "type": "int16",     "note": "last CDummy entity index in this IPL; SHRT_MIN = not yet populated" },
+    { "name": "staticIdx",                "offset": 42, "size":  2, "type": "int16",     "note": "entity-arrays index for this IPL; -1 = none" },
+    { "name": "isInterior",               "offset": 44, "size":  1, "type": "bool",      "note": "true = IPL contains interior geometry (alters streaming priority)" },
+    { "name": "loaded",                   "offset": 45, "size":  1, "type": "uint8",     "note": "non-zero = IPL data is currently loaded in memory" },
+    { "name": "loadRequested",            "offset": 46, "size":  1, "type": "bool",      "note": "true = a load request is pending (streaming has been asked to load this IPL)" },
+    { "name": "disableDynamicStreaming",  "offset": 47, "size":  1, "type": "bool",      "note": "true (default) = never dynamically unloaded; used for always-present cells" },
+    { "name": "ignoreWhenDeleted",        "offset": 48, "size":  1, "type": "uint8",     "note": "flag to suppress deletion notifications for entities in this IPL (used during shutdown)" },
+    { "name": "isLarge",                  "offset": 49, "size":  1, "type": "uint8",     "note": "true = use +350 unit bounding-box expansion instead of default +200" },
+    { "name": "_tail_pad",                "offset": 50, "size":  2, "type": "pad",       "note": "structural tail padding; raw size = 50B, padded to 52B (4-byte alignment)" }
+   ]
+  },
+  "CStreamedScripts": {
+   "slots": 82,
+   "slot_stride": 32,
+   "records_base_off": 8,
+   "count_word_off": 2628,
+   "flag_byte_off": 4
+  }
+ },
+ "structural_facts": [
+  {
+   "entry_va": "0x00410730",
+   "method": "CColStore::RemoveCol",
+   "fact": "CColStore slot = 0x2C (44 B); CPool object @ 0x965560, array@+0 / flag-bytes@+4",
+   "verified": true
+  },
+  {
+   "entry_va": "0x00411330",
+   "method": "CColStore::RemoveColSlot",
+   "fact": "RemoveColSlot: same 0x2C stride; per-slot status byte at slot+0x28",
+   "verified": true
+  },
+  {
+   "entry_va": "0x00410820",
+   "method": "CColStore::IncludeModelIndex",
+   "fact": "IncludeModelIndex indexes the same 0x2C slot",
+   "verified": true
+  },
+  {
+   "entry_va": "0x00405850",
+   "method": "CIplStore::RequestIplAndIgnore",
+   "fact": "CIplStore slot = 0x34 (52 B); CPool object @ 0x8E3FB0, array@+0 / flag-bytes@+4",
+   "verified": true
+  },
+  {
+   "entry_va": "0x00405B60",
+   "method": "CIplStore::RemoveIplSlot",
+   "fact": "RemoveIplSlot: same 0x34 stride",
+   "verified": true
+  },
+  {
+   "entry_va": "0x00404C90",
+   "method": "CIplStore::IncludeEntity",
+   "fact": "IncludeEntity indexes the same 0x34 slot",
+   "verified": true
+  },
+  {
+   "entry_va": "0x004706A0",
+   "method": "CStreamedScripts::ReInitialise",
+   "fact": "streamed-script table = 0x52 (82) slots x 0x20 (32 B); flag byte at slot+4 cleared",
+   "verified": true
+  },
+  {
+   "entry_va": "0x004706C0",
+   "method": "CStreamedScripts::RegisterScript",
+   "fact": "RegisterScript: slot = index*32 at this+8; live count word at this+0xA44",
+   "verified": true
+  },
+  {
+   "entry_va": "0x004708E0",
+   "method": "CStreamedScripts::RemoveStreamedScriptFromMemory",
+   "fact": "RemoveStreamedScriptFromMemory: same 32-byte slot (shl 5)",
+   "verified": true
+  }
+ ]
+}

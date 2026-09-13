@@ -1,0 +1,766 @@
+{
+ "chapter": "C42",
+ "subject": "CPhysical -- rigid-body base of every moving entity",
+ "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+ "_methodology": "Primary: disassembly VALIDATE_OFFSET macros (compile-time assertions; authoritative). Secondary: disassembly Physical.h (flag names and bitfield layout). Tertiary: Capstone disassembly sweep of 18 CPhysical methods from gta_sa.exe (upgrades tier to verified_by_disassembly when offset appears in 2+ function bodies). m_nPhysicalFlags @0x40 was the critical discovery: 28 hits across 15 functions, missing from disassembly header which exposes it as anonymous bitfields.",
+ "class_name": "CPhysical",
+ "size_hex": "0x138",
+ "size_bytes": 312,
+ "base_chain": "CEntity (0x38) -> CPhysical (0x138)",
+ "own_range_hex": "0x38..0x137",
+ "own_size_bytes": 256,
+ "coverage_bytes": 256,
+ "coverage_pct": 100.0,
+ "field_count": 38,
+ "fields": [
+  {
+   "name": "field_38",
+   "offset": "0x38",
+   "offset_int": 56,
+   "size": 4,
+   "type_hint": "int32_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x00542B07",
+   "access_fns": [
+    "ApplyTurnForce",
+    "ApplyForce",
+    "ApplyMoveSpeed",
+    "ApplyFrictionTurnForce",
+    "ApplyFrictionForce",
+    "ApplySoftCollision"
+   ],
+   "note": "purpose unknown; read in ApplyTurnForce + ApplyForce + ApplyMoveSpeed"
+  },
+  {
+   "name": "m_nLastCollisionTime",
+   "offset": "0x3C",
+   "offset_int": 60,
+   "size": 4,
+   "type_hint": "uint32_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x00542D4A",
+   "access_fns": [
+    "GetSpeed",
+    "ApplyFrictionTurnForce",
+    "ApplyFrictionForce",
+    "AddCollisionRecord",
+    "ApplySoftCollision"
+   ],
+   "note": "game timer value at last collision frame"
+  },
+  {
+   "name": "m_nPhysicalFlags",
+   "offset": "0x40",
+   "offset_int": 64,
+   "size": 4,
+   "type_hint": "uint32_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005429A4",
+   "access_fns": [
+    "SetDamagedPieceRecord",
+    "ApplyMoveForce",
+    "ApplyTurnForce",
+    "ApplyForce",
+    "GetSpeed",
+    "ApplyMoveSpeed",
+    "ApplyTurnSpeed",
+    "ApplyGravity",
+    "ApplyFrictionMoveForce",
+    "ApplyFrictionTurnForce",
+    "ApplyFrictionForce",
+    "SkipPhysics",
+    "AddCollisionRecord",
+    "GetHasCollidedWith",
+    "ApplySoftCollision"
+   ],
+   "access_count": 28,
+   "note": "union of 32 physics behavior bitflags. Checked in almost every physics function to gate behaviour. Source: disassembly Physical.h + disassembly CPhysical.h bitfield declaration.",
+   "bitfields": [
+    {
+     "name": "bIsHeavy",
+     "bit": 0,
+     "mask": "0x00000001",
+     "note": "double the mass"
+    },
+    {
+     "name": "bApplyGravity",
+     "bit": 1,
+     "mask": "0x00000002"
+    },
+    {
+     "name": "bDisableCollisionForce",
+     "bit": 2,
+     "mask": "0x00000004"
+    },
+    {
+     "name": "bCollidable",
+     "bit": 3,
+     "mask": "0x00000008"
+    },
+    {
+     "name": "bDisableTurnForce",
+     "bit": 4,
+     "mask": "0x00000010"
+    },
+    {
+     "name": "bDisableMoveForce",
+     "bit": 5,
+     "mask": "0x00000020"
+    },
+    {
+     "name": "bInfiniteMass",
+     "bit": 6,
+     "mask": "0x00000040"
+    },
+    {
+     "name": "bDisableZ",
+     "bit": 7,
+     "mask": "0x00000080"
+    },
+    {
+     "name": "bSubmergedInWater",
+     "bit": 8,
+     "mask": "0x00000100"
+    },
+    {
+     "name": "bOnSolidSurface",
+     "bit": 9,
+     "mask": "0x00000200"
+    },
+    {
+     "name": "bBroken",
+     "bit": 10,
+     "mask": "0x00000400"
+    },
+    {
+     "name": "bProcessCollisionEvenIfStationary",
+     "bit": 11,
+     "mask": "0x00000800"
+    },
+    {
+     "name": "bSkipLineCol",
+     "bit": 12,
+     "mask": "0x00001000",
+     "note": "only used for peds"
+    },
+    {
+     "name": "bDontApplySpeed",
+     "bit": 13,
+     "mask": "0x00002000"
+    },
+    {
+     "name": "b14",
+     "bit": 14,
+     "mask": "0x00004000"
+    },
+    {
+     "name": "bProcessingShift",
+     "bit": 15,
+     "mask": "0x00008000"
+    },
+    {
+     "name": "b16",
+     "bit": 16,
+     "mask": "0x00010000"
+    },
+    {
+     "name": "bDisableSimpleCollision",
+     "bit": 17,
+     "mask": "0x00020000"
+    },
+    {
+     "name": "bBulletProof",
+     "bit": 18,
+     "mask": "0x00040000"
+    },
+    {
+     "name": "bFireProof",
+     "bit": 19,
+     "mask": "0x00080000"
+    },
+    {
+     "name": "bCollisionProof",
+     "bit": 20,
+     "mask": "0x00100000"
+    },
+    {
+     "name": "bMeleeProof",
+     "bit": 21,
+     "mask": "0x00200000"
+    },
+    {
+     "name": "bInvulnerable",
+     "bit": 22,
+     "mask": "0x00400000"
+    },
+    {
+     "name": "bExplosionProof",
+     "bit": 23,
+     "mask": "0x00800000"
+    },
+    {
+     "name": "bDontCollideWithFlyers",
+     "bit": 24,
+     "mask": "0x01000000"
+    },
+    {
+     "name": "bAttachedToEntity",
+     "bit": 25,
+     "mask": "0x02000000"
+    },
+    {
+     "name": "bAddMovingCollisionSpeed",
+     "bit": 26,
+     "mask": "0x04000000"
+    },
+    {
+     "name": "bTouchingWater",
+     "bit": 27,
+     "mask": "0x08000000"
+    },
+    {
+     "name": "bCanBeCollidedWith",
+     "bit": 28,
+     "mask": "0x10000000"
+    },
+    {
+     "name": "bDestroyed",
+     "bit": 29,
+     "mask": "0x20000000"
+    },
+    {
+     "name": "b30",
+     "bit": 30,
+     "mask": "0x40000000"
+    },
+    {
+     "name": "b31",
+     "bit": 31,
+     "mask": "0x80000000"
+    }
+   ]
+  },
+  {
+   "name": "m_vecMoveSpeed",
+   "offset": "0x44",
+   "offset_int": 68,
+   "size": 12,
+   "type_hint": "CVector",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x00542BA7",
+   "access_fns": [
+    "ApplyMoveForce",
+    "ApplyForce",
+    "GetSpeed",
+    "ApplyMoveSpeed",
+    "ApplySoftCollision"
+   ],
+   "note": "linear velocity (world-space). ApplyForce: m_vecMoveSpeed += force/mass"
+  },
+  {
+   "name": "m_vecTurnSpeed",
+   "offset": "0x50",
+   "offset_int": 80,
+   "size": 12,
+   "type_hint": "CVector",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x00542B24",
+   "access_fns": [
+    "ApplyTurnForce",
+    "ApplyForce",
+    "GetSpeed",
+    "ApplyTurnSpeed",
+    "ApplySoftCollision"
+   ],
+   "note": "angular velocity (world-space). ApplyTurnForce: m_vecTurnSpeed += cross(r,F)/I"
+  },
+  {
+   "name": "m_vecFrictionMoveSpeed",
+   "offset": "0x5C",
+   "offset_int": 92,
+   "size": 12,
+   "type_hint": "CVector",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x00542DB4",
+   "access_fns": [
+    "GetSpeed",
+    "ApplyFrictionMoveForce",
+    "ApplyFrictionForce"
+   ],
+   "note": "friction linear velocity accumulator"
+  },
+  {
+   "name": "m_vecFrictionTurnSpeed",
+   "offset": "0x68",
+   "offset_int": 104,
+   "size": 12,
+   "type_hint": "CVector",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x00542D66",
+   "access_fns": [
+    "GetSpeed",
+    "ApplyFrictionTurnForce",
+    "ApplyFrictionForce",
+    "SkipPhysics"
+   ],
+   "note": "friction angular velocity accumulator"
+  },
+  {
+   "name": "m_vecForce",
+   "offset": "0x74",
+   "offset_int": 116,
+   "size": 12,
+   "type_hint": "CVector",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "accumulated force vector for current physics step (VALIDATE_OFFSET confirmed, not seen in Capstone sweep of 18 methods)"
+  },
+  {
+   "name": "m_vecTorque",
+   "offset": "0x80",
+   "offset_int": 128,
+   "size": 12,
+   "type_hint": "CVector",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "accumulated torque vector for current physics step (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_fMass",
+   "offset": "0x8C",
+   "offset_int": 140,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x00542B81",
+   "access_fns": [
+    "ApplyMoveForce",
+    "ApplyForce",
+    "ApplyGravity",
+    "ApplyFrictionMoveForce",
+    "ApplyFrictionTurnForce",
+    "ApplyFrictionForce",
+    "ApplySoftCollision"
+   ],
+   "note": "mass in kg. ApplyForce: fld [esi+0x8C] then fdiv; semantic + literal confirmed"
+  },
+  {
+   "name": "m_fTurnMass",
+   "offset": "0x90",
+   "offset_int": 144,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x00542AC7",
+   "access_fns": [
+    "ApplyTurnForce",
+    "ApplyForce",
+    "ApplyFrictionTurnForce",
+    "ApplyFrictionForce",
+    "ApplySoftCollision"
+   ],
+   "note": "angular inertia (moment of mass). ApplyTurnForce uses this to scale torque"
+  },
+  {
+   "name": "m_fVelocityFrequency",
+   "offset": "0x94",
+   "offset_int": 148,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "velocity integration frequency scalar (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_fAirResistance",
+   "offset": "0x98",
+   "offset_int": 152,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "air resistance coefficient, applied each frame in ApplyAirResistance (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_fElasticity",
+   "offset": "0x9C",
+   "offset_int": 156,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "coefficient of restitution [0..1]; 0=inelastic, 1=perfectly elastic (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_fBuoyancyConstant",
+   "offset": "0xA0",
+   "offset_int": 160,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "buoyancy force multiplier used in water submersion physics (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_vecCentreOfMass",
+   "offset": "0xA4",
+   "offset_int": 164,
+   "size": 12,
+   "type_hint": "CVector",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x00542A80",
+   "access_fns": [
+    "ApplyTurnForce",
+    "ApplyForce",
+    "GetSpeed",
+    "ApplyGravity",
+    "ApplyFrictionTurnForce",
+    "ApplyFrictionForce",
+    "ApplySoftCollision"
+   ],
+   "note": "local-space centre of mass offset from model pivot; used in ApplyTurnForce cross product"
+  },
+  {
+   "name": "m_pCollisionList",
+   "offset": "0xB0",
+   "offset_int": 176,
+   "size": 4,
+   "type_hint": "CEntryInfoList*",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "linked list of collision entries for this entity (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_pMovingList",
+   "offset": "0xB4",
+   "offset_int": 180,
+   "size": 4,
+   "type_hint": "CPtrNodeDoubleLink<CPhysical*>*",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x0054282A",
+   "access_fns": [
+    "AddToMovingList",
+    "RemoveFromMovingList"
+   ],
+   "note": "node in CWorld's moving entity list; set/cleared by AddToMovingList/RemoveFromMovingList"
+  },
+  {
+   "name": "m_nFakePhysics",
+   "offset": "0xB8",
+   "offset_int": 184,
+   "size": 1,
+   "type_hint": "int8_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "non-zero = simplified/fake physics mode (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_nNumEntitiesCollided",
+   "offset": "0xB9",
+   "offset_int": 185,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005433FC",
+   "access_fns": [
+    "SkipPhysics",
+    "AddCollisionRecord"
+   ],
+   "note": "count of entities in m_apCollidedEntities; used in AddCollisionRecord / SkipPhysics"
+  },
+  {
+   "name": "m_nContactSurface",
+   "offset": "0xBA",
+   "offset_int": 186,
+   "size": 1,
+   "type_hint": "uint8_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "eSurfaceType of the surface last contacted (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "field_BB",
+   "offset": "0xBB",
+   "offset_int": 187,
+   "size": 1,
+   "type_hint": "int8_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "padding byte (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_apCollidedEntities",
+   "offset": "0xBC",
+   "offset_int": 188,
+   "size": 24,
+   "type_hint": "CEntity*[6]",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005434FF",
+   "access_fns": [
+    "AddCollisionRecord"
+   ],
+   "note": "array of up to 6 entities this entity collided with this frame"
+  },
+  {
+   "name": "m_fMovingSpeed",
+   "offset": "0xD4",
+   "offset_int": 212,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "scalar speed used by CTheScripts::IsVehicleStopped; updated each physics step (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_fDamageIntensity",
+   "offset": "0xD8",
+   "offset_int": 216,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005428D0",
+   "access_fns": [
+    "SetDamagedPieceRecord",
+    "SkipPhysics"
+   ],
+   "note": "intensity of most recent collision damage; written by SetDamagedPieceRecord; cleared by SkipPhysics"
+  },
+  {
+   "name": "m_pDamageEntity",
+   "offset": "0xDC",
+   "offset_int": 220,
+   "size": 4,
+   "type_hint": "CEntity*",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005428EF",
+   "access_fns": [
+    "SetDamagedPieceRecord",
+    "SkipPhysics"
+   ],
+   "note": "entity that most recently caused damage to this physical"
+  },
+  {
+   "name": "m_vecLastCollisionImpactVelocity",
+   "offset": "0xE0",
+   "offset_int": 224,
+   "size": 12,
+   "type_hint": "CVector",
+   "tier": "verified",
+   "evidence_va": "0x00542937",
+   "access_fns": [
+    "SetDamagedPieceRecord"
+   ],
+   "note": "world-space velocity at last collision impact point; written by SetDamagedPieceRecord (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_vecLastCollisionPosn",
+   "offset": "0xEC",
+   "offset_int": 236,
+   "size": 12,
+   "type_hint": "CVector",
+   "tier": "verified",
+   "evidence_va": "0x00542920",
+   "access_fns": [
+    "SetDamagedPieceRecord"
+   ],
+   "note": "world-space position of last collision; written by SetDamagedPieceRecord (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_nPieceType",
+   "offset": "0xF8",
+   "offset_int": 248,
+   "size": 2,
+   "type_hint": "uint16_t",
+   "tier": "verified_by_disassembly",
+   "evidence_va": "0x005428FF",
+   "access_fns": [
+    "SetDamagedPieceRecord",
+    "SkipPhysics"
+   ],
+   "note": "fragment/piece type index of last damaged piece; used to select damage model"
+  },
+  {
+   "name": "field_FA",
+   "offset": "0xFA",
+   "offset_int": 250,
+   "size": 2,
+   "type_hint": "int16_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "padding to align m_pAttachedTo at 0xFC (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_pAttachedTo",
+   "offset": "0xFC",
+   "offset_int": 252,
+   "size": 4,
+   "type_hint": "CPhysical*",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "parent entity when attached; NULL when free. See AttachEntityToEntity / DettachEntityFromEntity (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_vecAttachOffset",
+   "offset": "0x100",
+   "offset_int": 256,
+   "size": 12,
+   "type_hint": "CVector",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "local offset from attach parent's pivot (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_vecAttachedEntityPosn",
+   "offset": "0x10C",
+   "offset_int": 268,
+   "size": 12,
+   "type_hint": "CVector",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "cached world position of the attached entity (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_qAttachedEntityRotation",
+   "offset": "0x118",
+   "offset_int": 280,
+   "size": 16,
+   "type_hint": "CQuaternion",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "cached rotation of attached entity as quaternion (x,y,z,w = 16 bytes; VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_pEntityIgnoredCollision",
+   "offset": "0x128",
+   "offset_int": 296,
+   "size": 4,
+   "type_hint": "CEntity*",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "collision with this entity is ignored (typically the attach parent; VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_fContactSurfaceBrightness",
+   "offset": "0x12C",
+   "offset_int": 300,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "lighting brightness from contact surface (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_fDynamicLighting",
+   "offset": "0x130",
+   "offset_int": 304,
+   "size": 4,
+   "type_hint": "float",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "accumulated dynamic lighting value for rendering (VALIDATE_OFFSET confirmed)"
+  },
+  {
+   "name": "m_pShadowData",
+   "offset": "0x134",
+   "offset_int": 308,
+   "size": 4,
+   "type_hint": "CRealTimeShadow*",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "pointer to real-time shadow data; NULL if no shadow active (VALIDATE_OFFSET confirmed)"
+  }
+ ],
+ "methods": [
+  {
+   "name": "RemoveAndAdd",
+   "entry_va": "0x00542560",
+   "tier": "verified"
+  },
+  {
+   "name": "AddToMovingList",
+   "entry_va": "0x00542800",
+   "tier": "verified"
+  },
+  {
+   "name": "RemoveFromMovingList",
+   "entry_va": "0x00542860",
+   "tier": "verified"
+  },
+  {
+   "name": "SetDamagedPieceRecord",
+   "entry_va": "0x005428C0",
+   "tier": "verified"
+  },
+  {
+   "name": "ApplyMoveForce",
+   "entry_va": "0x005429F0",
+   "tier": "verified"
+  },
+  {
+   "name": "ApplyTurnForce",
+   "entry_va": "0x00542A50",
+   "tier": "verified"
+  },
+  {
+   "name": "ApplyForce",
+   "entry_va": "0x00542B50",
+   "tier": "verified"
+  },
+  {
+   "name": "GetSpeed",
+   "entry_va": "0x00542CE0",
+   "tier": "verified"
+  },
+  {
+   "name": "ApplyMoveSpeed",
+   "entry_va": "0x00542DD0",
+   "tier": "verified"
+  },
+  {
+   "name": "ApplyTurnSpeed",
+   "entry_va": "0x00542E20",
+   "tier": "verified"
+  },
+  {
+   "name": "ApplyGravity",
+   "entry_va": "0x00542FE0",
+   "tier": "verified"
+  },
+  {
+   "name": "ApplyFrictionMoveForce",
+   "entry_va": "0x005430A0",
+   "tier": "verified"
+  },
+  {
+   "name": "ApplyFrictionTurnForce",
+   "entry_va": "0x00543100",
+   "tier": "verified"
+  },
+  {
+   "name": "ApplyFrictionForce",
+   "entry_va": "0x00543220",
+   "tier": "verified"
+  },
+  {
+   "name": "SkipPhysics",
+   "entry_va": "0x005433B0",
+   "tier": "verified"
+  },
+  {
+   "name": "AddCollisionRecord",
+   "entry_va": "0x00543490",
+   "tier": "verified"
+  },
+  {
+   "name": "GetHasCollidedWith",
+   "entry_va": "0x00543540",
+   "tier": "verified"
+  },
+  {
+   "name": "ApplySoftCollision",
+   "entry_va": "0x00543890",
+   "tier": "verified"
+  }
+ ],
+ "provenance": "disassembly VALIDATE_OFFSET (authoritative) + disassembly Physical.h (bitfield names) + Capstone sweep of 18 CPhysical functions vs gta_sa.exe"
+}

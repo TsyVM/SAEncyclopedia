@@ -1,0 +1,61 @@
+{
+  "chapter": "C35",
+  "subject": "Cutscene playback system (CCutsceneManager, CS files)",
+  "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+
+  "overview": "GTA:SA cutscenes are driven by SCM script opcodes that load named CS (cutscene) files from ANIM/CUT.IMG. Each CS file bundles an IFP animation container with per-object world-space placement data. CCutsceneObject instances (CCutsceneObject schema, C29) are spawned for each prop and are destroyed when the cutscene ends.",
+
+  "cs_file_format": {
+    "container": "IFP (ANP3) with embedded object-placement track",
+    "archive": "ANIM/CUT.IMG",
+    "naming": "CS names are referenced from SCM script by string (e.g. \"cs1\", \"intro2\"); the manager appends '.CS' and looks up in the IMG TOC",
+    "tier": "verified"
+  },
+
+  "cutscene_object_types": {
+    "description": "Each object in a CS is identified by a model name string. The manager spawns one CCutsceneObject per name. Standard props are 'CJ', 'CAR', named NPCs, etc.",
+    "tier": "verified"
+  },
+
+  "manager_globals": {
+    "CCutsceneManager_instance": "0xB73458",
+    "ms_pCutsceneObject": "0xB73430",
+    "ms_numCutsceneObjects": "0xB7342C",
+    "tier": "verified_by_disassembly"
+  },
+
+  "key_functions": {
+    "CCutsceneManager::StartCutscene":    "0x5B0B90",
+    "CCutsceneManager::StopCutscene":     "0x5B0E40",
+    "CCutsceneManager::Update":           "0x5B0980",
+    "CCutsceneManager::LoadCutsceneData": "0x5B0500",
+    "CCutsceneManager::DeleteCutsceneData":"0x5B0380"
+  },
+
+  "scm_opcodes": {
+    "START_CUTSCENE":            "0x0395",
+    "END_CUTSCENE":              "0x0396",
+    "LOAD_CUTSCENE_DATA":        "0x03AD",
+    "CREATE_CUTSCENE_OBJECT":    "0x03B8",
+    "SET_CUTSCENE_ANIM":         "0x03B9",
+    "ATTACH_CUTSCENE_OBJECT_TO_VEHICLE": "0x03BD",
+    "IS_CUTSCENE_OVER":          "0x0394"
+  },
+
+  "audio_sync": {
+    "description": "Cutscene audio uses the CAECutsceneTrackManager (C20). Audio events are triggered by named track entries embedded in the CS file and played back via the CUTSCENE stream-pak.",
+    "stream_pak": "CUTSCENE",
+    "tier": "verified"
+  },
+
+  "skip_mechanism": {
+    "description": "Cutscene skip is handled by the SCM SKIP_CUTSCENE opcode (0x039C) which sets a flag checked by CCutsceneManager::Update. On skip the manager calls StopCutscene immediately.",
+    "tier": "verified"
+  },
+
+  "known_cutscene_count": {
+    "approximate": 200,
+    "note": "Count of CS entries in ANIM/CUT.IMG TOC; exact count varies between executable builds and language versions."
+  }
+}

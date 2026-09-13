@@ -1,0 +1,79 @@
+{
+  "chapter": "C42",
+  "subject": "Vehicle physics: handling manager + CPhysical rigid body",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+  "handling_manager": {
+    "singleton": "0xc2b9c8",
+    "class_size": "0xc624",
+    "load_fn": "0x5BD830",
+    "arrays": {
+      "vehicle": {
+        "count": 210,
+        "stride": "0xe0",
+        "bytes": "0xb7c0"
+      },
+      "bike": {
+        "count": 13,
+        "stride": "0x40",
+        "bytes": "0x340"
+      },
+      "flying": {
+        "count": 24,
+        "stride": "0x58",
+        "bytes": "0x840"
+      },
+      "boat": {
+        "count": 12,
+        "stride": "0x3c",
+        "bytes": "0x2d0"
+      }
+    },
+    "arrays_total": "0xc610",
+    "vehicle_names": {
+      "base": "0x8d3978",
+      "stride": 14,
+      "count": 210,
+      "examples": [
+        "LANDSTAL",
+        "BRAVURA",
+        "BUFFALO"
+      ]
+    }
+  },
+  "thandling_data": {
+    "size": "0xe0",
+    "index": "gHandlingDataMgr + handlingId * 0xE0",
+    "drive_type_offset": "0x88",
+    "drive_type_rear": "'R' (0x52)",
+    "key_fields": [
+      "m_nVehicleId@0",
+      "m_fMass@4",
+      "m_fMassRecpr@8",
+      "m_fTurnMass@0xC",
+      "m_fDragMult@0x10",
+      "m_vecCentreOfMass@0x14",
+      "m_transmissionData(embedded)"
+    ]
+  },
+  "cphysical": {
+    "size": "0x138",
+    "rigid_body_fields": [
+      "m_vecMoveSpeed(linear vel)",
+      "m_vecTurnSpeed(angular vel)",
+      "m_fMass",
+      "m_fTurnMass(inertia)",
+      "m_fAirResistance",
+      "m_fElasticity",
+      "m_vecCentreOfMass"
+    ],
+    "functions": {
+      "ApplyTurnForce": "0x542a50",
+      "ApplyForce": "0x542b50",
+      "ApplyFrictionMoveForce": "0x5430a0"
+    },
+    "impulse_formula": "1 / (cross(pos,dir).sqMag / turnMass + 1/mass)"
+  },
+  "c13_tie": "handling.cfg (C13, 210 rows) -> tHandlingData[210]",
+  "checks_passed": 8,
+  "checks_total": 8
+}

@@ -1,0 +1,96 @@
+{
+  "_note": "Derived by tools/derive_object.py from GTA:SA 1.0 US object.dat + gta_sa.exe. All 15 checks pass. Do not hand-edit.",
+  "sscanf_format": "%s %f %f %f %f %f %f %f %d %d %d %d %d %f %f %f %s %f %f %f %f %f %d %d",
+  "sscanf_format_va": "0x868dc8",
+  "fields": [
+    "name",
+    "mass",
+    "turn_mass",
+    "air_resistance",
+    "elasticity",
+    "percent_submerged",
+    "uproot_limit",
+    "cdamage_multiplier",
+    "cdamage_effect",
+    "special_cdr",
+    "camera_avoid",
+    "causes_explosion",
+    "fx_type",
+    "fx_offset_x",
+    "fx_offset_y",
+    "fx_offset_z",
+    "fx_name",
+    "break_smash_mult",
+    "break_vx",
+    "break_vy",
+    "break_vz",
+    "break_v_rand",
+    "break_gun_mode",
+    "break_sparks"
+  ],
+  "variants": {
+    "basic_fields": 17,
+    "breakable_fields": 24,
+    "distinguished_by": "field count from sscanf, NOT field I"
+  },
+  "census": {
+    "basic": 758,
+    "breakable": 235,
+    "well_formed": 993,
+    "truncated": [
+      "JUD_LAN",
+      "spraydoor_LAw2"
+    ],
+    "markers": 2
+  },
+  "domains": {
+    "cdamage_effect": [
+      0,
+      1,
+      20,
+      200,
+      202
+    ],
+    "special_cdr": [
+      0,
+      1,
+      2,
+      4,
+      6,
+      7,
+      8,
+      9,
+      20
+    ],
+    "fx_type": [
+      0,
+      1,
+      2
+    ],
+    "break_gun_mode": [
+      0,
+      1,
+      2
+    ]
+  },
+  "named_exceptions": {
+    "special_cdr_out_of_range": [
+      "imy_bbox"
+    ],
+    "camera_avoid_undocumented_2": [
+      "CARRIER_DOOR_SFSe",
+      "portakabin"
+    ],
+    "percent_submerged_over_120": [
+      "dump1"
+    ],
+    "breakable_declared_but_no_params": [
+      "sec_keypad"
+    ],
+    "mass_over_documented_50000": 514,
+    "truncated_records": [
+      "JUD_LAN",
+      "spraydoor_LAw2"
+    ]
+  }
+}

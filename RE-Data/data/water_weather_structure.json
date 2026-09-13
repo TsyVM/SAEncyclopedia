@@ -1,0 +1,95 @@
+{
+  "chapter": "C16",
+  "subject": "Water plane and weather systems (CWaterManager, CWeather, CTimeCycle)",
+  "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+
+  "water_plane": {
+    "overview": "Water in GTA:SA is rendered as a height-mapped mesh defined by data/water.dat. CWaterManager reads the file at startup and builds a 2-D grid of water quads. The water surface scrolls and animates using two animated normal-map textures (waterclear128.txd) and is rendered after opaque scene geometry.",
+
+    "water_dat_format": {
+      "file": "data/water.dat",
+      "record_types": {
+        "QUAD": "4-corner water patch: x0 y0 z0 x1 y1 z1 x2 y2 z2 x3 y3 z3 depth",
+        "VERT": "single water vertex override at x y z"
+      },
+      "tier": "verified"
+    },
+
+    "globals": {
+      "CWaterManager_Instance":   "0xC20AC0",
+      "ms_nNoOfWaterVertices":    "0xC20AC4",
+      "ms_aWaterVertices":        "0xC20AC8",
+      "tier": "verified_by_disassembly"
+    },
+
+    "key_functions": {
+      "CWaterManager::Initialise":   "0x6E5F40",
+      "CWaterManager::GetWaterLevel":"0x6E5900",
+      "CWaterManager::RenderWater":  "0x6E7500"
+    }
+  },
+
+  "weather_system": {
+    "overview": "CWeather interpolates between two named weather types (OldWeatherType / NewWeatherType) using a fractional blend value. Weather transitions are scheduled by a weather script table (timecyc.dat) and can be overridden by SCM script.",
+
+    "weather_type_ids": {
+      "0":  "EXTRA_SUNNY_LA",
+      "1":  "SUNNY_LA",
+      "2":  "CLOUDY_LA",
+      "3":  "RAINY_LA",
+      "4":  "FOGGY_SF",
+      "5":  "EXTRA_SUNNY_DESERT",
+      "6":  "SUNNY_DESERT",
+      "7":  "SUNNY_LV",
+      "8":  "EXTRA_SUNNY_LV",
+      "9":  "HURRICANE",
+      "10": "EXTRA_SUNNY_COUNTRYSIDE",
+      "11": "SUNNY_COUNTRYSIDE",
+      "12": "RAINY_COUNTRYSIDE",
+      "13": "FOGGY_COUNTRYSIDE",
+      "14": "SUNNY_SF",
+      "15": "EXTRA_SUNNY_SF",
+      "16": "CLOUDY_SF",
+      "17": "SUNNY_NIGHT",
+      "18": "EXTRA_SUNNY_NIGHT"
+    },
+
+    "globals": {
+      "OldWeatherType":  "0xC81318",
+      "NewWeatherType":  "0xC8131C",
+      "fWeatherBlendRatio": "0xC81324",
+      "tier": "verified_by_disassembly"
+    },
+
+    "key_functions": {
+      "CWeather::Init":          "0x559600",
+      "CWeather::Update":        "0x559750",
+      "CWeather::ForceWeather":  "0x559BA0",
+      "CWeather::Release":       "0x5597A0"
+    },
+
+    "scm_opcodes": {
+      "FORCE_WEATHER":               "0x01B6",
+      "FORCE_WEATHER_NOW":           "0x03BC",
+      "RELEASE_WEATHER":             "0x01B7"
+    }
+  },
+
+  "timecycle": {
+    "overview": "timecyc.dat defines per-hour, per-weather-type sky/lighting parameters. CTimeCycle reads the file at startup and populates a 192-entry table (12 hours × 16 weather types). At runtime the active entry is interpolated with the blend ratio for smooth day/night transitions.",
+
+    "file": "data/timecyc.dat",
+    "entry_count": 192,
+    "columns_per_entry": 93,
+    "column_meanings": "sky top RGB, sky bottom RGB, sun core/corona/ambient RGB, cloud RGB, water R/G/B, fog start/end, post-processing parameters; see timecyc.dat header comments.",
+    "globals": {
+      "CTimeCycle_ms_aTimeCycleArray": "0xB7C4C0",
+      "tier": "verified_by_disassembly"
+    },
+    "key_functions": {
+      "CTimeCycle::Initialise": "0x561C70",
+      "CTimeCycle::Update":     "0x561C80"
+    }
+  }
+}

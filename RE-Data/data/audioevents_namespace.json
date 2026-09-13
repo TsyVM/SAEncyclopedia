@@ -1,0 +1,111 @@
+{
+  "chapter": "C20.6",
+  "subject": "Audio-event namespace recovered from data/AudioEvents.txt (corrects C20.5 sec7)",
+  "corrects": "C20.5 sec7 'the canonical namespace is not recoverable from the shipped files alone'",
+  "audioevents_file": "data/AudioEvents.txt",
+  "namespace": {
+    "count": 7071,
+    "id_range": [
+      1000,
+      45400
+    ],
+    "format": "SOUND_<NAME> <id>  (one per line, blank-line separated)"
+  },
+  "eventvol": {
+    "bytes": 45402,
+    "configured": 597,
+    "sentinel": "0x80 (-128)"
+  },
+  "cross_check": {
+    "configured_named": 447,
+    "configured_total": 597,
+    "named_pct": 74.9,
+    "low_block_unnamed": 149,
+    "high_unnamed": 1
+  },
+  "correction_summary": "C20.5 conflated 'not in the binary' (true - gta_sa.exe has bare integer immediates) with 'not in the shipped files' (FALSE). data/AudioEvents.txt names 7071 audio events; it names 447 of the 597 configured EventVol trim entries. Only the 149 low-block (<1000) engine-internal events remain unnamed by shipped files.",
+  "examples_named": {
+    "1002": {
+      "name": "SOUND_CEILING_VENT_LAND",
+      "trim": -8
+    },
+    "1005": {
+      "name": "SOUND_CLAXON_START",
+      "trim": -2
+    },
+    "1006": {
+      "name": "SOUND_CLAXON_STOP",
+      "trim": -2
+    },
+    "1007": {
+      "name": "SOUND_BLAST_DOOR_SLIDE_START",
+      "trim": -2
+    },
+    "1008": {
+      "name": "SOUND_BLAST_DOOR_SLIDE_STOP",
+      "trim": -2
+    },
+    "1009": {
+      "name": "SOUND_BONNET_DENT",
+      "trim": -6
+    },
+    "1010": {
+      "name": "SOUND_BASKETBALL_BOUNCE",
+      "trim": -6
+    },
+    "1011": {
+      "name": "SOUND_BASKETBALL_HIT_HOOP",
+      "trim": -2
+    },
+    "1012": {
+      "name": "SOUND_BASKETBALL_SCORE",
+      "trim": -5
+    },
+    "1013": {
+      "name": "SOUND_POOL_BREAK",
+      "trim": -2
+    },
+    "1014": {
+      "name": "SOUND_POOL_HIT_WHITE",
+      "trim": -6
+    },
+    "1015": {
+      "name": "SOUND_POOL_BALL_HIT_BALL",
+      "trim": -6
+    },
+    "1016": {
+      "name": "SOUND_POOL_HIT_CUSHION",
+      "trim": -10
+    },
+    "1017": {
+      "name": "SOUND_POOL_BALL_POT",
+      "trim": -6
+    },
+    "1018": {
+      "name": "SOUND_POOL_CHALK_CUE",
+      "trim": -6
+    },
+    "1019": {
+      "name": "SOUND_CRANE_ENTER",
+      "trim": 0
+    },
+    "1020": {
+      "name": "SOUND_CRANE_MOVE_START",
+      "trim": 14
+    },
+    "1021": {
+      "name": "SOUND_CRANE_MOVE_STOP",
+      "trim": 2
+    },
+    "1022": {
+      "name": "SOUND_CRANE_EXIT",
+      "trim": 9
+    },
+    "1023": {
+      "name": "SOUND_CRANE_SMASH_PORTACABIN",
+      "trim": -2
+    }
+  },
+  "checks_passed": 5,
+  "checks_total": 5
+}

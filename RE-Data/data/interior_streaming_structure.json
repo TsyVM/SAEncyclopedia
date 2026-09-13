@@ -1,0 +1,65 @@
+{
+  "chapter": "C10",
+  "subject": "Interior streaming and portal system — room IDs, IPL INST interiors, and CInterior",
+  "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+
+  "overview": "GTA:SA divides the world into an exterior (interior ID 0) and up to 13 named interiors. Interior geometry is stored in separate .IPL files and loaded on demand when the player enters a trigger zone. The active interior ID is a global that the renderer checks to cull geometry: exterior models are hidden inside interiors and vice versa. The transition is instantaneous (fade-to-black screen).",
+
+  "interior_ids": {
+    "description": "Interior ID constants. 0 = exterior world. All other IDs correspond to distinct streaming regions loaded from data/maps/*.ipl files.",
+    "INTERIOR_EXTERIOR":    { "id": 0,  "description": "The open world (default state)" },
+    "INTERIOR_LSPOLICE":    { "id": 1,  "description": "LS Police station interior" },
+    "INTERIOR_SFPOLICE":    { "id": 2,  "description": "SF Police station interior" },
+    "INTERIOR_LVPOLICE":    { "id": 3,  "description": "LV Police station interior" },
+    "INTERIOR_BANK":        { "id": 4,  "description": "Bank vault (mission-specific)" },
+    "INTERIOR_CASINO":      { "id": 5,  "description": "Four Dragons Casino floor" },
+    "INTERIOR_STRIPCLUB":   { "id": 6,  "description": "Caligula's Palace / Pig Pen" },
+    "INTERIOR_BARBER":      { "id": 7,  "description": "Barber shop" },
+    "INTERIOR_TATTOO":      { "id": 8,  "description": "Tattoo parlour" },
+    "INTERIOR_GYM":         { "id": 9,  "description": "Gym interior" },
+    "INTERIOR_BURGERSHOT":  { "id": 10, "description": "Burger Shot restaurant" },
+    "INTERIOR_CLUCKIN_BELL":{ "id": 11, "description": "Cluckin' Bell restaurant" },
+    "INTERIOR_PIZZA":       { "id": 12, "description": "Pizza Stack restaurant" },
+    "INTERIOR_VICTIM":      { "id": 13, "description": "Victim clothing store" }
+  },
+
+  "active_interior_global": {
+    "CGame_currArea": {
+      "va": "0xB72914",
+      "type": "int32",
+      "description": "Current active interior ID. 0 = exterior. Set by the trigger zone callback when the player crosses into/out of an interior.",
+      "tier": "verified"
+    }
+  },
+
+  "ipl_inst_interior_field": {
+    "description": "Each INST line in an .IPL file has an interior ID field (column 11). Objects with interior ID 0 are exterior; objects with ID > 0 only exist while that interior is active. This is how interior geometry is selectively rendered without removing objects from the world grid.",
+    "inst_line_format": "id, modelName, interior, posX, posY, posZ, rotX, rotY, rotZ, rotW, lod",
+    "column_11_meaning": "Interior ID: 0 = visible in exterior world, N = visible only when CGame::currArea == N",
+    "tier": "verified"
+  },
+
+  "streaming_region_files": {
+    "description": "Interior models are streamed from dedicated IPL and IMG entries. The interior IPL is separate from the main world IPL to allow on-demand loading.",
+    "examples": [
+      "data/maps/interior/int_la.ipl",
+      "data/maps/interior/int_sf.ipl",
+      "data/maps/interior/int_lv.ipl",
+      "data/maps/generic/citye.ipl"
+    ],
+    "tier": "verified"
+  },
+
+  "portal_system": {
+    "description": "GTA:SA does not use a true portal renderer. Interior/exterior transitions are handled by: (1) a trigger zone (ENEX or SCM 018C opcode) that changes CGame::currArea, (2) a fade-to-black that hides the transition, and (3) a teleport of the player to the interior spawn point. There are no real-time portals or occlusion volumes.",
+    "enex_dat_file": "data/enexpoints.dat",
+    "enex_entry_format": "name, entPosX, entPosY, entPosZ, entAngle, intID, spawnX, spawnY, spawnZ, spawnAngle",
+    "tier": "verified"
+  },
+
+  "key_functions": {
+    "CGame_SetCurrentArea":   { "va": "0x53EB70", "description": "Set CGame::currArea and trigger streaming reload for new interior" },
+    "CStreaming_LoadScene":    { "va": "0x40E670", "description": "Request model streaming for a new IPL region" }
+  }
+}

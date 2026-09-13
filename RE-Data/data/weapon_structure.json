@@ -1,0 +1,221 @@
+{
+  "source": "weapon.dat $ gun records + gta_sa.exe 1.0 US cross-check (C14.4)",
+  "dollar_record": {
+    "active_rows": 53,
+    "disabled_rows": 5,
+    "widths": {
+      "25": 43,
+      "29": 10
+    },
+    "fields_25": [
+      "name",
+      "eFireType",
+      "targetRange",
+      "weaponRange",
+      "modelId1",
+      "modelId2",
+      "weaponslot",
+      "assocGroupId",
+      "ammoClip",
+      "damage",
+      "fireOffX",
+      "fireOffY",
+      "fireOffZ",
+      "skillLevel",
+      "reqStat",
+      "accuracy",
+      "moveSpeed",
+      "anim1start",
+      "anim1end",
+      "anim1fire",
+      "anim2start",
+      "anim2end",
+      "anim2fire",
+      "breakout",
+      "flags"
+    ],
+    "fields_29_extra": [
+      "speed",
+      "radius",
+      "lifespan",
+      "spread"
+    ]
+  },
+  "skill_level_census": {
+    "triple_tier_weapons": 10,
+    "single_tier_weapons": 19,
+    "pistol_rows": 4,
+    "pistol_undocumented_tier": "P=3 (colt_cop model, reqStat=5000)"
+  },
+  "flags_bit_table": [
+    {
+      "1": "CANAIM",
+      "2": "AIMWITHARM",
+      "4": "1STPERSON",
+      "8": "ONLYFREEAIM"
+    },
+    {
+      "1": "MOVEAIM",
+      "2": "MOVEFIRE"
+    },
+    {
+      "1": "THROW",
+      "2": "HEAVY",
+      "4": "CONTINUOUSFIRE",
+      "8": "TWIN_PISTOL"
+    },
+    {
+      "1": "RELOAD",
+      "2": "CROUCHFIRE",
+      "4": "RELOAD2START",
+      "8": "LONG_RELOAD"
+    },
+    {
+      "1": "SLOWSDWN",
+      "2": "RANDSPEED",
+      "4": "EXPANDS"
+    }
+  ],
+  "undocumented_bits": {
+    "nibble2_bit8": [
+      "COUNTRYRIFLE",
+      "RLAUNCHER",
+      "RLAUNCHER_HS",
+      "SNIPERRIFLE"
+    ],
+    "nibble5_bit8": [
+      "COUNTRYRIFLE",
+      "EXTINGUISHER",
+      "FTHROWER",
+      "MINIGUN"
+    ]
+  },
+  "disabled_rows": {
+    "COUNTRYRIFLE": [
+      "P=0",
+      "P=2"
+    ],
+    "SNIPERRIFLE": [
+      "P=0",
+      "P=2"
+    ],
+    "JETPACK": [
+      "fully cut (only row)"
+    ],
+    "SKATEBOARD (melee \u00a3)": [
+      "fully cut (only row)"
+    ]
+  },
+  "exe_crosscheck": {
+    "exe_md5": "170b3a9108687b26da2d8901c6948a18",
+    "weapontype_table": [
+      "UNARMED",
+      "BRASSKNUCKLE",
+      "GOLFCLUB",
+      "NIGHTSTICK",
+      "KNIFE",
+      "BASEBALLBAT",
+      "SHOVEL",
+      "POOLCUE",
+      "KATANA",
+      "CHAINSAW",
+      "DILDO1",
+      "DILDO2",
+      "VIBE1",
+      "VIBE2",
+      "FLOWERS",
+      "CANE",
+      "GRENADE",
+      "TEARGAS",
+      "MOLOTOV",
+      "ROCKET",
+      "ROCKET_HS",
+      "FREEFALL_BOMB",
+      "PISTOL",
+      "PISTOL_SILENCED",
+      "DESERT_EAGLE",
+      "SHOTGUN",
+      "SAWNOFF",
+      "SPAS12",
+      "MICRO_UZI",
+      "MP5",
+      "AK47",
+      "M4",
+      "TEC9",
+      "COUNTRYRIFLE",
+      "SNIPERRIFLE",
+      "RLAUNCHER",
+      "RLAUNCHER_HS",
+      "FTHROWER",
+      "MINIGUN",
+      "SATCHEL_CHARGE",
+      "DETONATOR",
+      "SPRAYCAN",
+      "EXTINGUISHER",
+      "CAMERA",
+      "NIGHTVISION",
+      "INFRARED",
+      "PARACHUTE",
+      "",
+      "ARMOUR"
+    ],
+    "weapontype_table_size": 49,
+    "nameless_slot_index": 47,
+    "names_absent_from_exe_table": [
+      "JETPACK",
+      "SKATEBOARD"
+    ],
+    "exe_names_absent_from_weapon_dat": [
+      "ARMOUR"
+    ],
+    "reload_sample_time_string_found": false,
+    "flags_bit_names_found_in_exe": []
+  },
+  "exe_crosscheck_checks": [
+    {
+      "check": "gta_sa.exe MD5 matches the documented 1.0 US retail binary",
+      "passed": true,
+      "detail": "170b3a9108687b26da2d8901c6948a18"
+    },
+    {
+      "check": "WEAPONTYPE pointer table found and starts at UNARMED",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "WEAPONTYPE pointer table ends at ARMOUR",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "WEAPONTYPE pointer table has 49 entries (48 named + 1 blank slot)",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "exactly one nameless WEAPONTYPE slot, at id 47 (between PARACHUTE and ARMOUR)",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "every weapon.dat name is in the exe table EXCEPT JETPACK and SKATEBOARD",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "ARMOUR is the only exe-table name absent from weapon.dat (non-weapon pickup)",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "no trace of 'reloadSampleTime' anywhere in the executable (case-insensitive)",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "none of the 15 documented flags-bit names appear as standalone strings in the executable",
+      "passed": true,
+      "detail": ""
+    }
+  ]
+}

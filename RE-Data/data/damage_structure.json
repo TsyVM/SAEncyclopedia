@@ -1,0 +1,55 @@
+{
+  "chapter": "C45",
+  "subject": "The damage model: eWeaponType taxonomy + armour/health",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+  "cped_fields": {
+    "m_fHealth": "0x540",
+    "m_fMaxHealth": "0x544",
+    "m_fArmour": "0x548",
+    "default_max": 100.0,
+    "cped_size": "0x79C"
+  },
+  "absorption_model": {
+    "order": "armour (+0x548) absorbs first; overflow spills into health (+0x540); both floored at 0.0",
+    "floor_const": "0x858b50",
+    "death": "health reaches 0 -> ped killed",
+    "code_site": "0x47108a",
+    "armour_bypass": "WEAPON_FALL (0x36) and WEAPON_DROWNING (0x35) skip armour entirely (damage-response calculator @0x4AD550) - armour does not protect against falls or drowning (C45.4)"
+  },
+  "damage_sources_eWeaponType": {
+    "melee": "0..15 (fist, brassknuckle, bats, blades, cane)",
+    "guns": "22..38 (pistol..minigun) - shooting; damage from weapon.dat (C14.4)",
+    "WEAPON_ARMOUR": 48,
+    "WEAPON_RAMMEDBYCAR": 49,
+    "WEAPON_RUNOVERBYCAR": 50,
+    "WEAPON_EXPLOSION": 51,
+    "WEAPON_UZI_DRIVEBY": 52,
+    "WEAPON_DROWNING": 53,
+    "WEAPON_FALL": 54,
+    "WEAPON_UNIDENTIFIED": 55,
+    "WEAPON_ANYMELEE": 56,
+    "WEAPON_ANYWEAPON": 57,
+    "WEAPON_FLARE": 58
+  },
+  "damage_source_answer": {
+    "shooting": "gun eWeaponType (22..38) -> weapon.dat damage (C14.4)",
+    "hit_by_vehicle": "WEAPON_RAMMEDBYCAR (49) / WEAPON_RUNOVERBYCAR (50); magnitude from CPhysical impact (C42)",
+    "fall_from_height": "WEAPON_FALL (54); magnitude from impact velocity (C42)",
+    "drowning": "WEAPON_DROWNING (53); triggered by the underwater breath timer",
+    "explosion": "WEAPON_EXPLOSION (51)"
+  },
+  "event_flow": {
+    "CEventDamage": "0x44",
+    "CPedDamageResponse": "0xC",
+    "CPedDamageResponseCalculator": "0x14",
+    "note": "a source builds CEventDamage(weaponType, bodyPart); the calculator computes the response; the event enters the ped's C41 event group and the task tree reacts (flinch/fall/die)"
+  },
+  "ties": {
+    "C14": "weapon.dat gun damage values",
+    "C41": "CEvent -> task response",
+    "C42": "CPhysical impact velocity for fall/vehicle damage",
+    "C16": "water for drowning"
+  },
+  "checks_passed": 7,
+  "checks_total": 7
+}

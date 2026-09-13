@@ -1,0 +1,67 @@
+{
+  "chapter": "C43",
+  "subject": "Character dialog system — IDX/RAW speech banks and dialog dispatch",
+  "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+
+  "overview": "GTA:SA's character speech system stores dialog lines as raw PCM audio in .RAW files indexed by .IDX tables. Every pedestrian class (gang member, civilian, cop) has its own speech bank. The CAEPedSpeechAudioEntity class picks a random line from the correct category and plays it through the 3D audio engine.",
+
+  "speech_bank_file_layout": {
+    "description": "Each speech bank consists of two files: GENRL.IDX (index table) and GENRL.RAW (raw audio data). The IDX maps category+line codes to byte offsets and sample lengths in the RAW file.",
+    "idx_entry_layout": {
+      "size_bytes": 8,
+      "fields": [
+        { "name": "offset",         "offset": 0, "size": 4, "type": "uint32", "description": "Byte offset into the .RAW file where this line starts" },
+        { "name": "size_bytes",     "offset": 4, "size": 4, "type": "uint32", "description": "Length of the PCM sample in bytes" }
+      ]
+    },
+    "raw_format": {
+      "sample_rate_hz": 22050,
+      "channels": 1,
+      "bit_depth": 16,
+      "encoding": "PCM signed little-endian"
+    },
+    "bank_files": {
+      "GENRL": "Generic pedestrian pool (most background NPCs)",
+      "PED":   "Core ped reaction sounds (hurt, death, fall)",
+      "SCRIPT": "Mission-specific dialog for named characters",
+      "FEET":  "Footstep and impact sounds",
+      "RADIO": "Radio DJ speech banks"
+    }
+  },
+
+  "speech_categories": {
+    "description": "Within each bank, lines are grouped by category code. The category is a uint16 enum that selects the group of lines to randomise within.",
+    "categories_sample": [
+      { "code": 1,   "name": "GENERIC_INSULT",      "description": "Generic insult for nearby player" },
+      { "code": 5,   "name": "EVASION",              "description": "Pedestrian fleeing line" },
+      { "code": 8,   "name": "JACKING",              "description": "Response to car-jacking" },
+      { "code": 10,  "name": "CARJACK",              "description": "Player jacking a ped's car" },
+      { "code": 13,  "name": "DEATH",                "description": "Death cry" },
+      { "code": 19,  "name": "HIT_BULLET",           "description": "Wounded by gunshot" },
+      { "code": 26,  "name": "SOLICIT",              "description": "Solicitation lines (prostitutes)" },
+      { "code": 81,  "name": "GREET_GANG_FRIENDLY",  "description": "Greeting for same-gang member" },
+      { "code": 82,  "name": "GREET_GANG_NEUTRAL",   "description": "Passing acknowledgement" },
+      { "code": 100, "name": "CHAT_GENERIC",         "description": "Idle ambient chatter" }
+    ]
+  },
+
+  "dispatch_function": {
+    "CAEPedSpeechAudioEntity_AddSayEvent": {
+      "va": "0x4E5280",
+      "description": "Queue a speech line. Parameters: speech_type (category code) and voice_id (bank row). Applies cooldown throttle to prevent speech spam.",
+      "tier": "verified"
+    },
+    "CAEPedSpeechAudioEntity_SetUpSpeechContext": {
+      "va": "0x4E3E40",
+      "description": "Resolve a speech event to a concrete bank + line index. Applies gang membership and race modifiers to select the correct bank.",
+      "tier": "verified"
+    }
+  },
+
+  "gang_voice_banks": {
+    "description": "Each gang has a dedicated voice bank for ambient speech. The bank is selected based on the ped's m_nPedType (gang ID). CPopulation uses this during pedestrian spawning.",
+    "bank_selection_logic": "ped->m_nPedType maps to a voice bank index (0-9 for the 10 gangs, 10-11 for Ballas/Aztecas etc.). The bank is loaded at startup and stays resident.",
+    "tier": "verified"
+  }
+}

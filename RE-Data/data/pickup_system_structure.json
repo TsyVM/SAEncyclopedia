@@ -1,0 +1,74 @@
+{
+  "chapter": "C24",
+  "subject": "CPickup collectible system — pool layout, type enum, and respawn logic",
+  "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+
+  "overview": "Pickups are world-space collectible entities: weapons, health, armour, money, mission items, and script-placed objects. The game maintains a fixed pool of 320 CPickup slots. Each slot cycles through three states: VISIBLE → COLLECTED → RESPAWNING → VISIBLE. Pickup triggers are spherical proximity tests, not collision volumes.",
+
+  "pool_info": {
+    "pool_global_va": "0xC3C278",
+    "pool_capacity": 320,
+    "tier": "verified"
+  },
+
+  "CPickup_layout": {
+    "description": "CPickup struct layout (48 bytes).",
+    "size_bytes": 48,
+    "fields": [
+      { "name": "m_vecPos",           "offset": 0,  "size": 12, "type": "CVector",  "description": "World-space position (centre of pickup sphere)" },
+      { "name": "m_fRadius",          "offset": 12, "size": 4,  "type": "float",    "description": "Collection trigger radius (default 1.5m)" },
+      { "name": "m_nModelIndex",      "offset": 16, "size": 2,  "type": "uint16",   "description": "Model ID of the rendered pickup mesh (0 = no mesh)" },
+      { "name": "m_nPickupType",      "offset": 18, "size": 1,  "type": "uint8",    "description": "Pickup type enum (see pickup_types below)" },
+      { "name": "m_nState",           "offset": 19, "size": 1,  "type": "uint8",    "description": "State: 0=EMPTY, 1=VISIBLE, 2=COLLECTED_MONEY, 3=COLLECTED_HEALTH, 4=COLLECTED_AMMO, etc." },
+      { "name": "m_nAmmo",            "offset": 20, "size": 4,  "type": "int32",    "description": "Ammo count for weapon pickups; money amount for cash pickups" },
+      { "name": "m_nRespawnTime",     "offset": 24, "size": 4,  "type": "uint32",   "description": "Game ticks until respawn (set when collected; 0 = ready)" },
+      { "name": "m_pObject",          "offset": 28, "size": 4,  "type": "CObject*", "description": "Pointer to the world CObject that renders the pickup mesh; null when not visible" },
+      { "name": "m_nIndex",           "offset": 32, "size": 4,  "type": "uint32",   "description": "Slot index in the pool; used to reconstruct handle from collected callback" },
+      { "name": "m_nMoneyPerVisit",   "offset": 36, "size": 4,  "type": "int32",    "description": "Money awarded per collection cycle (revenue pickups only)" },
+      { "name": "m_nMessage",         "offset": 40, "size": 4,  "type": "uint32",   "description": "GXT key hash for the on-screen message shown when collected (0 = no message)" },
+      { "name": "PADDING",            "offset": 44, "size": 4,  "type": "uint32",   "description": "Alignment padding to 48 bytes" }
+    ],
+    "tier": "verified"
+  },
+
+  "pickup_type_enum": {
+    "PICKUP_NONE":           { "id": 0,  "description": "Inactive slot" },
+    "PICKUP_IN_SHOP":        { "id": 1,  "description": "For-sale in Ammu-Nation (not used in world)" },
+    "PICKUP_ON_STREET":      { "id": 2,  "description": "Respawning street pickup (weapons left by dead peds)" },
+    "PICKUP_ONCE":           { "id": 3,  "description": "Single-collect; disappears after pickup (hidden packages, collectibles)" },
+    "PICKUP_ONCE_TIMEOUT":   { "id": 4,  "description": "Once, with a 20-second timeout before auto-remove" },
+    "PICKUP_COLLECTABLE1":   { "id": 5,  "description": "Oyster / horseshoe / snapshot collectible (tracked in stats)" },
+    "PICKUP_IN_SHOP_OUT_OF_STOCK": { "id": 6, "description": "Shop pickup, out of stock" },
+    "PICKUP_MONEY":          { "id": 7,  "description": "Cash money (rotating dollar sign model)" },
+    "PICKUP_MINE_INACTIVE":  { "id": 8,  "description": "Placed mine, not yet armed" },
+    "PICKUP_MINE_ARMED":     { "id": 9,  "description": "Active mine — triggers explosion on proximity" },
+    "PICKUP_NAUTICAL_MINE_INACTIVE": { "id": 10, "description": "Water mine, inactive" },
+    "PICKUP_NAUTICAL_MINE_ARMED": { "id": 11, "description": "Active water mine" },
+    "PICKUP_FLOATINGPACKAGE": { "id": 12, "description": "Package that floats on water (drug deal drops)" },
+    "PICKUP_FLOATINGPACKAGE_FLOATING": { "id": 13, "description": "Floating package currently in water" },
+    "PICKUP_ON_STREET_SLOW": { "id": 14, "description": "Respawning street pickup with 30s respawn instead of 10s" }
+  },
+
+  "respawn_times_seconds": {
+    "PICKUP_ON_STREET": 10,
+    "PICKUP_ON_STREET_SLOW": 30,
+    "PICKUP_MONEY": 30,
+    "PICKUP_MINE_ARMED": 0,
+    "tier": "verified"
+  },
+
+  "rotation_animation": {
+    "description": "Visible pickups rotate around the Z axis. The rotation is applied to the CObject's matrix every frame at a fixed angular velocity.",
+    "angular_velocity_radians_per_frame": 0.02,
+    "bob_amplitude_units": 0.1,
+    "bob_frequency_hz": 1.0,
+    "tier": "verified"
+  },
+
+  "key_functions": {
+    "CPickups_Update":          { "va": "0x455530", "description": "Per-frame update: advance respawn timers, spawn/remove CObject, test proximity" },
+    "CPickups_GivePlayerGoodiesWithPickUpMI": { "va": "0x454C60", "description": "Called when player collects a pickup — applies weapon/health/ammo/money to player" },
+    "CPickups_AddPickUp":       { "va": "0x454850", "description": "Spawn a new pickup at a world position; returns slot index" }
+  }
+}

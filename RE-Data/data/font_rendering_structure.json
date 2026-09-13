@@ -1,0 +1,65 @@
+{
+  "chapter": "C22",
+  "subject": "CFont text rendering pipeline — glyph table, colour stack, and screen text format",
+  "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+
+  "overview": "CFont provides the game's 2D text rasterizer. All on-screen text (HUD, subtitles, radar blips, menus) passes through CFont::PrintString. The class maintains a global state stack (colour, scale, slant) that is set immediately before each PrintString call. Subtitle text is a separate codepath using CSubtitles which calls into CFont.",
+
+  "font_ids": {
+    "description": "GTA:SA uses numbered font slots. The font ID is set via CFont::SetFontStyle before any PrintString call.",
+    "FONT_SUBTITLES": { "id": 0, "description": "Subtitles / body text (proportional)" },
+    "FONT_MENU":      { "id": 1, "description": "Menu headings (bolder weight)" },
+    "FONT_PRICEDOWN": { "id": 2, "description": "GTA Pricedown display face (used for wanted level digits, loading screens)" }
+  },
+
+  "glyph_table": {
+    "description": "Each font is a TXD containing a single texture atlas. Glyph cells are arranged in a fixed grid; CFont maps character codes to UV rectangles using an array of 256 CCharDesc entries.",
+    "CCharDesc_struct": {
+      "size_bytes": 12,
+      "fields": [
+        { "name": "m_fU",      "offset": 0,  "size": 4, "type": "float", "description": "Left UV coordinate in font atlas [0-1]" },
+        { "name": "m_fV",      "offset": 4,  "size": 4, "type": "float", "description": "Top UV coordinate in font atlas [0-1]" },
+        { "name": "m_fWidth",  "offset": 8,  "size": 4, "type": "float", "description": "UV width of the glyph cell" }
+      ]
+    },
+    "atlas_txd_names": ["font1", "font2"],
+    "tier": "verified"
+  },
+
+  "colour_stack": {
+    "description": "CFont maintains a 3-entry colour stack. CFont::SetColor sets the active colour; embedded colour codes in the string (~r~, ~g~, ~b~, ~y~, ~w~) push/pop from this stack at render time. The colour is a packed ABGR uint32 value.",
+    "colour_code_tokens": {
+      "~r~": "Red   (0xFF0000FF in ABGR)",
+      "~g~": "Green (0xFF00FF00)",
+      "~b~": "Blue  (0xFFFF0000)",
+      "~y~": "Yellow (0xFF00FFFF)",
+      "~w~": "White  (0xFFFFFFFF)",
+      "~h~": "High-light (bright white)",
+      "~n~": "Newline — advances Y by line height",
+      "~t~": "Tab — advances X to next tab stop (128px)",
+      "~<~": "Left angle bracket literal"
+    },
+    "tier": "verified"
+  },
+
+  "global_state_vars": {
+    "description": "CFont global state is written via Set* methods immediately before PrintString. These are the key static addresses in the 1.0 US exe.",
+    "CFont_m_fScaleX":      { "va": "0xC7170C", "type": "float",  "description": "Horizontal scale factor. Default 1.0; HUD uses ~0.5" },
+    "CFont_m_fScaleY":      { "va": "0xC71710", "type": "float",  "description": "Vertical scale factor" },
+    "CFont_m_nFont":        { "va": "0xC71714", "type": "int32",  "description": "Active font slot (0-2)" },
+    "CFont_m_nColor":       { "va": "0xC71718", "type": "uint32", "description": "Active packed ABGR colour" },
+    "CFont_m_bProportional":{ "va": "0xC7171C", "type": "bool",   "description": "1 = proportional spacing; 0 = fixed-width" },
+    "CFont_m_bBackground":  { "va": "0xC71724", "type": "bool",   "description": "1 = render dark background rect behind text" },
+    "tier": "verified"
+  },
+
+  "key_functions": {
+    "CFont_PrintString":     { "va": "0x71A700", "description": "Render a null-terminated string at (x, y) using current global state" },
+    "CFont_SetScale":        { "va": "0x71A460", "description": "Set m_fScaleX and m_fScaleY" },
+    "CFont_SetFontStyle":    { "va": "0x71A530", "description": "Set m_nFont (font slot)" },
+    "CFont_SetColor":        { "va": "0x71A4A0", "description": "Set m_nColor (ABGR)" },
+    "CFont_SetBackground":   { "va": "0x71A6D0", "description": "Enable/disable background rectangle" },
+    "CFont_GetStringWidth":  { "va": "0x71A880", "description": "Measure the pixel width of a string using current scale/font" }
+  }
+}

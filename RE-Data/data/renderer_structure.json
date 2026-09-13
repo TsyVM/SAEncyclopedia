@@ -1,0 +1,70 @@
+{
+  "chapter": "C40",
+  "subject": "The render pipeline (CRenderer)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+  "render_lists": [
+    {
+      "name": "ms_aInVisibleEntityPtrs",
+      "base": "0xb745d8",
+      "count": 150,
+      "elem_bytes": 4,
+      "bytes": "0x258",
+      "end": "0xb74830"
+    },
+    {
+      "name": "ms_aVisibleSuperLodPtrs",
+      "base": "0xb74830",
+      "count": 50,
+      "elem_bytes": 4,
+      "bytes": "0xc8",
+      "end": "0xb748f8"
+    },
+    {
+      "name": "ms_aVisibleLodPtrs",
+      "base": "0xb748f8",
+      "count": 1000,
+      "elem_bytes": 4,
+      "bytes": "0xfa0",
+      "end": "0xb75898"
+    },
+    {
+      "name": "ms_aVisibleEntityPtrs",
+      "base": "0xb75898",
+      "count": 1000,
+      "elem_bytes": 4,
+      "bytes": "0xfa0",
+      "end": "0xb76838"
+    }
+  ],
+  "render_lists_tile_from": "0xb745d8",
+  "render_lists_tile_into_count_block": "0xb76838",
+  "counts": {
+    "ms_nNoOfVisibleSuperLods": "0xb76838",
+    "ms_nNoOfInVisibleEntities": "0xb7683c",
+    "ms_nNoOfVisibleLods": "0xb76840",
+    "ms_nNoOfVisibleEntities": "0xb76844"
+  },
+  "camera_matrix_global": "0xb6f03c",
+  "pass_order": [
+    "ScanWorld",
+    "ConstructRenderList",
+    "RenderRoads",
+    "RenderEverythingBarRoads",
+    "RenderFadingInEntities"
+  ],
+  "functions": {
+    "ScanWorld": "0x554fe0",
+    "ConstructRenderList": "0x5556e0",
+    "SetupScanLists": "0x553540",
+    "PreRender": "0x553910",
+    "RenderRoads": "0x553a10",
+    "RenderEverythingBarRoads": "0x553aa0",
+    "RenderFadingInEntities": "0x5531e0",
+    "RenderOneRoad": "0x553230",
+    "RenderOneNonRoad": "0x553260"
+  },
+  "lod_dist_scale_default": 1.2,
+  "low_lod_dist_scale_default": 1.0,
+  "checks_passed": 5,
+  "checks_total": 5
+}

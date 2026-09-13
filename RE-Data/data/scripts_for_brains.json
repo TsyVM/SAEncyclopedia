@@ -1,0 +1,76 @@
+{
+ "$schema": "scripts_for_brains.v1",
+ "generated": "tools/derive_scriptsforbrains.py",
+ "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+ "summary": {
+  "slots": 70,
+  "stride": 20,
+  "table_bytes": 1400,
+  "free_sentinel": "0xFFFF (id word)",
+  "this_relative": true,
+  "facts_checked": 3,
+  "facts_passed": 3
+ },
+ "record_fields": [
+  {
+   "offset": 0,
+   "size": 2,
+   "name": "model id (0xFFFF = free slot)"
+  },
+  {
+   "offset": 2,
+   "size": 1,
+   "name": "flag byte"
+  },
+  {
+   "offset": 3,
+   "size": 1,
+   "name": "flag byte"
+  },
+  {
+   "offset": 4,
+   "size": 1,
+   "name": "enabled/active byte (Init sets 1)"
+  },
+  {
+   "offset": 8,
+   "size": 4,
+   "name": "dword (from 0x859D9C template)"
+  },
+  {
+   "offset": 12,
+   "size": 2,
+   "name": "word"
+  },
+  {
+   "offset": 14,
+   "size": 2,
+   "name": "word"
+  },
+  {
+   "offset": 16,
+   "size": 4,
+   "name": "dword"
+  }
+ ],
+ "structural_facts": [
+  {
+   "entry_va": "0x0046A8C0",
+   "method": "CScriptsForBrains::Init",
+   "fact": "Init builds 0x46 (70) records of stride 0x14 (20 B); sets a byte @rec+4 = 1",
+   "verified": true
+  },
+  {
+   "entry_va": "0x0046A900",
+   "method": "CScriptsForBrains::SwitchAllObjectBrainsWithThisID",
+   "fact": "SwitchAllObjectBrainsWithThisID walks the same 70-slot x 20-byte table",
+   "verified": true
+  },
+  {
+   "entry_va": "0x0046A9C0",
+   "method": "CScriptsForBrains::AddNewStreamedScriptBrainForCodeUse",
+   "fact": "AddNew\u2026: slot = index*20 (lea *5 then *4); a free slot has id word == -1 (0xFFFF)",
+   "verified": true
+  }
+ ]
+}

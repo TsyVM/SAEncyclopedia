@@ -1,0 +1,65 @@
+{
+ "chapter": "C4",
+ "subject": "CPlaceable / CEntity -- the base of every world object, cold-verified",
+ "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+ "_note": "CEntity is the base class of CBuilding/CDummy/CObject/CPhysical(->CPed,CVehicle). Its fields are inherited by every entity, so proving them raises usable coverage across all of them at once (audit 05_CLASS_STRUCTURE). Offsets proven cold from named engine functions: CEntity::SetModelIndexNoCreate @0x533700 writes `word [this+0x22]` (m_nModelIndex) and does flag bit-ops on `[this+0x1C]` (m_nFlags); CEntity::CreateRwObject @0x533D30 writes the created RwObject to `[this+0x18]` (m_pRwObject) and reads `[this+0x14]` (m_matrix). m_nModelIndex@0x22 also matches the model-info array index (movzx into [eax*4 + 0xA9B0C8]). Sizes from disassembly VALIDATE_SIZE: CPlaceable 0x18, CEntity 0x38, CPhysical 0x138.",
+ "class_name": "CEntity",
+ "size_hex": "0x38",
+ "size_bytes": 56,
+ "base_chain": "CPlaceable (0x18) -> CEntity (0x38)",
+ "model_info_array_va": "0x00A9B0C8",
+ "fields": [
+  {
+   "name": "m_matrix",
+   "offset": "0x14",
+   "size": 4,
+   "type": "CMatrix*",
+   "tier": "reasoned",
+   "evidence_va": "0x00533D8D",
+   "note": "matrix pointer (CPlaceable); read in CreateRwObject to place the RwObject. Classic offset, bracketed by cold m_pRwObject@0x18 and the CPlaceable size 0x18."
+  },
+  {
+   "name": "m_pRwObject",
+   "offset": "0x18",
+   "size": 4,
+   "type": "RwObject*",
+   "tier": "verified",
+   "evidence_va": "0x00533D5D",
+   "note": "RenderWare object; CEntity::CreateRwObject @0x533D30 writes the created object to [this+0x18] (two sites)."
+  },
+  {
+   "name": "m_nFlags",
+   "offset": "0x1C",
+   "size": 4,
+   "type": "uint32_t",
+   "tier": "verified",
+   "evidence_va": "0x00533718",
+   "note": "entity flag bitfield (bUsesCollision, bIsVisible, ...); SetModelIndexNoCreate does read-modify-write bit ops here (xor/and 0x200000, or 0x4000, and 0xF7FFFFFF)."
+  },
+  {
+   "name": "m_nRandomSeed",
+   "offset": "0x20",
+   "size": 2,
+   "type": "uint16_t",
+   "tier": "reasoned",
+   "evidence_va": null,
+   "note": "random seed; fills 0x20-0x21 between the cold m_nFlags (ends 0x20) and the cold m_nModelIndex (0x22). Classic layout."
+  },
+  {
+   "name": "m_nModelIndex",
+   "offset": "0x22",
+   "size": 2,
+   "type": "uint16_t",
+   "tier": "verified",
+   "evidence_va": "0x0053370F",
+   "note": "model index (indexes CModelInfo::ms_modelInfoPtrs @0xA9B0C8). CEntity::SetModelIndexNoCreate @0x533700 writes `mov word [this+0x22], ax`. Proven cold."
+  }
+ ],
+ "related_sizes": {
+  "CPlaceable": "0x18",
+  "CEntity": "0x38",
+  "CPhysical": "0x138"
+ },
+ "tier": "verified",
+ "provenance": "cold disassembly of gta_sa.exe (1.0 US); named function addresses from disassembly"
+}

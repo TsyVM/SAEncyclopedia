@@ -1,0 +1,50 @@
+{
+ "chapter": "C6",
+ "subject": "CColModel actual allocation size discrepancy — 56 bytes vs. 48 bytes claimed",
+ "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+ "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+ "finding": {
+  "description": "A Capstone disassembly of the function at 0x537490 (which attaches a CColModel to a CBaseModelInfo entry during model loading) reveals a `push 0x38` immediately before a call to the memory allocator at 0x531AE0. This means CColModel is being allocated as 0x38 = 56 bytes, not 0x30 = 48 bytes as documented in disassembly.",
+  "alloc_site_va": "0x5374E1",
+  "alloc_size_pushed": "0x38 = 56 bytes",
+  "allocator_called": "0x531AE0",
+  "tier": "verified_by_disassembly"
+ },
+ "proof_sequence": [
+  "0x5374DB: cmp word ptr [ebp + 0x10], bx   ; check if model already has a colmodel",
+  "0x5374DF: je 0x537546                      ; if already assigned, skip allocation",
+  "0x5374E1: push 0x38                         ; size = 56 bytes",
+  "0x5374E3: call 0x531AE0                     ; CMemoryMgr::Alloc(56)",
+  "0x5374E8: add esp, 4",
+  "0x5374F7: mov ecx, eax                      ; ecx = newly allocated CColModel*",
+  "0x5374F9: call 0x59DE00                     ; CColModel::CColModel() constructor"
+ ],
+ "constructor_evidence": {
+  "constructor_va": "0x59DE00",
+  "first_instructions": [
+   "0x59DE00: push esi",
+   "0x59DE01: mov esi, ecx           ; ecx = this pointer (the newly allocated block)",
+   "0x59DE03: call 0x531940           ; parent CColModel base constructor",
+   "0x59DE08: mov dword ptr [esi], 0x866e78  ; set vtable pointer",
+   "0x59DE11: ret"
+  ],
+  "tier": "verified_by_disassembly"
+ },
+ "impact": {
+  "schema_difference": "Our SASDK schema for CColModel (C6) documents 5 fields totaling 48 bytes. The exe allocates 56 bytes. The 8-byte gap (offsets 48-55) contains undocumented fields.",
+  "possible_extra_fields": [
+   {
+    "offset": 48,
+    "size": 4,
+    "description": "Unknown — may be a padding word, a CColDataVolume* extension, or a triangle count for COL4 format"
+   },
+   {
+    "offset": 52,
+    "size": 4,
+    "description": "Unknown — may be a reference count or link pointer"
+   }
+  ],
+  "action": "The CColModel schema needs a Capstone sweep of CColModel member functions to identify what code accesses offsets 48-55.",
+  "capstone_target": "CColModel::RemoveCollisionVolumes, CColModel::ReleaseData, CColModel::SetLink — any of these will access the mystery bytes"
+ }
+}

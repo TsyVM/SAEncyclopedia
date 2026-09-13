@@ -1,0 +1,71 @@
+{
+  "chapter": "C6",
+  "subject": "CCollisionData struct layout — the struct pointed to by CColModel::m_pColData",
+  "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+
+  "overview": "CCollisionData holds the actual geometry arrays for a model's collision mesh. CColModel.m_pColData (offset +0x2C in CColModel) points to a heap-allocated CCollisionData. The struct is filled by LoadColVer2 @0x537300 and LoadColVer4 @0x537490 and freed by CColModel::RemoveCollisionVolumes @0x537070.",
+
+  "evidence_sources": [
+    "LoadColVer2 @0x537300: writes all count fields and pointers into the newly allocated CCollisionData",
+    "CColModel::RemoveCollisionVolumes @0x537070: zeroes m_pSuspectLines (+0x1C) and m_pShadowMesh (+0x24)"
+  ],
+
+  "CCollisionData_layout": {
+    "description": "Layout proven from field access pattern in LoadColVer2 and RemoveCollisionVolumes.",
+    "size_bytes_minimum": 52,
+    "fields": [
+      { "name": "m_nNumSpheres",       "offset": 0,  "size": 2, "type": "uint16", "tier": "verified_by_disassembly",
+        "evidence_va": "0x537388",
+        "note": "Written as word from ESP+0x40 (the sphere count from the COL file header)" },
+      { "name": "m_nNumBoxes",         "offset": 2,  "size": 2, "type": "uint16", "tier": "verified_by_disassembly",
+        "evidence_va": "0x537393",
+        "note": "Written as word; second count field in the COL header" },
+      { "name": "m_nNumTriangles",     "offset": 4,  "size": 2, "type": "uint16", "tier": "verified_by_disassembly",
+        "evidence_va": "0x5373A9",
+        "note": "Third count in COL header. COL2/3 formats use a triangle array." },
+      { "name": "m_nNumLines",         "offset": 6,  "size": 1, "type": "uint8",  "tier": "verified_by_disassembly",
+        "evidence_va": "0x53739E",
+        "note": "Line (suspension wire) count. Written as byte." },
+      { "name": "m_nFlags",            "offset": 7,  "size": 1, "type": "uint8",  "tier": "verified_by_disassembly",
+        "evidence_va": "0x5370AE",
+        "note": "Flags byte. bit 0: has sphere data; bit 1: has box data; bit 2: has mesh/triangle data. RemoveCollisionVolumes tests bit 2 via `test byte [esi+7], 4`." },
+      { "name": "m_pSpheres",          "offset": 8,  "size": 4, "type": "CColSphere*", "tier": "verified_by_disassembly",
+        "evidence_va": "0x5373EF",
+        "note": "Pointer to array of CColSphere structs (m_nNumSpheres entries)" },
+      { "name": "m_pBoxes",            "offset": 12, "size": 4, "type": "CColBox*", "tier": "verified_by_disassembly",
+        "evidence_va": "0x5373F9",
+        "note": "Pointer to array of CColBox structs (m_nNumBoxes entries)" },
+      { "name": "m_pLines",            "offset": 16, "size": 4, "type": "void*",   "tier": "verified_by_disassembly",
+        "evidence_va": "0x537413",
+        "note": "Pointer to suspension line data (m_nNumLines entries)" },
+      { "name": "m_pTriangles",        "offset": 20, "size": 4, "type": "CColTriangle*", "tier": "verified_by_disassembly",
+        "evidence_va": "0x53742D",
+        "note": "Pointer to triangle index array (m_nNumTriangles entries)" },
+      { "name": "m_pTrianglePlanes",   "offset": 24, "size": 4, "type": "CColTrianglePlane*", "tier": "verified_by_disassembly",
+        "evidence_va": "0x537447",
+        "note": "Pre-computed plane equations for each triangle. Allocated separately by call to 0x536910; set to null if not computed." },
+      { "name": "m_pSuspectLines",     "offset": 28, "size": 4, "type": "void*",   "tier": "verified_by_disassembly",
+        "evidence_va": "0x5370CB",
+        "note": "Zeroed by RemoveCollisionVolumes: `mov dword ptr [edx + 0x1c], edi` (edi=0). Exact type unknown — may be a re-slice pointer into an existing allocation." },
+      { "name": "m_nNumSuspectLines",  "offset": 32, "size": 4, "type": "uint32",  "tier": "verified_by_disassembly",
+        "evidence_va": "0x537469",
+        "note": "Written to CColData[+0x20]. Probably the count for the m_pSuspectLines array." },
+      { "name": "m_pShadowMesh",       "offset": 36, "size": 4, "type": "void*",   "tier": "verified_by_disassembly",
+        "evidence_va": "0x5370C0",
+        "note": "Shadow mesh pointer, set by the return value of call 0x536910 (CColShadowMeshAllocator). If no shadow mesh, set to null (0x5370C5)." },
+      { "name": "m_nAllocatedCount",   "offset": 40, "size": 4, "type": "uint32",  "tier": "verified_by_disassembly",
+        "evidence_va": "0x53746F",
+        "note": "Written at CColData[+0x28]. Exact semantics unclear — may be the total count of allocated collision volumes (spheres+boxes+triangles) for bulk-free purposes." },
+      { "name": "m_pDataBuffer",       "offset": 44, "size": 4, "type": "void*",   "tier": "verified_by_disassembly",
+        "evidence_va": "0x53707C",
+        "note": "At +0x2C: a re-slice pointer computed as `ecx + eax - 0x48` in RemoveCollisionVolumes. Likely points into the same contiguous allocation for the beginning of the geometry data, used to identify the start of the freeable block." }
+    ]
+  },
+
+  "alloc_pattern": {
+    "description": "CCollisionData is NOT a C++ new — it is allocated from a suballocated data block. The geometry arrays (spheres, boxes, triangles) are packed into one contiguous heap block. The pointers in CCollisionData are all into this single block, which is freed with one call when the CColModel is released.",
+    "evidence_va": "0x537374",
+    "note": "`lea edi, [ebp + 0x30]` — EDI is set to CCollisionData + 0x30, then used as the destination for `rep movsd` which copies the sphere/box data directly into the struct at that offset. This confirms that the geometry arrays are stored inline starting at +0x30, not as separate heap allocations."
+  }
+}

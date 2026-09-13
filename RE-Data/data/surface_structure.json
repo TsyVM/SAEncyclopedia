@@ -1,0 +1,155 @@
+{
+  "_note": "Derived by tools/derive_surfaces.py from GTA:SA 1.0 US shipped files + gta_sa.exe. All 12 checks pass. Do not hand-edit.",
+  "namespace": {
+    "surface_types": 179,
+    "agreement": "surfinfo.dat = surfaud.dat = exe string table = 179",
+    "identical_order": true
+  },
+  "surfinfo_dat": {
+    "records": 179,
+    "columns": 37,
+    "fields": [
+      "name",
+      "adhesion_group",
+      "tyre_grip",
+      "wet_grip",
+      "skidmark",
+      "friction_effect",
+      "softland",
+      "see_thro",
+      "shoot_t",
+      "sand",
+      "water",
+      "s_water",
+      "beach",
+      "steep_sl",
+      "glass",
+      "stairs",
+      "skateable",
+      "pavement",
+      "roughness",
+      "flame",
+      "sparks",
+      "sprint",
+      "footsteps",
+      "footdust",
+      "cardirt",
+      "carclean",
+      "w_grass",
+      "w_gravel",
+      "w_mud",
+      "w_dust",
+      "w_sand",
+      "w_spray",
+      "proc_plant",
+      "proc_obj",
+      "climbable",
+      "bullet_fx",
+      "name_end"
+    ],
+    "name_repeated_last_column": true,
+    "adhesion_groups": [
+      "HARD",
+      "LOOSE",
+      "ROAD",
+      "RUBBER",
+      "SAND",
+      "WET"
+    ],
+    "skidmark_domain": [
+      "DEFAULT",
+      "MUDDY",
+      "SANDY"
+    ],
+    "friction_effect_domain": [
+      "NONE",
+      "SPARKS"
+    ],
+    "bullet_fx_domain": [
+      "DUST",
+      "SAND",
+      "SPARKS",
+      "WOOD"
+    ],
+    "tier": "verified"
+  },
+  "surfaud_dat": {
+    "records": 179,
+    "columns": 10,
+    "fields": [
+      "name",
+      "con",
+      "grs",
+      "snd",
+      "grv",
+      "wod",
+      "wtr",
+      "mtl",
+      "lgs",
+      "til"
+    ],
+    "flags_boolean": true,
+    "tier": "verified"
+  },
+  "surface_dat": {
+    "shape": "6x6 lower-triangular adhesion/friction matrix",
+    "groups": [
+      "RUBBER",
+      "HARD",
+      "ROAD",
+      "LOOSE",
+      "SAND",
+      "WET"
+    ],
+    "values": 21,
+    "matrix": {
+      "Rubber": [
+        6.0
+      ],
+      "Hard": [
+        3.6,
+        2.0
+      ],
+      "Road": [
+        4.5,
+        3.0,
+        6.0
+      ],
+      "Loose": [
+        3.2,
+        3.5,
+        2.0,
+        1.0
+      ],
+      "Sand": [
+        3.0,
+        4.0,
+        2.0,
+        1.0,
+        1.0
+      ],
+      "Wet": [
+        2.8,
+        2.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5
+      ]
+    },
+    "self_adhesion_diagonal": [
+      6.0,
+      2.0,
+      6.0,
+      1.0,
+      1.0,
+      0.5
+    ],
+    "tier": "verified"
+  },
+  "procedural": {
+    "procobj_surface_refs": 17,
+    "plants_surface_refs": 42,
+    "both_subset_of_179": true
+  }
+}

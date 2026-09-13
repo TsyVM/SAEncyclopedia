@@ -1,0 +1,366 @@
+# GXT Container Format
+*Source: `gxt_structure.json`*
+- **$schema:** sa-encyclopedia/re-data/gxt/v1
+- **Note:** GXT container structure + key hash. See C19-GXT-Text/. Derived from american.gxt/spanish.gxt.
+
+## Header
+
+### Bytes
+4
+
+### Fields
+| Col 1 | Col 2 | Col 3 |
+| --- | --- | --- |
+| version_word | uint16 | =4, constant, meaning open |
+| bits_per_char | uint16 | =8, proven by 8-bit string decode |
+
+## TABL
+
+### Tag
+TABL
+
+### Layout
+tag[4] + size[4] + entry[12]*N
+
+### Entry
+| Col 1 | Col 2 |
+| --- | --- |
+| name | char[8] |
+| offset | uint32 |
+
+## Table block
+| Field | Value |
+| --- | --- |
+| Layout | (name[8] if not MAIN) + TKEY + TDAT |
+| Align | 4-byte, 0..3 NUL pad between blocks |
+
+## TKEY
+
+### Tag
+TKEY
+
+### Entry
+| Col 1 | Col 2 |
+| --- | --- |
+| tdat_offset | uint32 |
+| key_hash | uint32 |
+
+### Sorted
+ascending by key_hash (binary search)
+
+## TDAT
+| Field | Value |
+| --- | --- |
+| Tag | TDAT |
+| Chars | 8-bit, NUL-terminated, ~x~ format tokens |
+
+## Key hash
+| Field | Value |
+| --- | --- |
+| Algorithm | CRC-32 (reflected, poly 0xEDB88320, init 0xFFFFFFFF) WITHOUT final complement, on UPPERCASED key name |
+| Python | (binascii.crc32(name.upper())^0xFFFFFFFF)&0xFFFFFFFF |
+| Confirmation | 1180/1186 (99.5%) of SCM text-opcode GXT keys hash into the key set |
+
+## Files
+
+### American
+
+#### Filelen
+738256
+
+#### Version
+4
+
+#### BitsPerChar
+8
+
+#### Ntables
+127
+
+#### Total keys
+16588
+
+#### Main keys
+5428
+
+#### Tables
+| Table name | Key count | Byte size |
+| --- | --- | --- |
+| MAIN | 5428 | 147945 |
+| AMBULAE | 15 | 443 |
+| BCESAR2 | 25 | 1093 |
+| BCESAR4 | 93 | 3965 |
+| BCOU | 39 | 1577 |
+| BCRASH1 | 79 | 3572 |
+| BLOOD | 12 | 485 |
+| BOAT | 58 | 2131 |
+| BS | 52 | 1633 |
+| BURGLAR | 33 | 1330 |
+| CASIN10 | 66 | 2761 |
+| CASINO1 | 114 | 4683 |
+| CASINO2 | 69 | 2574 |
+| CASINO3 | 44 | 2215 |
+| CASINO4 | 214 | 8308 |
+| CASINO5 | 69 | 3652 |
+| CASINO6 | 169 | 7427 |
+| CASINO7 | 43 | 1679 |
+| CASINO9 | 73 | 3089 |
+| CAT | 459 | 16949 |
+| CESAR1 | 42 | 1380 |
+| CESAR2 | 57 | 2515 |
+| COPCAR | 12 | 482 |
+| CRASH1 | 114 | 4660 |
+| CRASH2 | 46 | 2300 |
+| CRASH3 | 60 | 2827 |
+| DOC2 | 105 | 4000 |
+| DOCKCR | 4 | 131 |
+| DS | 66 | 2379 |
+| DSERT10 | 47 | 1958 |
+| DSERT12 | 24 | 793 |
+| DSERT3 | 67 | 2981 |
+| DSERT4 | 31 | 1632 |
+| DSERT5 | 132 | 6516 |
+| DSERT6 | 61 | 2494 |
+| DSERT7 | 5 | 169 |
+| DSERT8 | 148 | 9775 |
+| DSERT9 | 70 | 3517 |
+| DUAL | 57 | 467 |
+| FARLIE2 | 70 | 2680 |
+| FARLIE3 | 120 | 4911 |
+| FARLIE4 | 36 | 1288 |
+| FARLIE5 | 34 | 1435 |
+| FIRETRK | 17 | 820 |
+| FTRAIN | 14 | 398 |
+| GARAGE1 | 175 | 6992 |
+| GARAGE2 | 55 | 2034 |
+| GRAV | 47 | 252 |
+| GROVE1 | 144 | 5857 |
+| GROVE2 | 62 | 2630 |
+| GYM | 36 | 1738 |
+| HEIST1 | 106 | 5658 |
+| HEIST2 | 64 | 3054 |
+| HEIST3 | 101 | 3918 |
+| HEIST4 | 41 | 2047 |
+| HEIST5 | 43 | 2126 |
+| HEIST9 | 195 | 7545 |
+| INTRO1 | 206 | 8157 |
+| INTRO2 | 75 | 2847 |
+| KICKSTT | 25 | 924 |
+| LAFIN1 | 243 | 8602 |
+| LAFIN2 | 93 | 3765 |
+| LOWR | 23 | 1073 |
+| MAN_1 | 121 | 4727 |
+| MAN_2 | 159 | 7382 |
+| MAN_3 | 96 | 3732 |
+| MAN_5 | 96 | 3923 |
+| MENU2P | 30 | 753 |
+| OTB | 184 | 2547 |
+| PIMP | 118 | 5367 |
+| POOL | 42 | 1496 |
+| QUARRY | 70 | 3803 |
+| RACETOR | 74 | 1812 |
+| RIOT1 | 107 | 4234 |
+| RIOT2 | 137 | 5131 |
+| RIOT3 | 39 | 1492 |
+| RIOT4 | 309 | 11811 |
+| RUN_2P | 7 | 307 |
+| RYDER1 | 139 | 5606 |
+| RYDER2 | 139 | 6123 |
+| RYDER3 | 112 | 4242 |
+| SCRASH2 | 59 | 3570 |
+| SHTR | 45 | 210 |
+| SMOKE1 | 124 | 4717 |
+| SMOKE2 | 90 | 3586 |
+| SMOKE3 | 120 | 4895 |
+| SMOKE4 | 154 | 5745 |
+| STEAL1 | 39 | 1646 |
+| STEAL2 | 76 | 2966 |
+| STEAL4 | 92 | 4169 |
+| STEAL5 | 44 | 1779 |
+| STRAP1 | 188 | 6799 |
+| STRAP2 | 54 | 4213 |
+| STRAP3 | 107 | 4860 |
+| STRAP4 | 82 | 3448 |
+| STUNT | 12 | 442 |
+| SWEET1 | 77 | 3387 |
+| SWEET1B | 122 | 5041 |
+| SWEET2 | 135 | 5608 |
+| SWEET3 | 137 | 5491 |
+| SWEET4 | 92 | 4139 |
+| SWEET5 | 74 | 3205 |
+| SWEET6 | 140 | 6430 |
+| SWEET7 | 128 | 6737 |
+| SYN1 | 123 | 4706 |
+| SYN2 | 156 | 6418 |
+| SYN3 | 73 | 2796 |
+| SYN4 | 75 | 3072 |
+| SYN5 | 80 | 3112 |
+| SYN6 | 14 | 883 |
+| SYN7 | 53 | 2213 |
+| TAXI1 | 139 | 4807 |
+| TORENO1 | 75 | 2642 |
+| TORENO2 | 92 | 3833 |
+| TRU1 | 94 | 3804 |
+| TRU2 | 110 | 4651 |
+| TRUCK | 76 | 2970 |
+| VALET1 | 144 | 6089 |
+| VCR1 | 47 | 2147 |
+| VCR2 | 51 | 2066 |
+| WUZI1 | 152 | 5645 |
+| WUZI2 | 160 | 5901 |
+| WUZI4 | 80 | 3061 |
+| ZERO1 | 66 | 2670 |
+| ZERO2 | 58 | 2671 |
+| ZERO3 | 62 | 2247 |
+| ZERO4 | 111 | 5568 |
+
+### Spanish
+
+#### Filelen
+763917
+
+#### Version
+4
+
+#### BitsPerChar
+8
+
+#### Ntables
+127
+
+#### Total keys
+16600
+
+#### Main keys
+5431
+
+#### Tables
+| Table name | Key count | Byte size |
+| --- | --- | --- |
+| MAIN | 5431 | 160413 |
+| AMBULAE | 15 | 560 |
+| BCESAR2 | 25 | 984 |
+| BCESAR4 | 93 | 3721 |
+| BCOU | 39 | 1746 |
+| BCRASH1 | 79 | 3431 |
+| BLOOD | 12 | 554 |
+| BOAT | 58 | 2358 |
+| BS | 52 | 1919 |
+| BURGLAR | 33 | 1435 |
+| CASIN10 | 66 | 2828 |
+| CASINO1 | 115 | 4757 |
+| CASINO2 | 69 | 2592 |
+| CASINO3 | 44 | 2183 |
+| CASINO4 | 215 | 8290 |
+| CASINO5 | 69 | 3572 |
+| CASINO6 | 170 | 7389 |
+| CASINO7 | 43 | 1791 |
+| CASINO9 | 73 | 3116 |
+| CAT | 458 | 17519 |
+| CESAR1 | 42 | 1430 |
+| CESAR2 | 57 | 2700 |
+| COPCAR | 12 | 574 |
+| CRASH1 | 113 | 4718 |
+| CRASH2 | 46 | 2369 |
+| CRASH3 | 60 | 2878 |
+| DOC2 | 105 | 3962 |
+| DOCKCR | 4 | 132 |
+| DS | 66 | 2673 |
+| DSERT10 | 47 | 2052 |
+| DSERT12 | 24 | 846 |
+| DSERT3 | 67 | 2767 |
+| DSERT4 | 30 | 1312 |
+| DSERT5 | 132 | 7523 |
+| DSERT6 | 61 | 2608 |
+| DSERT7 | 5 | 167 |
+| DSERT8 | 148 | 10681 |
+| DSERT9 | 70 | 3568 |
+| DUAL | 57 | 482 |
+| FARLIE2 | 70 | 2509 |
+| FARLIE3 | 120 | 4923 |
+| FARLIE4 | 36 | 1302 |
+| FARLIE5 | 34 | 1552 |
+| FIRETRK | 17 | 891 |
+| FTRAIN | 14 | 451 |
+| GARAGE1 | 175 | 6962 |
+| GARAGE2 | 55 | 2177 |
+| GRAV | 47 | 264 |
+| GROVE1 | 144 | 5808 |
+| GROVE2 | 62 | 2646 |
+| GYM | 36 | 1888 |
+| HEIST1 | 106 | 5855 |
+| HEIST2 | 64 | 3166 |
+| HEIST3 | 102 | 4025 |
+| HEIST4 | 43 | 2355 |
+| HEIST5 | 43 | 2284 |
+| HEIST9 | 195 | 8286 |
+| INTRO1 | 206 | 8068 |
+| INTRO2 | 75 | 3032 |
+| KICKSTT | 25 | 944 |
+| LAFIN1 | 242 | 9052 |
+| LAFIN2 | 93 | 3694 |
+| LOWR | 23 | 1132 |
+| MAN_1 | 121 | 5021 |
+| MAN_2 | 159 | 7640 |
+| MAN_3 | 96 | 3587 |
+| MAN_5 | 96 | 3891 |
+| MENU2P | 30 | 821 |
+| OTB | 183 | 2552 |
+| PIMP | 118 | 5699 |
+| POOL | 42 | 1580 |
+| QUARRY | 70 | 4216 |
+| RACETOR | 74 | 2006 |
+| RIOT1 | 107 | 4615 |
+| RIOT2 | 139 | 5298 |
+| RIOT3 | 39 | 1543 |
+| RIOT4 | 307 | 12125 |
+| RUN_2P | 7 | 339 |
+| RYDER1 | 141 | 5505 |
+| RYDER2 | 139 | 6260 |
+| RYDER3 | 111 | 4311 |
+| SCRASH2 | 59 | 3495 |
+| SHTR | 45 | 216 |
+| SMOKE1 | 124 | 4636 |
+| SMOKE2 | 90 | 3527 |
+| SMOKE3 | 120 | 4905 |
+| SMOKE4 | 155 | 5941 |
+| STEAL1 | 39 | 1702 |
+| STEAL2 | 76 | 2951 |
+| STEAL4 | 92 | 4188 |
+| STEAL5 | 44 | 1788 |
+| STRAP1 | 190 | 7188 |
+| STRAP2 | 54 | 3932 |
+| STRAP3 | 107 | 5113 |
+| STRAP4 | 81 | 3193 |
+| STUNT | 12 | 482 |
+| SWEET1 | 77 | 3385 |
+| SWEET1B | 122 | 4956 |
+| SWEET2 | 135 | 5775 |
+| SWEET3 | 137 | 5547 |
+| SWEET4 | 92 | 4064 |
+| SWEET5 | 74 | 3486 |
+| SWEET6 | 141 | 6453 |
+| SWEET7 | 128 | 7373 |
+| SYN1 | 123 | 5107 |
+| SYN2 | 156 | 6412 |
+| SYN3 | 75 | 2896 |
+| SYN4 | 75 | 3015 |
+| SYN5 | 80 | 3069 |
+| SYN6 | 14 | 903 |
+| SYN7 | 53 | 2256 |
+| TAXI1 | 139 | 4762 |
+| TORENO1 | 75 | 2736 |
+| TORENO2 | 92 | 3791 |
+| TRU1 | 94 | 3762 |
+| TRU2 | 110 | 4829 |
+| TRUCK | 76 | 3275 |
+| VALET1 | 144 | 7011 |
+| VCR1 | 47 | 2051 |
+| VCR2 | 51 | 2027 |
+| WUZI1 | 154 | 6069 |
+| WUZI2 | 160 | 6162 |
+| WUZI4 | 80 | 3064 |
+| ZERO1 | 66 | 2733 |
+| ZERO2 | 58 | 2815 |
+| ZERO3 | 62 | 2434 |
+| ZERO4 | 111 | 6029 |

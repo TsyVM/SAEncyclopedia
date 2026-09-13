@@ -1,0 +1,64 @@
+{
+  "chapter": "C20",
+  "subject": "Radio station system (CAERadioTrackManager, stream-pack slots)",
+  "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+
+  "station_count": 13,
+  "station_table": [
+    { "index": 0,  "id": "RADIO_PLAYBACK_FM",   "gxt_key": "FEA_FM0",  "genre": "old-school hip-hop",   "stream_pak": "MH" },
+    { "index": 1,  "id": "RADIO_K_ROSE",        "gxt_key": "FEA_FM1",  "genre": "country",              "stream_pak": "CO" },
+    { "index": 2,  "id": "RADIO_K_DST",         "gxt_key": "FEA_FM2",  "genre": "classic rock",         "stream_pak": "CR" },
+    { "index": 3,  "id": "RADIO_BOUNCE",        "gxt_key": "FEA_FM3",  "genre": "funk / old-school",    "stream_pak": "CH" },
+    { "index": 4,  "id": "RADIO_SF_UR",         "gxt_key": "FEA_FM4",  "genre": "electronic / techno",  "stream_pak": "RE" },
+    { "index": 5,  "id": "RADIO_RLS",           "gxt_key": "FEA_FM5",  "genre": "hip-hop / gangsta rap","stream_pak": "DS" },
+    { "index": 6,  "id": "RADIO_MASTER_SOUNDS", "gxt_key": "FEA_FM6",  "genre": "70s funk / soul",      "stream_pak": "HC" },
+    { "index": 7,  "id": "RADIO_WCTR",          "gxt_key": "FEA_FM7",  "genre": "talk radio",           "stream_pak": "TK" },
+    { "index": 8,  "id": "RADIO_RADIO_X",       "gxt_key": "FEA_FM8",  "genre": "alternative / rock",  "stream_pak": "RG" },
+    { "index": 9,  "id": "RADIO_CSR_103",       "gxt_key": "FEA_FM9",  "genre": "R&B / contemporary",  "stream_pak": "CO" },
+    { "index": 10, "id": "RADIO_K_JAH",         "gxt_key": "FEA_FM10", "genre": "reggae",               "stream_pak": "NJ" },
+    { "index": 11, "id": "RADIO_MASTER_BEATS",  "gxt_key": "FEA_FM11", "genre": "electronica / dance",  "stream_pak": "AA" },
+    { "index": 12, "id": "RADIO_KCHAT",         "gxt_key": "FEA_FM12", "genre": "chat / phone-in show", "stream_pak": "CH" }
+  ],
+
+  "special_modes": {
+    "user_track_player": {
+      "index": 13,
+      "description": "Plays MP3/OGG/WMA files from the User Music folder (My Documents/GTA San Andreas User Files/User Tracks/)",
+      "stream_pak": null,
+      "tier": "verified"
+    },
+    "radio_off": {
+      "index": 14,
+      "description": "No audio output; CAutomobile uses index 14 to represent radio-off state",
+      "tier": "verified"
+    }
+  },
+
+  "stream_pak_to_station": {
+    "note": "Station audio streams from StrmPaks.dat entries; each station maps to one of the named .BNK stream-pak files in the audio/ folder"
+  },
+
+  "manager_globals": {
+    "current_station_global": "0xB6BC94",
+    "tier": "verified_by_disassembly",
+    "note": "Word written by SetCurrentStation and read by the radio seek loop. Value is the station index 0..14."
+  },
+
+  "key_functions": {
+    "CAERadioTrackManager::SetCurrentStation": "0x4E9A80",
+    "CAERadioTrackManager::GetCurrentStation": "0x4E96E0",
+    "CAERadioTrackManager::StartTrackFromBeginning": "0x4E97E0",
+    "CAERadioTrackManager::SkipToNextTrack": "0x4E9A00"
+  },
+
+  "scm_opcodes": {
+    "GET_RADIO_CHANNEL":  "0x03C4",
+    "SET_RADIO_CHANNEL":  "0x01DF"
+  },
+
+  "vehicle_radio_persistence": {
+    "description": "Each vehicle stores its last-tuned station in CVehicle. When the player exits, the station is saved and restored on re-entry.",
+    "field_in_cvehicle": "m_nCurrentRadioStation (see CVehicle schema, C47)"
+  }
+}

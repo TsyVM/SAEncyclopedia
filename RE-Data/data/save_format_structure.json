@@ -1,0 +1,68 @@
+{
+  "chapter": "C38",
+  "subject": "Save file format — block layout, checksum, and per-block data structures",
+  "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+
+  "overview": "GTA:SA save files are stored at Documents\\GTA San Andreas User Files\\GTASAsf1.b through GTASAsf8.b. Each file is a flat binary with a header block followed by a sequence of tagged data blocks. All values are little-endian. The total file size is approximately 202KB. A simple additive checksum at the end covers the entire file.",
+
+  "file_header": {
+    "magic_string": "BLOCK ",
+    "header_size_bytes": 4,
+    "description": "The very first 4 bytes of the file are the total size of the first block (block 0, the game header). This double-acts as a rough validation."
+  },
+
+  "block_framing": {
+    "description": "Each block starts with a 4-byte size prefix (the size of the block body, not including the size field itself). Blocks are concatenated end-to-end with no padding.",
+    "size_field_bytes": 4,
+    "alignment": "none (arbitrary size)"
+  },
+
+  "block_index": {
+    "0":  { "name": "Game header / player name",    "description": "Player name (24 bytes), save slot number, current mission, timer, city level" },
+    "1":  { "name": "Simple variables",             "description": "Game flags: on-foot stats, weapon tier, chaos meter, cash on hand, camera distance" },
+    "2":  { "name": "Garages",                      "description": "All stored vehicle data (which car is in each garage, damage state, mods)" },
+    "3":  { "name": "Vehicle pool",                 "description": "Spawned mission vehicles that must persist across load" },
+    "4":  { "name": "Stats",                        "description": "CStats — 343 int32 entries (see stats_structure.json) in the order they appear in the stats enum" },
+    "5":  { "name": "Streaming",                    "description": "Streaming model request queue state" },
+    "6":  { "name": "Player peds",                  "description": "Full CPed save state for CJ and any co-op companions" },
+    "7":  { "name": "Vehicles",                     "description": "Extended vehicle pool dump (missions-related spawned vehicles)" },
+    "8":  { "name": "Objects",                      "description": "World objects that persist after save" },
+    "9":  { "name": "Paths",                        "description": "Path nodes modified during play" },
+    "10": { "name": "Cranes",                       "description": "Crane state at each crane site" },
+    "11": { "name": "Pickups",                      "description": "All 320 pickup slots (respawn timers, collection state)" },
+    "12": { "name": "Phone calls",                  "description": "Phone callback table for mission phone triggers" },
+    "13": { "name": "Restart points",               "description": "Wasted/busted restart points set for the current area" },
+    "14": { "name": "Radar blips",                  "description": "All 1024 tRadarTrace slots" },
+    "15": { "name": "Zones",                        "description": "Gang territory ownership array (320 zones)" },
+    "16": { "name": "Gang data",                    "description": "Gang member counts, turf contested state" },
+    "17": { "name": "Car generators",               "description": "CCarGenerator table — parked car definitions" },
+    "18": { "name": "Particles",                    "description": "Persistent particle effect positions" },
+    "19": { "name": "Audio",                        "description": "Audio script state — scripted sound triggers" },
+    "20": { "name": "Player info",                  "description": "Player money, weapon slots, skill levels, outfit, fat/muscle stats" },
+    "21": { "name": "Stunt jumps",                  "description": "Which of the 70 unique stunt jumps have been completed" },
+    "22": { "name": "Tags",                         "description": "Spray tag completion bitfield (100 tags)" },
+    "23": { "name": "Relationships",                "description": "Ped relationship table snapshot" },
+    "24": { "name": "IPLS",                         "description": "Active interior ID and loaded IPL flags" },
+    "25": { "name": "BuildingSwaps",                "description": "IPL BUILD/OCCL switching state" },
+    "26": { "name": "Invasions",                    "description": "Unused/empty block in retail" }
+  },
+
+  "checksum": {
+    "algorithm": "Simple additive uint32 sum of all bytes excluding the checksum field itself",
+    "location": "Last 4 bytes of the file",
+    "tier": "verified"
+  },
+
+  "player_header_layout": {
+    "description": "Block 0 player header — first 48 bytes of the file (after the 4-byte block size).",
+    "fields": [
+      { "name": "szPlayerName", "offset": 0,  "size": 24, "type": "char[24]",  "description": "Null-terminated player name; padded to 24 bytes" },
+      { "name": "nCurrentMission", "offset": 24, "size": 4, "type": "int32", "description": "Current active main mission ID (0 = no mission)" },
+      { "name": "nGameTimer",  "offset": 28, "size": 4, "type": "uint32",  "description": "In-game time in milliseconds since new game start" },
+      { "name": "nSlot",       "offset": 32, "size": 4, "type": "int32",   "description": "Save slot index (1-8)" },
+      { "name": "bMissionPassed", "offset": 36, "size": 1, "type": "bool", "description": "1 if the current slot has completed the game" }
+    ],
+    "tier": "verified"
+  }
+}

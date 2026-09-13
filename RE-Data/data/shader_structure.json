@@ -1,0 +1,49 @@
+{
+  "chapter": "C44",
+  "subject": "Shaders: the RenderWare D3D9 vertex-shader pipelines",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+  "finding": "GTA:SA 1.0 PC is NOT fixed-function: it renders through RenderWare (RW36) D3D9 vertex-shader pipelines whose VS assembly is generated at runtime from embedded source templates and assembled with D3DX9. No shipped HLSL; pixel processing is largely fixed-function texture-stage-state.",
+  "corrects": "C40.3's 'no per-object shader system to extract'",
+  "vertex_input_register_map": {
+    "v0": "position0",
+    "v1": "blendweight0",
+    "v2": "blendindices0",
+    "v3": "normal0",
+    "v4": "color0",
+    "v5": "texcoord0",
+    "v6": "texcoord1",
+    "v13": "tangent0",
+    "v14": "position1",
+    "v15": "normal1"
+  },
+  "register_map_addr": "0x8d7340",
+  "position_transform": {
+    "plain": "m4x4 oPos.xyzw, v0, c[0]",
+    "skinned": "m4x4 oPos.xyzw, r3, c[0]"
+  },
+  "runtime_assembly": {
+    "template_example": "dcl_texcoord%u v%u",
+    "assembler": "D3DX9 Shader Assembler",
+    "models": [
+      "vs.1.0",
+      "vs.1.1",
+      "vs.2.0"
+    ]
+  },
+  "pipelines": {
+    "nodeD3D9WorldSectorAllInOne": "map / world sector geometry",
+    "nodeD3D9AtomicAllInOne": "atomics: objects & vehicles",
+    "nodeD3D9SkinAtomicAllInOne": "skinned atomics: peds (blendweight/indices)",
+    "CustomEnvMapPipe": "San Andreas env-map: vehicle reflections",
+    "matfx effectPipesD3D9": "material effects",
+    "im3dpipe": "immediate mode: sky (C38) / HUD (C23) / coronas"
+  },
+  "csl_sources": [
+    "nodeD3D9AtomicAllInOne.csl",
+    "nodeD3D9WorldSectorAllInOne.csl",
+    "nodeD3D9SkinAtomicAllInOne.csl"
+  ],
+  "rw_version": "RenderWare RW36 (3.6) D3D9",
+  "checks_passed": 8,
+  "checks_total": 8
+}

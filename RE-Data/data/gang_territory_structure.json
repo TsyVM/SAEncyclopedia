@@ -1,0 +1,71 @@
+{
+  "chapter": "C41",
+  "subject": "Gang territory warfare system (CGangWars, CGangs, gang zones)",
+  "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+
+  "overview": "GTA:SA's gang territory system tracks which gang owns each map zone. Territory ownership is stored per-zone (CZone) in two parallel arrays. Gang warfare is driven by CGangWars which manages the active attack state, attacker/defender gang IDs, and the progress bar. CGangs holds static data about each gang (colour, model sets, weapon tier tables).",
+
+  "gang_zones": {
+    "zone_array_global":      "0xC8B280",
+    "zone_count":             "320",
+    "zone_owner_array_global":"0xC8B2C0",
+    "tier": "verified_by_disassembly",
+    "note": "Each zone-owner byte is a gang ID (0=no gang, 1=Grove Street Families, 2=Ballas, 3=Los Santos Vagos, 4=San Fierro Rifa, 5=Da Nang Boyz, etc.) or 0xFF for a non-gang-owned zone."
+  },
+
+  "gang_ids": {
+    "0":  "No gang (civilian / law enforcement)",
+    "1":  "Grove Street Families (GSF)  — colour: green",
+    "2":  "Ballas                        — colour: purple",
+    "3":  "Los Santos Vagos              — colour: yellow",
+    "4":  "San Fierro Rifa               — colour: cyan",
+    "5":  "Da Nang Boyz                  — colour: red",
+    "6":  "Mafia (unused in final game)",
+    "7":  "Triads                        — colour: light blue",
+    "8":  "San Fierro Triads (2nd group)",
+    "9":  "Varrios Los Aztecas           — colour: light blue"
+  },
+
+  "CGangs_fields": [
+    { "name": "m_nModelSetLow",    "offset": 0,  "size": 1, "type": "uint8",  "tier": "verified_by_disassembly", "note": "First ped model ID for this gang's low-density spawns" },
+    { "name": "m_nModelSetHigh",   "offset": 1,  "size": 1, "type": "uint8",  "tier": "verified_by_disassembly", "note": "First ped model ID for this gang's high-density spawns" },
+    { "name": "m_nWeaponTier",     "offset": 4,  "size": 1, "type": "uint8",  "tier": "verified",               "note": "0-5 weapon tier; table in peds.dat. Higher = better weapons." },
+    { "name": "m_nColor",          "offset": 8,  "size": 4, "type": "uint32", "tier": "verified_by_disassembly", "note": "RGBA colour used for minimap territory shading" }
+  ],
+
+  "CGangWars_globals": {
+    "ms_bGangWarFightingForZone": "0xC8A4A4",
+    "ms_AttackingGang":           "0xC8A4A8",
+    "ms_DefendingGang":           "0xC8A4AC",
+    "ms_fGangWarProgress":        "0xC8A4B0",
+    "ms_WavesSurvived":           "0xC8A4B4",
+    "ms_bPlayerInSafeHouse":      "0xC8A4B8",
+    "tier": "verified_by_disassembly"
+  },
+
+  "war_rules": {
+    "description": "A gang war starts when CJ enters a non-GSF zone and a Ballas/Vagos gang member spots him. Three waves of enemy gang members attack. If all waves are defeated the zone flips to GSF. If CJ dies or flees the zone flips to the attacking gang. Territory is saved as part of save-game slot.",
+    "tier": "verified"
+  },
+
+  "key_functions": {
+    "CGangWars::StartGangWar":         "0x446500",
+    "CGangWars::EndGangWar":           "0x446700",
+    "CGangWars::Update":               "0x446200",
+    "CGangs::GetGangInfo":             "0x4E6090",
+    "CGangs::Initialize":              "0x4E5E00",
+    "CZone::GetCurrentZone":           "0x572040"
+  },
+
+  "territory_minimap": {
+    "description": "Gang-owned zones are tinted with the gang colour on the world map. CRadar::DrawZoneNames renders them using the zone-owner table. The territory display is toggled by the START button.",
+    "tier": "verified"
+  },
+
+  "peds_dat_integration": {
+    "file": "data/peds.dat",
+    "description": "Each gang's spawn models and weapon tiers are defined in peds.dat via GANG entries. The parser populates CGangs at startup.",
+    "tier": "verified"
+  }
+}

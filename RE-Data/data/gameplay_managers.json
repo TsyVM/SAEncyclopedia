@@ -1,0 +1,111 @@
+{
+ "$schema": "gameplay_managers.v1",
+ "generated": "tools/derive_gameplay_managers.py",
+ "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+ "summary": {
+  "replay_blocks": 8,
+  "shop_items": 560,
+  "entryexit_record": 60,
+  "facts_checked": 10,
+  "facts_passed": 10
+ },
+ "managers": {
+  "CEntryExitManager": {
+   "element": "CEntryExit",
+   "record_stride": 60,
+   "pool_global": 9873368,
+   "visible_objects_slots": 32,
+   "visible_objects_base": 9873208
+  },
+  "CReplay": {
+   "buffer_base": 9960328,
+   "buffer_end": 10760328,
+   "block_size": 100000,
+   "ped_conv_table": 9959480,
+   "ped_conv_entries": 140,
+   "ped_packet_stride": 1988,
+   "slot_schema": "CReplayPedPacket",
+   "slot_note": "Each ped conversion table entry is a 1988-byte opaque snapshot matching the CPed/CCopPed class layout. Size 1988 = 0x7C4 matches CCopPed. Access via tReplayPedUpdateBlock streaming packets rather than direct field access.",
+   "slot_fields": [
+    { "name": "_raw_data", "offset": 0, "size": 1988, "type": "uint8[1988]", "note": "opaque replay ped snapshot; internal layout mirrors CPed field layout. Use tReplayPedUpdateBlock packets for field-level access." }
+   ]
+  },
+  "CShopping": {
+   "num_items": 560,
+   "bought_id_array": 11107728,
+   "has_bought_flags": 11104928,
+   "shop_record_stride": 24,
+   "clothes_buffer": 11118608,
+   "clothes_dwords": 30,
+   "slot_schema": "CShoppingRecord",
+   "slot_fields": [
+    { "name": "key",        "offset":  0, "size": 4, "type": "uint32",   "note": "item key hash used to look up prices in ms_prices[]" },
+    { "name": "price",      "offset":  4, "size": 4, "type": "uint32",   "note": "base item price in dollars before gPriceMultipliers zone modifier is applied" },
+    { "name": "extra_data", "offset":  8, "size": 8, "type": "uint32[2]","note": "item-type union: weapon={ammo,0}, clothes={modelKey,textureKey}, tattoos={type1,texKey}, general={extra1,extra2}" },
+    { "name": "nameTag",    "offset": 16, "size": 8, "type": "char[8]",  "note": "display name tag string (null-terminated, max 8 chars); shown in shop UI" }
+   ]
+  }
+ },
+ "structural_facts": [
+  {
+   "entry_va": "0x0043FD50",
+   "method": "CEntryExitManager::DeleteOne",
+   "fact": "CEntryExit record = 0x3C (60 B); DeleteOne divides ptr->index by 60 (reciprocal 0x88888889); pool object at 0x96a7d8",
+   "verified": true
+  },
+  {
+   "entry_va": "0x0043F180",
+   "method": "CEntryExitManager::EnableBurglaryHouses",
+   "fact": "pool layout: array ptr @ pool+0, flag-byte array @ pool+4, count @ pool+8",
+   "verified": true
+  },
+  {
+   "entry_va": "0x0043ECF0",
+   "method": "CEntryExitManager::SetAreaCodeForVisibleObjects",
+   "fact": "visible-objects array = 32 slots (cmp 0x20) at 0x96a738, count at 0x96a7dc",
+   "verified": true
+  },
+  {
+   "entry_va": "0x0045D4B0",
+   "method": "CReplay::StreamAllNecessaryCarsAndPeds",
+   "fact": "replay buffer = 8 blocks x 0x186A0 (100,000 B) at 0x97FB88..0xA43088",
+   "verified": true
+  },
+  {
+   "entry_va": "0x0045D6C0",
+   "method": "CReplay::FindFirstFocusCoordinate",
+   "fact": "same 8 x 100,000 replay buffer walked in FindFirstFocusCoordinate",
+   "verified": true
+  },
+  {
+   "entry_va": "0x0045EF20",
+   "method": "CReplay::InitialisePedPoolConversionTable",
+   "fact": "ped-pool conversion table = 0x8C (140) entries at 0x97F838; ped packet stride 0x7C4",
+   "verified": true
+  },
+  {
+   "entry_va": "0x0049B5E0",
+   "method": "CShopping::HasPlayerBought",
+   "fact": "shop items = 0x230 (560); bought-id array @ 0xA97D90, has-bought byte array @ 0xA972A0",
+   "verified": true
+  },
+  {
+   "entry_va": "0x0049B640",
+   "method": "CShopping::ShutdownForRestart",
+   "fact": "ShutdownForRestart clears 0x8C (140) dwords = 560 bytes of the flag array at 0xA972A0",
+   "verified": true
+  },
+  {
+   "entry_va": "0x0049B200",
+   "method": "CShopping::StoreClothesState",
+   "fact": "clothes-state buffer = 0x1E (30) dwords (120 B) at 0xA9A810; player-info stride 0x190",
+   "verified": true
+  },
+  {
+   "entry_va": "0x0049ADE0",
+   "method": "CShopping::GetExtraInfo",
+   "fact": "shop-section record stride = 0x18 (24 B) (GetExtraInfo; C27.3-verified method)",
+   "verified": true
+  }
+ ]
+}

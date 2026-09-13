@@ -1,0 +1,94 @@
+{
+  "chapter": "C38",
+  "subject": "Skybox / sky rendering (CClouds)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+  "functions": {
+    "Init": "0x7138d0",
+    "Update": "0x712ff0",
+    "Shutdown": "0x712fa0",
+    "SetUpOneSkyPoly": "0x713060",
+    "Render": "0x713950",
+    "RenderSkyPolys": "0x714650",
+    "MovingFog_GetFirstFreeSlot": "0x713710",
+    "VolumetricClouds_GetFirstFreeSlot": "0x7135c0"
+  },
+  "sky_is_textured": false,
+  "sky_model": "untextured Gouraud gradient quad (SetUpOneSkyPoly) between timecyc sky-top and sky-bottom colours",
+  "sky_textures_txd": "particle",
+  "sky_textures": {
+    "cloud1": {
+      "global": "0xC6AA78",
+      "role": "scrolling low cloud"
+    },
+    "cloudmasked": {
+      "global": "0xC6AA7C",
+      "role": "masked cloud"
+    },
+    "cloudhigh": {
+      "global": "0xC6AA74",
+      "mask": "cloudhighm",
+      "role": "high/volumetric cloud"
+    },
+    "lunar": {
+      "global": "0xC6BFC8",
+      "mask": "lunarm",
+      "role": "moon"
+    }
+  },
+  "timecyc_link": {
+    "current_colours": "0xB7C4A0",
+    "below_horizon_grey": "0xB7CB10",
+    "sky_top_table": "0xB7BF78",
+    "sky_bottom_table": "0xB7BD50",
+    "note": "RenderSkyPolys blends m_BelowHorizonGrey (a lerp of m_CurrentColours.SkyBottom) - the C15 timecyc columns"
+  },
+  "star_field": {
+    "num_positions": 9,
+    "stars_drawn": 11,
+    "table_stride_bytes": 36,
+    "y_table": "0x8D55EC",
+    "z_table": "0x8D5610",
+    "size_table": "0x8D5634",
+    "y": [
+      0.0,
+      0.05,
+      0.13,
+      0.4,
+      0.7,
+      0.6,
+      0.27,
+      0.55,
+      0.75
+    ],
+    "z": [
+      0.0,
+      0.45,
+      0.9,
+      1.0,
+      0.85,
+      0.52,
+      0.48,
+      0.35,
+      0.2
+    ],
+    "size": [
+      1.0,
+      1.4,
+      0.9,
+      1.0,
+      0.6,
+      1.5,
+      1.3,
+      1.0,
+      0.8
+    ]
+  },
+  "horizon_bands": 6,
+  "moving_fog_slots": 350,
+  "volumetric_cloud_slots_reversed": 180,
+  "low_cloud_offsets": 12,
+  "rainbow_lines": 6,
+  "moon_size_default": 3,
+  "checks_passed": 10,
+  "checks_total": 10
+}

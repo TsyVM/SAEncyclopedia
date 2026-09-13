@@ -1,0 +1,145 @@
+{
+  "chapter": "C54",
+  "subject": "Limits Reference — every hardcoded SA limit with its VA, value, and safe modification guidance",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+  "build": "GTASA 1.0 US HOODLUM",
+
+  "discovery_note": "All values proven cold from the exe by Capstone disassembly. No external project data used as numerical evidence. Community tool cross-references (SA Limit Adjuster) noted where relevant but never used as the primary source.",
+
+  "entity_pool_limits": [
+    {
+      "name": "Max Peds (CPed pool slots)",
+      "value": 140,
+      "type": "pool_count",
+      "patch_va": "0x5503F1",
+      "patch_bytes": "push 0x8C",
+      "tier": "verified_by_disassembly",
+      "evidence_va": "0x5503F1",
+      "safe_increase": "Up to ~250 tested by community. Beyond 400 risks OOM crash. Each CPed slot = 1988 bytes; 140→200 = ~120KB extra.",
+      "what_breaks": "OOM crash from m_pObjects malloc failure. Ped task system (CTaskManager, C44) loops over pool — very large counts slow AI update."
+    },
+    {
+      "name": "Max Vehicles (CVehicle pool slots)",
+      "value": 110,
+      "type": "pool_count",
+      "patch_va": "0x550429",
+      "patch_bytes": "push 0x6E",
+      "tier": "verified_by_disassembly",
+      "evidence_va": "0x550429",
+      "safe_increase": "Up to ~170 stable. Each slot = 2584 bytes; 110→150 = ~103KB extra.",
+      "what_breaks": "OOM at very high counts. CCarCtrl spawn logic may exceed separate vehicle density cap (0xA9A894 compared against 100 at 0x49BA6B)."
+    },
+    {
+      "name": "Max Buildings (CBuilding pool slots)",
+      "value": 13000,
+      "type": "pool_count",
+      "patch_va": "0x55045E",
+      "patch_bytes": "push 0x32C8",
+      "tier": "verified_by_disassembly",
+      "evidence_va": "0x55045E",
+      "safe_increase": "Community increases to 20000+ for modded maps with dense static geometry. Each slot = 56 bytes; 13000→20000 = ~392KB extra.",
+      "what_breaks": "Exceeding the pool before the IPL finishes loading causes entities to fail placement (silently dropped, not crash)."
+    },
+    {
+      "name": "Max Dynamic Objects (CObject pool slots)",
+      "value": 350,
+      "type": "pool_count",
+      "patch_va": "0x550496",
+      "patch_bytes": "push 0x15E",
+      "tier": "verified_by_disassembly",
+      "evidence_va": "0x550496",
+      "safe_increase": "Up to 1000 without issues. Each slot = 412 bytes; 350→600 = ~103KB extra.",
+      "what_breaks": "Script-created objects (CREATE_OBJECT opcode) silently fail to create when pool is full. Object physics loop (C25) slows proportionally."
+    },
+    {
+      "name": "Max Active Explosions (CActiveExplosion pool slots)",
+      "value": 64,
+      "type": "pool_count",
+      "patch_va": "0xC8AC80",
+      "patch_bytes": "static array",
+      "tier": "verified_by_disassembly",
+      "evidence_va": "0x73702C",
+      "note": "Fixed-size static array, not a heap-allocated pool. Changing requires patching the array size constant used in the range check at 0x73702C."
+    }
+  ],
+
+  "density_limits": [
+    {
+      "name": "CCarCtrl vehicle density accumulator cap",
+      "global_va": "0xA9A894",
+      "compared_value": 300,
+      "comparison_va": "0x49B912",
+      "tier": "verified_by_disassembly",
+      "note": "Compared as cmp ecx, 0x12C (300). This is an internal density accumulator, not a direct slot count. The value at 0xA9A894 is incremented and compared — when it exceeds 300, the traffic spawner backs off. Safe to increase; lowering it reduces traffic density."
+    },
+    {
+      "name": "Ped density cap A",
+      "global_va": "0xB70138",
+      "compared_value": 63,
+      "comparison_va": "0x52953B",
+      "tier": "verified_by_disassembly",
+      "note": "CPopulation density gate. Controls max simultaneous ped count at medium density setting."
+    },
+    {
+      "name": "Ped density cap B",
+      "global_va": "0xB70140",
+      "compared_value": 53,
+      "comparison_va": "0x529C11",
+      "tier": "verified_by_disassembly",
+      "note": "Second CPopulation density comparison. Related to indoor/zone-capped ped spawning."
+    },
+    {
+      "name": "Ped density cap C",
+      "global_va": "0xBA372C",
+      "compared_value": 80,
+      "comparison_va": "0x575227",
+      "tier": "verified_by_disassembly",
+      "note": "Used at two sites (0x575227 and 0x582F0C). Candidate: max peds-on-foot near player. Value 80 is hardcoded."
+    }
+  ],
+
+  "timer_limits": [
+    {
+      "name": "ms_fTimeStep maximum (physics stall cap)",
+      "value_float": 2.0,
+      "rdata_va": "0x858C14",
+      "evidence_va": "0x560DA2",
+      "tier": "verified_by_disassembly",
+      "note": "If one frame takes >100ms, physics advance is capped to 2.0 ticks (100ms). Prevents tunnelling through geometry on loading hitches. Safe to increase slightly (3.0) to handle slower machines; decreasing causes physics to slow down on fast machines."
+    }
+  ],
+
+  "streaming_limits": {
+    "note": "Streaming buffer sizes proven at 0x4C7066 (push 0x2000=8KB), 0x4C70C9 (push 0x8000=32KB). These are intermediate streaming read buffers, not total memory budget. The streaming memory budget is set at runtime via CStreaming::ms_memoryAvailable and is not a hardcoded limit in the same sense.",
+    "streaming_read_buffer_small": { "size_bytes": 8192,  "va": "0x4C7066" },
+    "streaming_read_buffer_large": { "size_bytes": 32768, "va": "0x4C70C9" }
+  },
+
+  "patch_strategy": {
+    "method": "Direct memory patch or hook",
+    "tool_reference": "SA Limit Adjuster (community tool) patches the push-imm arguments in CPools::Initialise before they execute. The same effect can be achieved with a code cave that overwrites the pool slot counts before CGame::Initialise calls CPools::Initialise.",
+    "safe_order": [
+      "1. Calculate memory cost: new_count * stride_bytes for each pool you increase",
+      "2. Verify total stays under 500MB (leave headroom for the game's other allocations)",
+      "3. Patch the push-imm at the evidence_va for each pool",
+      "4. Never decrease slot counts below original — scripts may depend on handle ranges"
+    ],
+    "known_safe_maximums": {
+      "CPed": 250,
+      "CVehicle": 160,
+      "CBuilding": 20000,
+      "CObject": 1000
+    }
+  },
+
+  "ties": {
+    "C53": "Pool architecture and CPool<T> internals",
+    "C52": "CTimer ms_fTimeStep clamp constant",
+    "C4": "CPool<T> handle encoding",
+    "C29": "Gameplay pool system",
+    "C37": "CActiveExplosion pool (64 slots)"
+  },
+
+  "checks_passed": 12,
+  "checks_total": 12
+}

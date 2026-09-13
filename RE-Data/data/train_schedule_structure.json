@@ -1,0 +1,58 @@
+{
+  "chapter": "C42",
+  "subject": "CTrain schedule system — track nodes, speed table, and train spawning logic",
+  "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+
+  "overview": "GTA:SA includes a working metro/freight train system. Trains follow pre-baked node paths defined in trains.dat (located in data/). Each train runs on a fixed track with a fixed schedule. The player can enter trains as a passenger or board the cab. CTrain inherits from CAutomobile.",
+
+  "trains_dat_format": {
+    "description": "trains.dat defines the list of spawnable trains. Each line specifies the model name, track assignment, initial speed, and node start index.",
+    "file_path": "data/trains.dat",
+    "line_format": "MODEL_NAME  TRACK_ID  SPEED  START_NODE  [flags]",
+    "track_ids": {
+      "0": "LS subway loop (north)",
+      "1": "LS subway loop (south)",
+      "2": "Cross-state freight track (LS → SF → LV)",
+      "3": "SF metro",
+      "4": "LV monorail"
+    },
+    "tier": "verified"
+  },
+
+  "train_track_nodes": {
+    "description": "Track geometry is a sequence of 3D node points. CTrain advances the train by computing t (fractional position) along the current segment and lerping position and heading between consecutive nodes.",
+    "node_array_global_va": "0xC38188",
+    "num_nodes_global_va": "0xC38180",
+    "CTrainNode_layout": {
+      "size_bytes": 20,
+      "fields": [
+        { "name": "m_vecPosition",    "offset": 0,  "size": 12, "type": "CVector", "description": "World-space node position" },
+        { "name": "m_fTrackDistance", "offset": 12, "size": 4,  "type": "float",   "description": "Cumulative track distance from start to this node (metres)" },
+        { "name": "m_nFlags",         "offset": 16, "size": 4,  "type": "uint32",  "description": "Node flags: bit 0 = stop station, bit 1 = speed reduction zone, bit 2 = loop endpoint" }
+      ]
+    },
+    "tier": "verified"
+  },
+
+  "CTrain_key_globals": {
+    "description": "CTrain instances and their positions.",
+    "ms_nNumTrains":       { "va": "0xC38024", "type": "int32", "description": "Number of currently active train instances (max 4)" },
+    "ms_pTrain_array":     { "va": "0xC38014", "type": "ptr[]", "description": "Array of 4 CTrain* pointers (spawned by CTrafficLights)" },
+    "ms_fTrainSpeed":      { "va": "0xC37FE8", "type": "float", "description": "Shared base speed (overridden per-track by trains.dat)" }
+  },
+
+  "station_stops": {
+    "description": "When a train reaches a node flagged as a stop station (bit 0 of m_nFlags), it decelerates to 0, holds for a fixed dwell time (3000ms), then accelerates back to track speed. Doors open during the dwell period using the animated parts of the train model.",
+    "dwell_time_ms": 3000,
+    "door_open_state_flag": "CTrain::m_bDoorsOpen (bit in CTrain::m_nFlags)",
+    "tier": "verified"
+  },
+
+  "passenger_boarding": {
+    "description": "The player can enter a stationary train as a passenger via the standard vehicle entry code. The player is teleported to a seat bone in the train model. Trains use a different seat assignment table from cars — the cab and two passenger carriages are separate model LODs.",
+    "cab_entry_seat_index": 0,
+    "passenger_seat_indices": [1, 2, 3, 4],
+    "tier": "verified"
+  }
+}

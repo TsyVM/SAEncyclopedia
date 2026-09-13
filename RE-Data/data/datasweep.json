@@ -1,0 +1,109 @@
+{
+  "chapter": "C48",
+  "subject": "Combing the data folder: the remaining retail data files",
+  "files": {
+    "clothes.dat": {
+      "kind": "clothing-rule language",
+      "verbs": {
+        "SETC": 87,
+        "HIDE": 12,
+        "IGNORE": 11,
+        "ENDIGNORE": 11,
+        "EXCLUSIVE": 3,
+        "ENDEXCLUSIVE": 3,
+        "CUTS": 20
+      },
+      "note": "CJ appearance: SETC sets a body-part component, HIDE/IGNO/CUTS/EXCL modify"
+    },
+    "shopping.dat": {
+      "kind": "economy/pricing tree",
+      "sections": 37,
+      "categories": [
+        "CarMods",
+        "Clothes",
+        "Haircuts",
+        "Tattoos",
+        "Food",
+        "Weapons",
+        "Furniture",
+        "Gifts",
+        "Property",
+        "uniform",
+        "BINCO",
+        "PROLAPSE",
+        "shop",
+        "ZIP",
+        "VICTIM",
+        "SACHS",
+        "Wings",
+        "pizza",
+        "shot",
+        "ammun1",
+        "ammun2",
+        "ammun3",
+        "ammun4",
+        "one",
+        "shop",
+        "shop",
+        "shop",
+        "shop",
+        "2",
+        "3",
+        "Cars",
+        "Lowriders",
+        "Racers",
+        "swank"
+      ],
+      "ties": "C30 CShopping runtime"
+    },
+    "furnitur.dat": {
+      "kind": "interior furnishing",
+      "groups": 6,
+      "note": "GROUP/SUBGROUP/ITEM procedural interior population"
+    },
+    "numplate.dat": {
+      "kind": "carplate charset colour palettes (JASC .PAL)"
+    },
+    "animgrp.dat": {
+      "kind": "animation groups",
+      "groups": 42,
+      "ties": "C17 IFP animation"
+    },
+    "water1.dat": {
+      "kind": "water quads",
+      "quads": 267,
+      "ties": "C16 water"
+    },
+    "timecycp.dat": {
+      "kind": "alternate timecycle (same format as timecyc.dat)",
+      "lines": 437,
+      "ties": "C15 timecycle"
+    },
+    "default.dat": {
+      "kind": "boot load list (IDE/IMG/COLFILE)",
+      "ties": "C11 gta.dat"
+    },
+    "gta_quick.dat": {
+      "kind": "quick-boot load list variant",
+      "ties": "C11"
+    },
+    "default.ide": {
+      "kind": "always-loaded object/weapon definitions (IDE)",
+      "ties": "C11"
+    },
+    "txdcut.ide": {
+      "kind": "cutscene TXD parent assignments (txdp section)",
+      "ties": "C9/C11"
+    },
+    "animviewer.dat": {
+      "kind": "dev anim-viewer IDE load list"
+    },
+    "polydensity.dat": {
+      "kind": "binary uint32 map polygon-density grid",
+      "bytes": 288020,
+      "cells": 72005
+    }
+  },
+  "checks_passed": 8,
+  "checks_total": 8
+}

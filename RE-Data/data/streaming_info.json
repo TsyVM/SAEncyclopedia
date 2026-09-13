@@ -1,0 +1,100 @@
+{
+ "chapter": "C2",
+ "subject": "CStreamingInfo -- per-asset streaming metadata record",
+ "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+ "_note": "Backfilled into RE-Data JSON from the C2.2 chapter prose (which was the only machine-unreadable home for this, the most-cited struct in the project -- see SASDK-READINESS-REPORT.md S5). Layout proven cold in the C2.2 disassembly; the three 0x04/0x07/0x08 fields were marked reasoned there and subsequently confirmed by disassembly.",
+ "class_name": "CStreamingInfo",
+ "size_hex": "0x14",
+ "size_bytes": 20,
+ "array_base_va": "0x008E4CC0",
+ "link_array_base_va": "0x009654B4",
+ "stride_bytes": 20,
+ "entry_count": 26316,
+ "array_total_bytes": 526320,
+ "stride_idiom": "lea reg,[reg+reg*4]; shl reg,2  (index * 5 * 4 = index * 20)",
+ "fields": [
+  {
+   "name": "m_nNextIndex",
+   "offset": "0x00",
+   "size": 2,
+   "type": "uint16_t",
+   "tier": "verified",
+   "evidence_va": "0x0040885E",
+   "note": "eviction-list forward link; 16-bit index (0xFFFF = null), spliced in RequestModel unlink sequence"
+  },
+  {
+   "name": "m_nPrevIndex",
+   "offset": "0x02",
+   "size": 2,
+   "type": "uint16_t",
+   "tier": "verified",
+   "evidence_va": "0x00408861",
+   "note": "eviction-list back link; 16-bit index (0xFFFF = null)"
+  },
+  {
+   "name": "m_nNextIndexOnCd",
+   "offset": "0x04",
+   "size": 2,
+   "type": "uint16_t",
+   "tier": "reasoned",
+   "evidence_va": null,
+   "note": "load-order chain; reasoned in C2.2, Closed in X1 S3.1 (confirmed)"
+  },
+  {
+   "name": "m_nFlags",
+   "offset": "0x06",
+   "size": 1,
+   "type": "uint8_t",
+   "tier": "verified",
+   "evidence_va": "0x0040883D",
+   "note": "request flags; accumulated via OR (not replaced). bit 0x10 = priority"
+  },
+  {
+   "name": "m_nImgId",
+   "offset": "0x07",
+   "size": 1,
+   "type": "uint8_t",
+   "tier": "reasoned",
+   "evidence_va": null,
+   "note": "archive (IMG) index; reasoned in C2.2, Closed in X1 S3.1 (confirmed)"
+  },
+  {
+   "name": "m_nCdPosn",
+   "offset": "0x08",
+   "size": 4,
+   "type": "uint32_t",
+   "tier": "reasoned",
+   "evidence_va": null,
+   "note": "packed sector handle / offset; reasoned in C2.2, Closed in X1 S3.1 (confirmed)"
+  },
+  {
+   "name": "m_nCdSize",
+   "offset": "0x0C",
+   "size": 4,
+   "type": "uint32_t",
+   "tier": "verified",
+   "evidence_va": "0x00408AC3",
+   "note": "size in 2048-byte sectors; shl 0xB at accounting site is the sector->byte seam"
+  },
+  {
+   "name": "m_nLoadState",
+   "offset": "0x10",
+   "size": 1,
+   "type": "uint8_t",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "load state 0/1/2; 116 references -- the most-read field in the subsystem"
+  },
+  {
+   "name": "_pad",
+   "offset": "0x11",
+   "size": 3,
+   "type": "uint8_t[3]",
+   "tier": "verified",
+   "evidence_va": null,
+   "note": "tail padding to 4-byte alignment; the struct's only slack byte range"
+  }
+ ],
+ "tier": "verified",
+ "provenance": "C2.2 (02-streaming-info-record.md) + X1 S3.1 (X1-SDK-Cross-Reference.md)"
+}

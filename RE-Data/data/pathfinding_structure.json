@@ -1,0 +1,78 @@
+{
+  "chapter": "C27",
+  "subject": "CPathFind AI navigation — node grid, link table, and ped/vehicle path queries",
+  "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+
+  "overview": "GTA:SA's AI pathfinding uses a pre-baked node graph stored in data/paths/NODES.DAT (and separate PEDNODES.DAT). Nodes are 3D waypoints; links between nodes encode speed limits, road type, and lane flags. Vehicles follow node paths to navigate traffic; peds follow ped-specific node paths. The CPathFind singleton owns the node and link arrays and exposes query functions.",
+
+  "CPathFind_singleton": {
+    "va": "0xC6E0C0",
+    "type": "CPathFind*",
+    "description": "Singleton pointer. Accessing [CPathFind+offset] gives fields on the singleton.",
+    "tier": "verified"
+  },
+
+  "CPathNode_layout": {
+    "description": "Each traffic node in NODES.DAT. Nodes are 28 bytes.",
+    "size_bytes": 28,
+    "fields": [
+      { "name": "m_vecPosition",    "offset": 0,  "size": 12, "type": "CVector",  "description": "World-space node position" },
+      { "name": "m_nAreaID",        "offset": 12, "size": 2,  "type": "uint16",   "description": "Which streaming area (IPL tile) this node belongs to" },
+      { "name": "m_nNodeID",        "offset": 14, "size": 2,  "type": "uint16",   "description": "Index of this node within its area" },
+      { "name": "m_wLinkID",        "offset": 16, "size": 2,  "type": "uint16",   "description": "Index into the link table for this node's first link" },
+      { "name": "m_nNumLinks",      "offset": 18, "size": 1,  "type": "uint8",    "description": "Number of outgoing links from this node" },
+      { "name": "m_nPathWidth",     "offset": 19, "size": 1,  "type": "uint8",    "description": "Road width at this node (in 0.5m increments)" },
+      { "name": "m_nFlags0",        "offset": 20, "size": 2,  "type": "uint16",   "description": "Packed flags: speed limit, road type, junction flag, don't wander flag" },
+      { "name": "m_nFlags1",        "offset": 22, "size": 2,  "type": "uint16",   "description": "Additional flags: flood prevention, road blocked, water crossing" },
+      { "name": "PADDING",          "offset": 24, "size": 4,  "type": "uint32",   "description": "Padding to 28 bytes" }
+    ],
+    "tier": "verified"
+  },
+
+  "CPathLink_layout": {
+    "description": "Each directed link between two path nodes.",
+    "size_bytes": 8,
+    "fields": [
+      { "name": "m_wAreaID",        "offset": 0, "size": 2, "type": "uint16", "description": "Target node area ID" },
+      { "name": "m_wNodeID",        "offset": 2, "size": 2, "type": "uint16", "description": "Target node index within that area" },
+      { "name": "m_nPathWidth",     "offset": 4, "size": 1, "type": "uint8",  "description": "Path width along this link" },
+      { "name": "m_nFlags",         "offset": 5, "size": 1, "type": "uint8",  "description": "Link flags: direction, bridge, traffic light approach" },
+      { "name": "PADDING",          "offset": 6, "size": 2, "type": "uint16", "description": "Alignment padding" }
+    ],
+    "tier": "verified"
+  },
+
+  "node_flags_breakdown": {
+    "m_nFlags0_bits": {
+      "bits_0_3":  "Speed limit: 0=20mph, 1=30mph, 2=40mph, 3=60mph, 4=car_park_speed, 5=motorway",
+      "bit_4":     "Is junction (intersection node — traffic light and give-way checks)",
+      "bit_5":     "Is disabled (no vehicle will use this node)",
+      "bit_6":     "Traffic density flag (busy road)",
+      "bit_7":     "One-way direction marker",
+      "bits_8_10": "Road type (0=road, 1=rural track, 2=motorway, 3=bike path, 4=pedestrian area)"
+    },
+    "tier": "verified"
+  },
+
+  "path_file_layout": {
+    "NODES_DAT": {
+      "path": "data/paths/NODES.DAT",
+      "description": "Binary file containing all vehicle path nodes. Split into 64×64 areas; each area is 400×400 game units.",
+      "header_size": 12,
+      "total_nodes_approx": 75000
+    },
+    "PEDNODES_DAT": {
+      "path": "data/paths/PEDNODES.DAT",
+      "description": "Binary file for ped-only navigation. Same format but with tighter node spacing and footpath/staircase special flags.",
+      "total_nodes_approx": 45000
+    }
+  },
+
+  "key_functions": {
+    "CPathFind_FindNodeClosestToCoors":   { "va": "0x427060", "description": "Find the nearest path node to a world position; used by vehicle AI to get on-road" },
+    "CPathFind_DoPathSearch":            { "va": "0x428800", "description": "A* pathfinding: returns a chain of nodes from start to goal" },
+    "CPathFind_GetRandomNodeNearPosition": { "va": "0x427580", "description": "Get a random nearby node; used for ambient traffic destination selection" },
+    "CPathFind_FindNthNodeClosestToCoors": { "va": "0x427360", "description": "Get the Nth nearest node; used when the first is blocked or occupied" }
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "chapter": "C47",
+  "subject": "Vehicle dynamics: suspension, tyres, and damage",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+  "cautomobile_size": "0x988",
+  "cvehicle_size": "0x5a0",
+  "wheels": {
+    "count": 4,
+    "names": [
+      "FRONT_LEFT",
+      "REAR_LEFT",
+      "FRONT_RIGHT",
+      "REAR_RIGHT"
+    ]
+  },
+  "suspension": {
+    "compression": {
+      "offset": "0x7d4",
+      "range": "[0..1] (0=fully compressed, 1=relaxed)",
+      "refs_in_code": 15,
+      "ctor_init": 1.0
+    },
+    "compression_prev": "0x7e4",
+    "spring_length": {
+      "offset": "0x878",
+      "formula": "SuspensionUpperLimit - SuspensionLowerLimit"
+    },
+    "line_length": {
+      "offset": "0x888",
+      "formula": "springLength + wheelSize/2"
+    },
+    "wheel_array_stride": "0x10",
+    "other_wheel_arrays": {
+      "colPoint": "0x724",
+      "rotation": "0x828",
+      "position": "0x838",
+      "burnoutSpeed": "0x858"
+    },
+    "handling_source": "tHandlingData suspension fields (C42): ForceLevel/DampingLevel/UpperLimit/LowerLimit/BiasBetweenFrontAndRear/AntiDiveMultiplier"
+  },
+  "damage_manager": {
+    "size": "0x18",
+    "fields": {
+      "m_fWheelDamageEffect": "float",
+      "m_nEngineStatus": "uint8 (0..250)",
+      "m_anWheelsStatus": "eCarWheelStatus[4]",
+      "m_aDoorsStatus": "eDoorStatus[6]",
+      "m_nLightsStatus": "uint32 bitfield",
+      "m_nPanelsStatus": "uint32 (per ePanels)"
+    },
+    "doors": [
+      "BONNET",
+      "BOOT",
+      "LEFT_FRONT",
+      "RIGHT_FRONT",
+      "LEFT_REAR",
+      "RIGHT_REAR"
+    ],
+    "panel_states": [
+      "OK",
+      "DAMAGED",
+      "MISSING"
+    ],
+    "progress_fns": [
+      "ProgressWheelDamage",
+      "ProgressPanelDamage",
+      "ProgressEngineDamage",
+      "ProgressDoorDamage",
+      "FuckCarCompletely"
+    ]
+  },
+  "ties": {
+    "C42": "tHandlingData suspension/traction params drive these runtime arrays",
+    "C45": "component damage is the vehicle analogue of CPed armour/health"
+  },
+  "checks_passed": 5,
+  "checks_total": 5
+}

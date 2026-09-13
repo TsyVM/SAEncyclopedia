@@ -1,0 +1,65 @@
+{
+  "chapter": "C9",
+  "subject": "Texture streaming and TXD pipeline (CTxdStore, CTexDictionary)",
+  "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+
+  "overview": "GTA:SA streams textures via TXD (Texture Dictionary) archives. CTxdStore manages the global pool of loaded TXDs. Each model (DFF/IDE) references a parent TXD by name; at load time the streaming system requests that TXD from CTxdStore before the model can be made visible.",
+
+  "txd_file_format": {
+    "chunk_id": "0x16",
+    "description": "A TXD is an RenderWare binary stream chunk (id 0x16 = rwID_TEXDICTIONARY). It contains a count of CTexture (platform-native texture) children, each a native texture platform chunk.",
+    "pc_native_texture_chunk_id": "0x15",
+    "texture_format_header": {
+      "filter_flags": "uint16 — min/mag/mip filter modes",
+      "u_addressing":  "uint8  — U wrap mode (clamp=1, wrap=2, mirror=3, border=4)",
+      "v_addressing":  "uint8  — V wrap mode",
+      "name":          "char[32] — texture name (lookup key for RwTexDictionaryFindNamedTexture)",
+      "mask_name":     "char[32] — alpha mask texture name (empty string = no mask)"
+    },
+    "tier": "verified"
+  },
+
+  "CTxdStore_pool": {
+    "global_instance":  "0xC8800C",
+    "pool_size":        "TXD_POOL_SIZE = 850 slots (from streaming info)",
+    "tier": "verified_by_disassembly",
+    "note": "Each slot holds an RwTexDictionary* and a reference count. Slots are claimed by name hash at load and freed when the ref count reaches zero."
+  },
+
+  "TxdDef_fields": {
+    "schema_reference": "TxdDef.json (C31)",
+    "note": "TxdDef is the streaming-slot entry. It stores the TXD name, parent TXD index (for parent-chain lookup), and the RwTexDictionary pointer."
+  },
+
+  "parent_txd_chain": {
+    "description": "Each TXD can declare a parent TXD. Texture lookups walk the parent chain until a match is found or the root (no parent) is reached. Vehicle TXDs parent to 'vehicle.txd'; skin TXDs parent to 'player.txd'.",
+    "common_parents": {
+      "vehicle.txd": "parent of all vehicle-colour and decal TXDs",
+      "player.txd":  "parent of CJ skin layer TXDs",
+      "generic.txd": "generic shared textures (shadow blob, weapon icons, etc.)"
+    },
+    "tier": "verified"
+  },
+
+  "model_to_txd_binding": {
+    "description": "IDE (item definition) files contain a txd= field on each model line. CStreaming builds a model→TXD index from this at startup. When a model slot is loaded, CStreaming first ensures its TXD slot is loaded.",
+    "ide_txd_field": "column 2 in IDE OBJS/TOBJ/PEDS/CARS/WEAP lines",
+    "tier": "verified"
+  },
+
+  "key_functions": {
+    "CTxdStore::AddTxdSlot":           "0x731850",
+    "CTxdStore::FindTxdSlot":          "0x731900",
+    "CTxdStore::LoadTxd":              "0x7316A0",
+    "CTxdStore::RemoveTxd":            "0x731A00",
+    "CTxdStore::PushCurrentTxd":       "0x7316B0",
+    "CTxdStore::PopCurrentTxd":        "0x7316C0",
+    "RwTexDictionaryFindNamedTexture":  "0x7F3AC0"
+  },
+
+  "memory_budget": {
+    "note": "Texture memory is not explicitly budgeted; the streaming system evicts TXD slots by LRU when out of streaming budget. The budget is set by the platform in CStreaming::Init and is typically 48–96 MB on PC.",
+    "tier": "verified"
+  }
+}

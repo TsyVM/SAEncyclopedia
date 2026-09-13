@@ -1,0 +1,540 @@
+{
+  "chapter": "C20",
+  "subject": "GTA:SA audio subsystem",
+  "target": "gta_sa.exe 1.0 US, md5 170b3a9108687b26da2d8901c6948a18",
+  "files": {
+    "PakFiles.dat": {
+      "bytes": 468,
+      "records": 9,
+      "width": 52,
+      "layout": "char name[12] (NUL-terminated, 0xCD-padded) + 40 zero bytes",
+      "tier": "verified",
+      "names": [
+        "FEET",
+        "GENRL",
+        "PAIN_A",
+        "SCRIPT",
+        "SPC_EA",
+        "SPC_FA",
+        "SPC_GA",
+        "SPC_NA",
+        "SPC_PA"
+      ]
+    },
+    "StrmPaks.dat": {
+      "bytes": 272,
+      "records": 17,
+      "width": 16,
+      "layout": "char name[16], NUL-terminated, zero-padded",
+      "tier": "verified",
+      "names": [
+        "AA",
+        "ADVERTS",
+        "",
+        "AMBIENCE",
+        "BEATS",
+        "CH",
+        "CO",
+        "CR",
+        "CUTSCENE",
+        "DS",
+        "HC",
+        "MH",
+        "MR",
+        "NJ",
+        "RE",
+        "RG",
+        "TK"
+      ],
+      "note": "index 2 is blank and is referenced by no track"
+    },
+    "BankLkup.dat": {
+      "bytes": 8520,
+      "records": 710,
+      "width": 12,
+      "layout": "uint8 packIndex; uint8 pad[3] = 0xCC; uint32 offset; uint32 size",
+      "semantics": "offset = start of the 4804-byte bank header; size = PCM bytes after it",
+      "tier": "verified",
+      "banks_per_pack": {
+        "FEET": 7,
+        "GENRL": 137,
+        "PAIN_A": 3,
+        "SCRIPT": 218,
+        "SPC_EA": 46,
+        "SPC_FA": 18,
+        "SPC_GA": 209,
+        "SPC_NA": 52,
+        "SPC_PA": 20
+      }
+    },
+    "TrakLkup.dat": {
+      "bytes": 23064,
+      "records": 1922,
+      "width": 12,
+      "layout": "uint8 packIndex; uint8 pad[3] = 0xCD; uint32 offset; uint32 size",
+      "semantics": "offset = start of the 8068-byte track header; size field is inconsistent",
+      "size_convention": {
+        "size==oggLength": 804,
+        "size==oggLength+8068": 1118
+      },
+      "tier": "verified"
+    },
+    "BankSlot.dat": {
+      "bytes": 216902,
+      "header": "uint16 numSlots = 45",
+      "records": 45,
+      "width": 4820,
+      "layout": "uint32 bufferOffset; uint32 bufferSize; int32 = -1; int32 = -1; SoundEntry entries[400]; uint32 pad",
+      "tier": "verified (arithmetic, width, entry layout); open (field meanings)"
+    },
+    "EventVol.dat": {
+      "bytes": 45402,
+      "bytes_read_by_game": 45401,
+      "layout": "int8 volume[45401], indexed directly by audio event ID",
+      "element": "signed byte (movsx), no index scaling in any of 56 accesses",
+      "sentinel": {
+        "value": -128,
+        "raw": "0x80",
+        "meaning": "no value set for this event",
+        "count": 44804
+      },
+      "events_with_a_value": 597,
+      "value_range": [
+        -28,
+        20
+      ],
+      "base_pointer_va": "0xbd00f8",
+      "exe_literal_event_ids": [
+        52,
+        53,
+        76,
+        77,
+        78,
+        90,
+        91,
+        92,
+        93,
+        99,
+        107,
+        108,
+        109,
+        110,
+        111,
+        115,
+        116,
+        117,
+        119,
+        125,
+        128,
+        141,
+        144,
+        145,
+        151,
+        153,
+        158,
+        164,
+        1113
+      ],
+      "trailing_unread_byte": "present, and is itself 0x80",
+      "tier": "verified (element type, flat indexing, extent, sentinel); reasoned (values are decibel trims); open (the audio-event ID namespace itself)"
+    }
+  },
+  "sfx_bank": {
+    "header_bytes": 4804,
+    "max_sounds": 400,
+    "layout": "uint32 numSounds; SoundEntry entries[400]",
+    "sound_entry": {
+      "width": 12,
+      "fields": [
+        "uint32 dataOffset (relative to the end of the header)",
+        "int32 loopOffset (-1 = no loop)",
+        "uint16 sampleRate",
+        "int16 trim (authored, not measured; meaning open)"
+      ]
+    },
+    "banks": 710,
+    "sounds": 61993,
+    "looping_sounds": 351,
+    "sample_rates": {
+      "12000": 54273,
+      "15000": 5908,
+      "8000": 1082,
+      "18000": 286,
+      "22050": 89,
+      "16000": 36,
+      "26000": 30,
+      "24000": 24,
+      "44100": 22,
+      "11025": 18,
+      "23000": 17,
+      "20000": 16,
+      "32000": 14,
+      "22100": 12,
+      "10000": 12,
+      "28000": 10,
+      "21000": 8,
+      "17600": 8,
+      "22000": 7,
+      "27000": 6,
+      "17000": 5,
+      "19000": 4,
+      "26600": 3,
+      "17974": 3,
+      "16500": 3,
+      "18800": 3,
+      "14364": 3,
+      "15010": 2,
+      "16950": 2,
+      "21600": 2,
+      "17924": 2,
+      "14000": 2,
+      "24500": 2,
+      "25400": 2,
+      "23600": 2,
+      "11048": 2,
+      "18021": 2,
+      "17968": 2,
+      "25600": 2,
+      "22400": 2,
+      "8500": 2,
+      "9000": 2,
+      "28300": 1,
+      "16946": 1,
+      "20200": 1,
+      "11000": 1,
+      "16800": 1,
+      "16700": 1,
+      "13600": 1,
+      "13000": 1,
+      "21561": 1,
+      "18900": 1,
+      "11007": 1,
+      "12500": 1,
+      "34000": 1,
+      "17825": 1,
+      "10162": 1,
+      "16499": 1,
+      "21746": 1,
+      "15375": 1,
+      "26513": 1,
+      "11615": 1,
+      "11473": 1,
+      "29711": 1,
+      "11993": 1,
+      "10653": 1,
+      "9400": 1,
+      "18017": 1,
+      "22044": 1,
+      "21950": 1,
+      "17958": 1,
+      "11983": 1,
+      "22114": 1,
+      "11984": 1,
+      "14474": 1,
+      "14489": 1,
+      "14986": 1,
+      "18007": 1,
+      "12010": 1,
+      "12918": 1,
+      "12811": 1,
+      "2021": 1,
+      "25000": 1,
+      "20900": 1,
+      "12800": 1,
+      "18569": 1,
+      "19200": 1,
+      "26400": 1,
+      "24600": 1,
+      "19700": 1,
+      "16600": 1,
+      "17800": 1,
+      "11963": 1,
+      "15571": 1,
+      "11987": 1,
+      "17143": 1,
+      "22038": 1,
+      "13548": 1,
+      "11517": 1,
+      "13462": 1,
+      "18700": 1,
+      "19993": 1,
+      "23300": 1
+    },
+    "trim_range": [
+      -200,
+      6229
+    ],
+    "exceptions": [
+      {
+        "bank_index": 138,
+        "pack": "GENRL",
+        "sound": 27,
+        "rate": 2021,
+        "loop": 0,
+        "trim": 400
+      }
+    ],
+    "pcm": "16-bit signed mono, little-endian",
+    "tier": "verified (container, entry layout, tiling, PCM width); open (trim field)",
+    "peak_survey": {
+      "sampled": 120,
+      "within_2dBFS": 104
+    }
+  },
+  "stream_pack": {
+    "xor_key": "ea3ac4a19aa814f348b0d7239de8fff1",
+    "xor_period": 16,
+    "xor_indexing": "key[absoluteFileOffset % 16]",
+    "header_bytes": 8068,
+    "max_beats": 1000,
+    "layout": "Beat beats[1000] {int32 timeMs; int32 type}, unused = {-1,0}; 68-byte trailer",
+    "trailer": {
+      "oggLength_at": 8000,
+      "rateField_at": 8004,
+      "displaced_by_8_on_beat_annotated_tracks": true,
+      "constant_uint16_at_8064": 1,
+      "fill": "0xCD"
+    },
+    "tracks": 1922,
+    "packs": 16,
+    "codec": "Ogg Vorbis, 2 channels",
+    "vorbis_sample_rates": {
+      "32000": 1882,
+      "24000": 40
+    },
+    "rate_field_values": {
+      "48000": 1744,
+      "0": 137,
+      "24000": 40,
+      "25137": 1
+    },
+    "rate_field_note": "does NOT equal the Vorbis sample rate except on AMBIENCE; meaning open",
+    "beat_tracks": [
+      {
+        "track": 175,
+        "pack": "BEATS",
+        "offset": 0,
+        "beats": 174,
+        "trailer_at": 8008
+      },
+      {
+        "track": 177,
+        "pack": "BEATS",
+        "offset": 9979717,
+        "beats": 152,
+        "trailer_at": 8008
+      },
+      {
+        "track": 178,
+        "pack": "BEATS",
+        "offset": 14115027,
+        "beats": 144,
+        "trailer_at": 8008
+      },
+      {
+        "track": 179,
+        "pack": "BEATS",
+        "offset": 18033228,
+        "beats": 174,
+        "trailer_at": 8008
+      },
+      {
+        "track": 180,
+        "pack": "BEATS",
+        "offset": 21743595,
+        "beats": 76,
+        "trailer_at": 8008
+      },
+      {
+        "track": 181,
+        "pack": "BEATS",
+        "offset": 25474541,
+        "beats": 136,
+        "trailer_at": 8008
+      }
+    ],
+    "tier": "verified (key, container, tiling, codec); open (trailer rate field)"
+  },
+  "executable_confirmation": {
+    "BankLkup": {
+      "ref_va": "0x4dfbd7",
+      "divisor": 12,
+      "evidence": "mov eax,0xAAAAAAAB; mul esi; shr edx,3; lea eax,[eax+eax*2]; shl eax,2"
+    },
+    "PakFiles": {
+      "ref_va": "0x4dfc7d",
+      "divisor": 52,
+      "evidence": "mov eax,0x4EC4EC4F; mul esi; shr edx,4; imul eax,eax,0x34"
+    },
+    "BankSlot": {
+      "ref_va": "0x4e0597",
+      "record": 4820,
+      "evidence": "imul eax,eax,0x12D4 after reading the 2-byte count"
+    },
+    "StrmPaks": {
+      "ref_va": "0x4e0982",
+      "divisor": 16,
+      "evidence": "shr eax,4"
+    },
+    "TrakLkup": {
+      "ref_va": "0x4e0a02",
+      "divisor": 12,
+      "evidence": "mov eax,0xAAAAAAAB; mul edi; shr edx,3"
+    },
+    "EventVol": {
+      "ref_va": "0x5b9d68",
+      "read_bytes": 45401,
+      "evidence": "push 0xB159; cmp eax,0xB159"
+    },
+    "string_vas": {
+      "BANKLKUP": "0x85f118",
+      "PAKFILES": "0x85f140",
+      "BANKSLOT": "0x85f15c",
+      "STRMPAKS": "0x85f184",
+      "TRAKLKUP": "0x85f1a0",
+      "EVENTVOL": "0x86a440"
+    }
+  },
+  "checks": [
+    {
+      "name": "PakFiles.dat = 9 x 52, no residue",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "PakFiles names == SFX filenames",
+      "pass": true,
+      "detail": "['FEET', 'GENRL', 'PAIN_A', 'SCRIPT', 'SPC_EA', 'SPC_FA', 'SPC_GA', 'SPC_NA', 'SPC_PA']"
+    },
+    {
+      "name": "StrmPaks.dat = 17 x 16, no residue",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "StrmPaks slot 2 blank; other 16 == streams filenames",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "BankLkup.dat divides by 12 with no residue",
+      "pass": true,
+      "detail": "710 banks"
+    },
+    {
+      "name": "BankLkup pad bytes are all 0xCC",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "every SFX pack tiles exactly as sum(4804 + size)",
+      "pass": true,
+      "detail": "{'FEET': 7, 'GENRL': 137, 'PAIN_A': 3, 'SCRIPT': 218, 'SPC_EA': 46, 'SPC_FA': 18, 'SPC_GA': 209, 'SPC_NA': 52, 'SPC_PA': 20}"
+    },
+    {
+      "name": "all banks: sound offsets ascending and unique",
+      "pass": true,
+      "detail": "710/710"
+    },
+    {
+      "name": "all banks: first offset 0, last offset < size",
+      "pass": true,
+      "detail": "710/710"
+    },
+    {
+      "name": "all banks: unused entries are all-zero",
+      "pass": true,
+      "detail": "710/710"
+    },
+    {
+      "name": "all sounds: data length even (16-bit samples)",
+      "pass": true,
+      "detail": "61993/61993"
+    },
+    {
+      "name": "all sounds: loop offset is -1 or inside the sound",
+      "pass": true,
+      "detail": "61993/61993"
+    },
+    {
+      "name": "TrakLkup.dat divides by 12 with no residue",
+      "pass": true,
+      "detail": "1922 tracks"
+    },
+    {
+      "name": "TrakLkup pad bytes are all 0xCD",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "TrakLkup never references pack index 2 (the blank StrmPaks slot)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "XOR key decrypts to OggS at offset+8068 on every track",
+      "pass": true,
+      "detail": "1922/1922"
+    },
+    {
+      "name": "every stream pack tiles exactly as sum(8068 + oggLength)",
+      "pass": true,
+      "detail": "16 packs"
+    },
+    {
+      "name": "all tracks are 2-channel Vorbis",
+      "pass": true,
+      "detail": "{32000: 1882, 24000: 40}"
+    },
+    {
+      "name": "exactly 6 tracks carry beat data, all in BEATS",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "TrakLkup size field is inconsistent across tracks",
+      "pass": true,
+      "detail": "{'size==oggLength': 804, 'size==oggLength+8068': 1118}"
+    },
+    {
+      "name": "sampled sounds peak at -2.00 dBFS",
+      "pass": true,
+      "detail": "104/120 = 86.7%"
+    },
+    {
+      "name": "BankSlot.dat = 2 + 45 x 4820",
+      "pass": true,
+      "detail": "45 slots"
+    },
+    {
+      "name": "BankSlot words 2 and 3 are -1 in every slot",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "EventVol.dat is 45,402 bytes; executable reads 45,401 (0xB159)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "EventVol: the one unread trailing byte is itself the 0x80 default",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "EventVol: 597 of 45,401 events carry a value",
+      "pass": true,
+      "detail": "1.31% of entries"
+    },
+    {
+      "name": "EventVol: every event ID hard-coded in gta_sa.exe has a value set",
+      "pass": true,
+      "detail": "29/29, against a 1.31% base rate"
+    },
+    {
+      "name": "EventVol: values are small signed integers (a trim, not a raw level)",
+      "pass": true,
+      "detail": "range -28..20"
+    }
+  ]
+}

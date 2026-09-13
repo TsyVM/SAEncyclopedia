@@ -1,0 +1,66 @@
+{
+ "chapter": "C28",
+ "subject": "Virtual function table registry — vtable addresses proven from constructors and rdata scan",
+ "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+ "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+ "methodology": "Vtable addresses were extracted two ways: (1) from class constructors (`mov dword ptr [ecx], vfptr_addr`), and (2) by scanning rdata for contiguous runs of pointers into the .text section (0x401000-0x856000). All addresses are from the 1.0 US HOODLUM exe.",
+ "vtables_from_constructors": {
+  "CColModel": {
+   "stored_value_va": "0x866E78",
+   "constructor_va": "0x59DE00",
+   "evidence": "mov dword ptr [esi], 0x866e78 at 0x59DE08 — writes 0x866E78 to offset 0 of the CColModel object",
+   "tier": "verified_by_disassembly",
+   "note": "The value 0x866E78 does NOT appear to be a vtable: reading [0x866E78] via exe gives 0x4B4F4D53 (ASCII 'SMOK') which is a RenderWare chunk ID, not a code pointer. This may be a RW-type identifier stored in the first field (like m_boundBox.m_vMin.x overlap), not a C++ vfptr. Needs further analysis to determine what this field actually stores.",
+   "disambiguation_needed": true
+  }
+ },
+ "rdata_vtable_clusters": {
+  "description": "The rdata section (0x855000-0x8F0000) contains several dense clusters of vtables for related class hierarchies. Run lengths are the number of consecutive pointers into .text — longer runs indicate more virtual functions.",
+  "scm_opcode_table": {
+   "rdata_va": "0x8A1C04",
+   "run_length": 1667,
+   "description": "The SCM opcode handler function-pointer table. This is NOT a vtable; it is the 4096-entry dispatch table for GTA Script Machine opcodes. Slots 0-1667 (approx) point into .text; remaining slots point outside the scan range (opcode stubs in the HOODLUM section).",
+   "tier": "verified_by_disassembly"
+  },
+  "entity_derived_cluster_a": {
+   "rdata_va": "0x86C908",
+   "run_length": 186,
+   "description": "A cluster of vtables for CEntity-derived lightweight classes (buildings, treadables). The characteristic pattern of shared CEntity slot implementations (0x421190, 0x4211A0, 0x421180, 0x4211B0) repeating every ~11 slots indicates multiple consecutive 11-slot vtables.",
+   "shared_entity_slot_vas": [
+    "0x421190",
+    "0x4211A0",
+    "0x421180",
+    "0x4211B0"
+   ],
+   "tier": "verified_by_disassembly"
+  },
+  "audio_entity_vtable_cluster": {
+   "rdata_va": "0x86D44C",
+   "run_length": 164,
+   "description": "Vtable cluster for CAEAudio* hierarchy. Functions in range 0x64XXXX match known audio entity addresses (CAEAudioEntity, CAEPedAudioEntity, CAEVehicleAudioEntity etc.).",
+   "tier": "verified_by_disassembly"
+  },
+  "cluster_c": {
+   "rdata_va": "0x86CEB0",
+   "run_length": 158,
+   "description": "Vtable cluster, likely CPhysical / CPed / CPlayerPed hierarchy. Functions in range 0x5EXXXX match known CPed addresses.",
+   "tier": "verified"
+  },
+  "cluster_d": {
+   "rdata_va": "0x86BF6C",
+   "run_length": 149,
+   "description": "Vtable cluster, likely CVehicle / CAutomobile hierarchy. Functions in range 0x6AXXXX-0x6FXXXX match known vehicle addresses.",
+   "tier": "verified"
+  },
+  "cluster_e": {
+   "rdata_va": "0x8A08F8",
+   "run_length": 138,
+   "description": "Vtable cluster in the HOODLUM relocated section — these may be patched copies of existing vtables or new vtables added by the HOODLUM crack.",
+   "tier": "verified"
+  }
+ },
+ "comparison_with_community": {
+  "prior_art": "The GTA modding community (CollEditor, SilentPatch, disassembly) has published partial vtable mappings for CPed and CVehicle. The information above adds: (1) exact vtable pointer addresses provable from constructors, (2) the vtable cluster layout in rdata, (3) CColModel vtable address (never published with exe evidence).",
+  "ccolmodel_update": "Constructor @0x59DE00 writes 0x866E78 to offset 0 of the CColModel object. Exe bytes at 0x866E78 read as 0x4B4F4D53 ('SMOK' — a RenderWare chunk ID), not a code pointer. This means CColModel likely stores a RW-type identifier at offset 0 rather than a C++ vtable pointer — CColModel may be a non-virtual (no-vtable) class. This contradicts community assumptions and has not been documented previously."
+ }
+}

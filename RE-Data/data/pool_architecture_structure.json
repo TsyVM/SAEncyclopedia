@@ -1,0 +1,192 @@
+{
+  "chapter": "C53",
+  "subject": "CPool<T> architecture, slot counts for all 13 pools, and memory budget",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a22",
+  "build": "GTASA 1.0 US HOODLUM",
+
+  "discovery_note": "All slot counts proven cold from CPools::Initialise CREATE phase at 0x5503A0. Each pool's count is a push-imm32 immediately before a typed CPool constructor call. Strides proven from the IMUL in each constructor body. No external project data used.",
+
+  "cpool_struct": {
+    "size_bytes": 20,
+    "fields": [
+      { "name": "m_pObjects",  "offset": 0,  "size": 4, "type": "void*",    "tier": "verified_by_disassembly", "evidence_va": "0x54F420", "note": "Pointer to element array. malloc(count * element_stride)." },
+      { "name": "m_byteMap",   "offset": 4,  "size": 4, "type": "uint8_t*", "tier": "verified_by_disassembly", "evidence_va": "0x54F434", "note": "Parallel flag array. 1 byte per slot. Bit7=isFree, bits6-0=allocation counter." },
+      { "name": "m_nSize",     "offset": 8,  "size": 4, "type": "int32_t",  "tier": "verified_by_disassembly", "evidence_va": "0x54F74A", "note": "Slot count. Written once at init; read by loop bounds." },
+      { "name": "m_nFirstFree","offset": 12, "size": 4, "type": "int32_t",  "tier": "verified_by_disassembly", "evidence_va": "0x54F74F", "note": "Initialised to 0xFFFFFFFF (-1) = no free slot cached." },
+      { "name": "m_bOwnsMemory","offset":16, "size": 1, "type": "uint8_t",  "tier": "verified_by_disassembly", "evidence_va": "0x54F746", "note": "Set to 1 at construction — pool owns its m_pObjects/m_byteMap memory." }
+    ]
+  },
+
+  "handle_encoding": {
+    "formula": "handle = (slot_index << 8) | byteMap[slot_index]",
+    "validation": "byteMap[slot] & 0x80 must be 0 (slot in use) and lower byte of handle must match byteMap[slot]",
+    "tier": "verified_by_disassembly",
+    "evidence_va": "0x54F441"
+  },
+
+  "pools": [
+    {
+      "index": 0,
+      "global_va": "0xB7448C",
+      "count": 500,
+      "element_stride": 20,
+      "constructor_va": "0x54F720",
+      "type_name": "unknown_20B",
+      "tier": "verified_by_disassembly",
+      "evidence_va": "0x5503B9",
+      "note": "Constructor uses lea eax,[edi+edi*4];shl eax,2 = edi*20. Type TBD. 500 slots. Stored at 0xB7448C (outside the main 0xB74490+ range)."
+    },
+    {
+      "index": 1,
+      "global_va": "0xB74490",
+      "count": 140,
+      "element_stride": 1988,
+      "constructor_va": "0x54F7F0",
+      "type_name": "CPed",
+      "tier": "verified_by_disassembly",
+      "evidence_va": "0x5503F1",
+      "note": "Constructor: imul eax,eax,0x7C4 (0x7C4=1988). CPed VALIDATE_SIZE=0x79C=1948 — the 40-byte gap (0x7C4-0x79C=0x28) is likely per-pool alignment/overflow padding. 140 peds is the hard entity limit."
+    },
+    {
+      "index": 2,
+      "global_va": "0xB74494",
+      "count": 110,
+      "element_stride": 2584,
+      "constructor_va": "0x54F8C0",
+      "type_name": "CVehicle",
+      "tier": "verified_by_disassembly",
+      "evidence_va": "0x550429",
+      "note": "Constructor: imul eax,eax,0xA18 (0xA18=2584). CAutomobile measured at 0x988=2440 — larger variants (CBike, CPlane, etc.) may drive the 2584 stride. 110 vehicles is the hard vehicle-pool limit."
+    },
+    {
+      "index": 3,
+      "global_va": "0xB74498",
+      "count": 13000,
+      "element_stride": 56,
+      "constructor_va": "0x54F970",
+      "type_name": "CBuilding",
+      "tier": "verified_by_disassembly",
+      "evidence_va": "0x55045E",
+      "note": "Constructor: imul eax,eax,0x38 (56). CBuilding is static world geometry — 13000 slots hold all static objects in the currently loaded area. Largest pool by count."
+    },
+    {
+      "index": 4,
+      "global_va": "0xB7449C",
+      "count": 350,
+      "element_stride": 412,
+      "constructor_va": "0x54FA40",
+      "type_name": "CObject",
+      "tier": "verified_by_disassembly",
+      "evidence_va": "0x550496",
+      "note": "Constructor: imul eax,eax,0x19C (412). CObject stride 0x19C = exactly the CObject VALIDATE_OFFSET-confirmed size. 350 dynamic moveable objects."
+    },
+    {
+      "index": 5,
+      "global_va": "0xB744A0",
+      "count": 2500,
+      "element_stride": null,
+      "constructor_va": "0x54FAF0",
+      "type_name": "unknown_2500",
+      "tier": "verified_by_disassembly",
+      "evidence_va": "0x5504CE",
+      "note": "2500 slots — likely CDummyObject (static placeholders without full CBuilding overhead) or some model/stream entry. Stride TBD."
+    },
+    {
+      "index": 6,
+      "global_va": "0xB744A4",
+      "count": 10150,
+      "element_stride": null,
+      "constructor_va": "0x54FBC0",
+      "type_name": "unknown_10150",
+      "tier": "verified_by_disassembly",
+      "evidence_va": "0x550506",
+      "note": "10150 slots — matches the SA model-info slot count range (~20000 model IDs but only a subset active). Likely CBaseModelInfo or a streaming slot structure."
+    },
+    {
+      "index": 7,
+      "global_va": "0xB744A8",
+      "count": 500,
+      "element_stride": null,
+      "constructor_va": "0x54FC90",
+      "type_name": "unknown_500b",
+      "tier": "verified_by_disassembly",
+      "evidence_va": "0x55053E",
+      "note": "500 slots. TBD."
+    },
+    {
+      "index": 8,
+      "global_va": "0xB744AC",
+      "count": 200,
+      "element_stride": null,
+      "constructor_va": "0x54FD60",
+      "type_name": "unknown_200",
+      "tier": "verified_by_disassembly",
+      "evidence_va": "0x550576",
+      "note": "200 slots. Candidate: CTrain (10+) or CDamageManager."
+    },
+    {
+      "index": 9,
+      "global_va": "0xB744B0",
+      "count": 64,
+      "element_stride": null,
+      "constructor_va": "0x54FE30",
+      "type_name": "unknown_64a",
+      "tier": "verified_by_disassembly",
+      "evidence_va": "0x5505AE",
+      "note": "64 slots — matches CActiveExplosion pool (documented: 64 slots at 0xC8AC80 in C37). Different global VA; may be a different 64-slot pool."
+    },
+    {
+      "index": 10,
+      "global_va": "0xB744B4",
+      "count": 32,
+      "element_stride": null,
+      "constructor_va": "0x54FF00",
+      "type_name": "unknown_32",
+      "tier": "verified_by_disassembly",
+      "evidence_va": "0x5505E3",
+      "note": "32 slots. Candidate: CTempNode, CEntryExitManager slot, or similar small pool."
+    },
+    {
+      "index": 11,
+      "global_va": "0xB744B8",
+      "count": 64,
+      "element_stride": null,
+      "constructor_va": "0x54FFD0",
+      "type_name": "unknown_64b",
+      "tier": "verified_by_disassembly",
+      "evidence_va": "0x550618",
+      "note": "64 slots. Second 64-slot pool."
+    },
+    {
+      "index": 12,
+      "global_va": "0xB744BC",
+      "count": 16,
+      "element_stride": null,
+      "constructor_va": "0x5500A0",
+      "type_name": "unknown_16",
+      "tier": "verified_by_disassembly",
+      "evidence_va": "0x55064D",
+      "note": "16 slots. Smallest pool. Candidate: CTrainNode, CEntryExit, or similar infrequent object."
+    }
+  ],
+
+  "cpools_create_va": "0x5503A0",
+  "cpools_shutdown_va": "0x550F10",
+
+  "memory_notes": {
+    "operator_new_va": "0x820595",
+    "operator_delete_va": "0x8207AE",
+    "heap_pattern": "Each pool allocates two malloc blocks: m_pObjects (count*stride bytes) and m_byteMap (count bytes). Total for CPed pool: 140*1988 + 140 = 278,420 bytes ~= 272KB. All 13 pools combined: several MB of static pool memory allocated at game start.",
+    "no_runtime_resize": "Pool sizes are fixed at creation. The only way to change them is to patch CPools::Initialise before it runs, or hook the constructor calls at 0x5503A0+. Limit Adjuster (community tool) patches the count arguments to these push instructions."
+  },
+
+  "ties": {
+    "C4": "CPool<T> handle encoding documented in C4 (cpool_internals_structure.json)",
+    "C51": "CPools::Initialise called during CGame::Initialise startup (C51.1)",
+    "C54": "Pool slot counts are the primary table in the Limits Reference chapter",
+    "C29": "CPools globals accessed from gameplay pool code"
+  },
+
+  "checks_passed": 13,
+  "checks_total": 13
+}

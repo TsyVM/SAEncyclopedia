@@ -1,0 +1,247 @@
+{
+  "chapter": "C22",
+  "subject": "GTA:SA zones, radar grid and the map gridref",
+  "target": "gta_sa.exe 1.0 US, md5 170b3a9108687b26da2d8901c6948a18",
+  "zone_record": {
+    "fields": [
+      "name",
+      "type",
+      "x1",
+      "y1",
+      "z1",
+      "x2",
+      "y2",
+      "z2",
+      "island",
+      "textKey"
+    ],
+    "exe_scanf_format": "%s %d %f %f %f %f %f %f %d %s",
+    "exe_format_va": "0x868d04",
+    "exe_parser_ref_va": "0x5b4ae9",
+    "loaded_via": "the IPL path; gta.dat lists `IPL DATA\\MAP.ZON` and `IPL DATA\\INFO.ZON`",
+    "tier": "verified"
+  },
+  "info_zon": {
+    "records": 378,
+    "types": {
+      "0": 378
+    },
+    "islands": {
+      "1": 378
+    },
+    "distinct_names": 377,
+    "distinct_text_keys": 169,
+    "name_equals_text_key": 110,
+    "extent": {
+      "x": [
+        -2997.47,
+        2997.06
+      ],
+      "y": [
+        -2892.97,
+        2993.87
+      ],
+      "z": [
+        -242.99,
+        900.0
+      ]
+    },
+    "gxt_resolution": {
+      "resolved": 169,
+      "of": 169,
+      "misses": []
+    },
+    "tier": "verified"
+  },
+  "map_zon": {
+    "records": 6,
+    "types": {
+      "3": 6
+    },
+    "islands": {
+      "3": 1,
+      "2": 3,
+      "1": 2
+    },
+    "names": [
+      "Vegas",
+      "SF01",
+      "SF02",
+      "SF03",
+      "LA01",
+      "LA02"
+    ],
+    "text_key": "UNUSED (a sentinel; hashes to no GXT key)",
+    "world_span": 6000.0,
+    "tier": "verified"
+  },
+  "radar_grid": {
+    "tiles": 144,
+    "grid": [
+      12,
+      12
+    ],
+    "units_per_tile": 500.0,
+    "naming": "radar%02d.txd, in models/gta3.img",
+    "exe_format_va": "0x866b98",
+    "exe_loader_va": "0x588015",
+    "exe_loop_bound": "0x90 (144)",
+    "exe_handle_array_va": "0xba8478",
+    "orientation": {
+      "conversion_va": "0x5858d0",
+      "col": "floor((worldX + 3000) * (1/500))  -> 0 at west, 11 at east",
+      "row": "floor(11 - (worldY + 3000) * (1/500))  -> 0 at north, 11 at south",
+      "index": "col + row*12  (lea at 0x584b7b / 0x584bca)",
+      "corners": {
+        "NW(-3000,+3000)": 0,
+        "NE(+3000,+3000)": 11,
+        "SW(-3000,-3000)": 132,
+        "SE(+3000,-3000)": 143
+      },
+      "tier": "verified"
+    },
+    "tier": "verified (count, naming, grid arithmetic, tile orientation)"
+  },
+  "gridref": {
+    "grid": [
+      10,
+      10
+    ],
+    "cells": 100,
+    "units_per_cell": 600.0,
+    "record_bytes": 32,
+    "exe_path_va": "0x87295c",
+    "exe_format": "%c%d %s",
+    "exe_loader_va": "0x71d500",
+    "index_arithmetic": "((letter - 'A') * 10 + (num - 1)) * 32",
+    "artists": {
+      "STUARTM": 34,
+      "SCOTT": 14,
+      "ANDREWSO": 12,
+      "GARY": 9,
+      "WAYLAND": 8,
+      "STEVEM": 7,
+      "NIK": 5,
+      "ADAMC": 4,
+      "JIMA": 4,
+      "SIMONL": 3
+    },
+    "note": "a development ownership table - maps map-grid cells to Rockstar artist user IDs - shipped in retail and still parsed by the engine",
+    "consumers": {
+      "table_base_va": "0xc72fb0",
+      "loader_va": "0x71d4e0",
+      "loader_called_from": "0x5BA392 (init sequence)",
+      "accessors_va": [
+        "0x71d5a0",
+        "0x71d5e0",
+        "0x71d650",
+        "0x71d670"
+      ],
+      "finding": "The loader IS called at init, so the 100-record table at 0xC72FB0 is populated. But the four accessor functions (world->cell x2, a validity check, and the getter that returns atoi(name)) have ZERO call/jmp/pointer references anywhere in the executable. The table is WRITE-ONLY in retail: loaded and never read. The consuming feature was cut, leaving the reader API as unreferenced dead code.",
+      "tier": "verified"
+    },
+    "tier": "verified (grid, completeness, record size, index arithmetic, consumers)"
+  },
+  "checks": [
+    {
+      "name": "info.zon: every record has exactly 10 fields",
+      "pass": true,
+      "detail": "378 records"
+    },
+    {
+      "name": "map.zon: every record has exactly 10 fields",
+      "pass": true,
+      "detail": "6 records"
+    },
+    {
+      "name": "both files are a single `zone` ... `end` section",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "info.zon: every bounding box has min < max on all three axes",
+      "pass": true,
+      "detail": "378/378"
+    },
+    {
+      "name": "map.zon: every bounding box has min < max on all three axes",
+      "pass": true,
+      "detail": "6/6"
+    },
+    {
+      "name": "map.zon spans exactly -3000..+3000 on X and Y (the world square)",
+      "pass": true,
+      "detail": "span 6000"
+    },
+    {
+      "name": "info.zon lies inside the world square",
+      "pass": true,
+      "detail": "X -2997.47..2997.06  Y -2892.97..2993.87"
+    },
+    {
+      "name": "EVERY info.zon text key resolves to a GXT key (C19 cross-check)",
+      "pass": true,
+      "detail": "169/169, misses: none"
+    },
+    {
+      "name": "map.zon's text key is the sentinel UNUSED and resolves to nothing",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "gta3.img holds exactly 144 radarNN.txd tiles, numbered 0..143 with no gap",
+      "pass": true,
+      "detail": "144 tiles"
+    },
+    {
+      "name": "144 tiles form a 12 x 12 grid over the 6000-unit world",
+      "pass": true,
+      "detail": "500 units per tile"
+    },
+    {
+      "name": "exe world->tile conversion uses +3000, x(1/500) and an 11-row Y-flip",
+      "pass": true,
+      "detail": "off=3000 inv=0.002000 flip=11"
+    },
+    {
+      "name": "exe conversion opcodes present at VA 0x5858D0 (fadd/fmul/fsubr)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "exe tile index is col + row*12  (lea [ecx+ecx*2]; [eax+ecx*4])",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "tile 0 = NW corner; 11 = NE; 132 = SW; 143 = SE",
+      "pass": true,
+      "detail": "corners->tiles {'NW': 0, 'NE': 11, 'SW': 132, 'SE': 143}"
+    },
+    {
+      "name": "gridref.dat is a complete 10 x 10 grid (A1..J10)",
+      "pass": true,
+      "detail": "100 cells, 10 artists"
+    },
+    {
+      "name": "the exe's index arithmetic maps the 100 cells onto 0..3168 step 32, no collision",
+      "pass": true,
+      "detail": "record size 32 bytes"
+    },
+    {
+      "name": "gridref table base 0xC72FB0 is written by loader and getter",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "gridref loader (0x71D4E0) IS called (so the table is populated at init)",
+      "pass": true,
+      "detail": "1 call/jmp refs"
+    },
+    {
+      "name": "the 4 gridref accessor functions are DEAD CODE (zero refs anywhere)",
+      "pass": true,
+      "detail": "refs {'0x71d5a0': (0, 0), '0x71d5e0': (0, 0), '0x71d650': (0, 0), '0x71d670': (0, 0)}"
+    }
+  ]
+}

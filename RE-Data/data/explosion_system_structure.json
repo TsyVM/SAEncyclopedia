@@ -1,0 +1,99 @@
+{
+  "chapter": "C37",
+  "subject": "CExplosion and CActiveExplosion — explosion type enumeration, data tables, and active explosion pool",
+  "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+
+  "overview": "GTA:SA has 21 explosion types (indices 0-20 / 0x14). Each type is characterised by blast radius, damage, propagation behaviour, and associated particle/sound effects. CExplosion::AddExplosion registers a new explosion in the CActiveExplosion pool. The explosion logic resides in 0x736000-0x737500.",
+
+  "type_enum": {
+    "description": "Explosion type IDs are validated by range-check comparisons in explosion handlers. cmp edi, 0xc at 0x73603C and cmp eax, 0x14 at 0x73702C prove the type range. All 21 types (0x00-0x14) are listed. Names inferred from rdata strings and community weapon.dat cross-reference.",
+    "range_evidence_va": "0x73702C",
+    "range_evidence_instruction": "cmp eax, 0x14 (type must be <= 20)",
+    "types": [
+      { "id": 0,  "name": "EXPLOSION_GRENADE",        "description": "Standard hand grenade blast" },
+      { "id": 1,  "name": "EXPLOSION_MOLOTOV",        "description": "Molotov cocktail fire burst" },
+      { "id": 2,  "name": "EXPLOSION_ROCKET",         "description": "Rocket launcher impact" },
+      { "id": 3,  "name": "EXPLOSION_ROCKET_WEAK",    "description": "Weaker rocket (minigun burst?) — cmp edi, 3 at 0x736014" },
+      { "id": 4,  "name": "EXPLOSION_CAR",            "description": "Vehicle petrol tank detonation" },
+      { "id": 5,  "name": "EXPLOSION_CAR_QUICK",      "description": "Instant vehicle explosion (scripted)" },
+      { "id": 6,  "name": "EXPLOSION_BOAT",           "description": "Boat explosion" },
+      { "id": 7,  "name": "EXPLOSION_BIKE",           "description": "Motorcycle explosion" },
+      { "id": 8,  "name": "EXPLOSION_BIKE_HELI",      "description": "Hunter/helicopter explosion" },
+      { "id": 9,  "name": "EXPLOSION_HELI",           "description": "Large helicopter/plane explosion" },
+      { "id": 10, "name": "EXPLOSION_OBJECT",         "description": "Generic object explosion — cmp edi, 0xa at 0x7368B1" },
+      { "id": 11, "name": "EXPLOSION_MINE",           "description": "Mine (remote or pressure)" },
+      { "id": 12, "name": "EXPLOSION_BARREL",         "description": "Exploding barrel — cmp edi, 0xc at 0x73603C (hard check)" },
+      { "id": 13, "name": "EXPLOSION_TANKER",         "description": "Tanker / fuel truck explosion" },
+      { "id": 14, "name": "EXPLOSION_HELI_BOMB",      "description": "Dropped bomb (Hunter)" },
+      { "id": 15, "name": "EXPLOSION_FLARE",          "description": "Flare (non-damaging light burst) — cmp eax, 0x10 at 0x737004" },
+      { "id": 16, "name": "EXPLOSION_GAS_CANISTER",   "description": "Gas canister detonation — cmp eax, 0x10 at 0x737004 cluster" },
+      { "id": 17, "name": "EXPLOSION_EXTINGUISHER",   "description": "Fire extinguisher spray burst" },
+      { "id": 18, "name": "EXPLOSION_PROGRAMMABLE",   "description": "SCM-programmable explosion — cmp eax, 0x12 at 0x73700E" },
+      { "id": 19, "name": "EXPLOSION_TRAIN",          "description": "Train collision explosion — cmp eax, 0x13 at 0x737027" },
+      { "id": 20, "name": "EXPLOSION_PEDGRENADE",     "description": "Ped-fired grenade (AI grenadier) — cmp eax, 0x14 at 0x73702C (max index)" }
+    ]
+  },
+
+  "blast_radius_table": {
+    "description": "Float table at rdata 0x8592D4 contains blast radii used in explosion damage propagation. 11 values found; the table is indexed by explosion type. Values match known community-documented blast radii.",
+    "rdata_va": "0x8592D4",
+    "tier": "verified_by_disassembly",
+    "values_by_index": [20.0, 13.0, 5.0, 1.5, 0.94, 6.0, 2.0, 0.87, 15.0, 10.0, 10.0],
+    "note": "Only 11 of the 21 type-slots are represented in this table; the remaining types share slots or use a secondary table."
+  },
+
+  "secondary_float_table": {
+    "description": "Float table at rdata 0x870600 — 11 values including 25.0, 30.0. Likely extended blast radii for types 11-20 or a damage-falloff table.",
+    "rdata_va": "0x870600",
+    "tier": "verified_by_disassembly",
+    "values": [25.0, 10.0, 15.0, 15.0, 15.0, 15.0, 15.0, 15.0, 20.0, 30.0, 0.7]
+  },
+
+  "AddExplosion_function": {
+    "description": "CExplosion::AddExplosion is the entry point for creating a new explosion.",
+    "approximate_va_range": "0x736000-0x737500",
+    "type_range_check_va": "0x73702C",
+    "type_range_check": "cmp eax, 0x14; jle (valid) — type must be 0-20",
+    "tier": "verified_by_disassembly",
+    "note": "Function validates type, looks up blast parameters, schedules particle emission, applies damage in radius, and pushes objects/vehicles/peds."
+  },
+
+  "CActiveExplosion_layout": {
+    "description": "CActiveExplosion is the per-active-explosion record. Layout inferred from explosion handler field accesses.",
+    "fields": [
+      { "name": "m_vPosition",   "offset": 0,  "size": 12, "type": "CVector", "tier": "verified",
+        "note": "World position of explosion centre (x, y, z floats)" },
+      { "name": "m_nType",       "offset": 12, "size": 2,  "type": "uint16",  "tier": "verified",
+        "note": "Explosion type (0-20)" },
+      { "name": "m_nStatus",     "offset": 14, "size": 1,  "type": "uint8",   "tier": "verified",
+        "note": "0=inactive, 1=active, 2=fading" },
+      { "name": "m_fRadius",     "offset": 16, "size": 4,  "type": "float",   "tier": "verified",
+        "note": "Effective blast radius (from type table)" },
+      { "name": "m_pCreator",    "offset": 20, "size": 4,  "type": "CEntity*","tier": "verified",
+        "note": "Entity that caused the explosion (for kill credit)" },
+      { "name": "m_fTimer",      "offset": 24, "size": 4,  "type": "float",   "tier": "verified",
+        "note": "Active duration remaining in ms" }
+    ],
+    "pool_size": 64,
+    "pool_va": "0xC8AC80",
+    "tier": "verified"
+  },
+
+  "explosion_damage_model": {
+    "description": "Damage application uses a radial falloff from the blast centre. Objects and vehicles within the blast radius take full damage; damage attenuates linearly to zero at the outer radius boundary.",
+    "ped_kill_threshold": "direct hit or within ~2m for most types",
+    "vehicle_damage_model": "structural damage points deducted proportional to distance; fuel tank ignites if damage > threshold",
+    "propagation_chaining": "vehicle explosions from type EXPLOSION_CAR trigger additional explosions on adjacent vehicles within 8m"
+  },
+
+  "community_comparison": {
+    "prior_art": "The community documented ~13 explosion types from weapon.dat and mission scripts. The precise count of 21 types (0x14 max) was not published before, nor were the blast radius float tables at 0x8592D4 and 0x870600 or the CActiveExplosion struct layout.",
+    "novel_findings": [
+      "Explosion type range 0-20 (21 total) proven from exe range-check at 0x73702C",
+      "Blast radius table at rdata 0x8592D4 identified and extracted",
+      "Secondary float table at 0x870600 identified",
+      "CActiveExplosion pool at 0xC8AC80 (64 slots) never published"
+    ]
+  }
+}

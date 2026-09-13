@@ -1,0 +1,100 @@
+{
+ "$schema": "gameplay_pools.v1",
+ "generated": "tools/derive_gameplay_pools.py",
+ "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+ "summary": {
+  "pickup_slots": 620,
+  "garage_slots": 50,
+  "facts_checked": 10,
+  "facts_passed": 10
+ },
+ "pools": {
+  "CPickups": {
+   "element": "CPickup",
+   "base": 9930948,
+   "end": 9950788,
+   "stride": 32,
+   "in_use_field": 24,
+   "handle": "counter<<16 | index",
+   "collected_ring": {
+    "base": 9930280,
+    "cursor": 9930276,
+    "slots": 20
+   }
+  },
+  "CGarages": {
+   "element": "CGarage",
+   "base": 9879624,
+   "end": 9890504,
+   "stride": 216,
+   "count_global": 9879588,
+   "fields": {
+    "type": 76,
+    "door_state": 77,
+    "flags": 78
+   }
+  }
+ },
+ "structural_facts": [
+  {
+   "entry_va": "0x004551C0",
+   "method": "CPickups::FindPickUpForThisObject",
+   "fact": "pickup pool = 620 slots x 0x20 (32 B), base 0x9788c4; slot-in-use byte at +0x18",
+   "verified": true
+  },
+  {
+   "entry_va": "0x00454A70",
+   "method": "CPickups::Init",
+   "fact": "Init: same 0x20 stride; collected-pickups ring = 0x14 (20) dwords at 0x978628",
+   "verified": true
+  },
+  {
+   "entry_va": "0x004552A0",
+   "method": "CPickups::GetActualPickupIndex",
+   "fact": "pickup handle packs {counter<<16 | index}; counter word at slot+0x16 (0x9788da)",
+   "verified": true
+  },
+  {
+   "entry_va": "0x00455240",
+   "method": "CPickups::AddToCollectedPickupsArray",
+   "fact": "collected ring write-cursor at 0x978624 wraps at 0x14 (20)",
+   "verified": true
+  },
+  {
+   "entry_va": "0x004471B0",
+   "method": "CGarages::Shutdown",
+   "fact": "garage pool = 50 slots x 0xD8 (216 B); walked base+0x50 (0x96c098)..0x96eac8",
+   "verified": true
+  },
+  {
+   "entry_va": "0x004476D0",
+   "method": "CGarages::ChangeGarageType",
+   "fact": "garage base 0x96c048; type byte at garage+0x4c, door-state byte at +0x4d",
+   "verified": true
+  },
+  {
+   "entry_va": "0x00447680",
+   "method": "CGarages::GetGarageNumberByName",
+   "fact": "garage count is a runtime global at 0x96c024 (loop bound)",
+   "verified": true
+  },
+  {
+   "entry_va": "0x00447CB0",
+   "method": "CGarages::DeActivateGarage",
+   "fact": "DeActivateGarage sets flag bit 2 at garage+0x4e",
+   "verified": true
+  },
+  {
+   "entry_va": "0x00447D50",
+   "method": "CGarage::OpenThisGarage",
+   "fact": "door state machine on garage+0x4d: from {0,2,5} -> 3 (OpenThisGarage)",
+   "verified": true
+  },
+  {
+   "entry_va": "0x00447D70",
+   "method": "CGarage::CloseThisGarage",
+   "fact": "door state machine on garage+0x4d: from {1,3} -> 2 (CloseThisGarage)",
+   "verified": true
+  }
+ ]
+}

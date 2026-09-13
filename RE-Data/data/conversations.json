@@ -1,0 +1,97 @@
+{
+ "$schema": "conversations.v1",
+ "generated": "tools/derive_conversations.py",
+ "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+ "summary": {
+  "per_ped_slots": 14,
+  "per_ped_stride": 28,
+  "node_slots": 12,
+  "node_stride": 44,
+  "line_slots": 50,
+  "line_stride": 24,
+  "build_index_global": "0x9691c8",
+  "facts_checked": 4,
+  "facts_passed": 4
+ },
+ "arrays": [
+  {
+   "name": "per-ped conversation state",
+   "base": "0x9691d8",
+   "slots": 14,
+   "stride": 28,
+   "ends_at": "0x969360",
+   "slot_schema": "CConversationPerPedSlot",
+   "slot_fields": [
+    { "name": "m_FirstNode",                   "offset":  0, "size": 4, "type": "int32",    "note": "index of the first conversation line node for this ped; -1 = none" },
+    { "name": "m_CurrentNode",                 "offset":  4, "size": 4, "type": "int32",    "note": "index of the currently active conversation node being played" },
+    { "name": "m_pPed",                        "offset":  8, "size": 4, "type": "ptr32",    "note": "pointer to the CPed participating in this conversation" },
+    { "name": "m_LastChange",                  "offset": 12, "size": 4, "type": "uint32",   "note": "game-time (ms) when the conversation state last changed" },
+    { "name": "m_LastTimeWeWereCloseEnough",   "offset": 16, "size": 4, "type": "uint32",   "note": "game-time (ms) of the last proximity check that passed; times out the conversation if the ped walks away" },
+    { "name": "m_Status",                      "offset": 20, "size": 4, "type": "int32",    "note": "conversation state enum: 0=INACTIVE, 1=ACTIVE, etc." },
+    { "name": "m_Enabled",                     "offset": 24, "size": 1, "type": "bool",     "note": "true = this slot is active and enabled for the ped" },
+    { "name": "m_SuppressSubtitles",           "offset": 25, "size": 1, "type": "bool",     "note": "true = do not display subtitle text during this conversation" },
+    { "name": "_pad1A",                        "offset": 26, "size": 2, "type": "pad",      "note": "structural padding to align to 4-byte boundary; total = 28B" }
+   ]
+  },
+  {
+   "name": "conversation-node table",
+   "base": "0x969360",
+   "slots": 12,
+   "stride": 44,
+   "ends_at": "0x969570",
+   "slot_schema": "CConversationNodeSlot",
+   "slot_fields": [
+    { "name": "m_Name",       "offset":  0, "size":  8, "type": "char[8]",  "note": "question line key name (null-terminated, max 8 chars)" },
+    { "name": "m_NameNodeYes","offset":  8, "size":  8, "type": "char[8]",  "note": "key name for the yes-answer dialogue node" },
+    { "name": "m_NameNodeNo", "offset": 16, "size":  8, "type": "char[8]",  "note": "key name for the no-answer dialogue node" },
+    { "name": "m_FinalSlot",  "offset": 24, "size":  4, "type": "int32",    "note": "resolved CConversationLineSlot index after name lookup; -1 = not yet resolved" },
+    { "name": "m_NodeYes",    "offset": 28, "size":  2, "type": "int16",    "note": "index of the yes response node after resolution" },
+    { "name": "m_NodeNo",     "offset": 30, "size":  2, "type": "int16",    "note": "index of the no response node after resolution" },
+    { "name": "m_Speech",     "offset": 32, "size":  4, "type": "int32",    "note": "audio WAV id for the question speech line" },
+    { "name": "m_SpeechY",    "offset": 36, "size":  4, "type": "int32",    "note": "audio WAV id for the yes answer line" },
+    { "name": "m_SpeechN",    "offset": 40, "size":  4, "type": "int32",    "note": "audio WAV id for the no answer line" }
+   ]
+  },
+  {
+   "name": "dialogue-line array",
+   "base": "0x969570",
+   "slots": 50,
+   "stride": 24,
+   "slot_schema": "CConversationLineSlot",
+   "slot_fields": [
+    { "name": "m_Name",    "offset":  0, "size": 8, "type": "char[8]", "note": "dialogue key name (null-terminated, max 8 chars)" },
+    { "name": "m_NodeYes", "offset":  8, "size": 2, "type": "int16",   "note": "index of the yes response node; -1 if none" },
+    { "name": "m_NodeNo",  "offset": 10, "size": 2, "type": "int16",   "note": "index of the no response node; -1 if none" },
+    { "name": "m_Speech",  "offset": 12, "size": 4, "type": "int32",   "note": "audio WAV id for the question line" },
+    { "name": "m_SpeechY", "offset": 16, "size": 4, "type": "int32",   "note": "audio WAV id for the yes answer line" },
+    { "name": "m_SpeechN", "offset": 20, "size": 4, "type": "int32",   "note": "audio WAV id for the no answer line" }
+   ]
+  }
+ ],
+ "structural_facts": [
+  {
+   "entry_va": "0x0043A7B0",
+   "method": "CConversations::Clear",
+   "fact": "Clear walks the per-ped array (stride 0x1C) and the line array (stride 0x18)",
+   "verified": true
+  },
+  {
+   "entry_va": "0x0043A870",
+   "method": "CConversations::SetUpConversationNode",
+   "fact": "SetUpConversationNode: node = index*0x2C at 0x969360; build index @0x9691C8; 6-char text-key copies",
+   "verified": true
+  },
+  {
+   "entry_va": "0x0043A960",
+   "method": "CConversations::RemoveConversationForPed",
+   "fact": "RemoveConversationForPed: per-ped array @0x9691E0; line record = index*24 @0x969570",
+   "verified": true
+  },
+  {
+   "entry_va": "0x0043A840",
+   "method": "CConversations::StartSettingUpConversation",
+   "fact": "StartSettingUpConversation resets build index @0x9691C8 and sets active flag @0x9691D0",
+   "verified": true
+  }
+ ]
+}

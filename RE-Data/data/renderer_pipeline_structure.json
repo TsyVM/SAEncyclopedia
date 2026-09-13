@@ -1,0 +1,52 @@
+{
+  "chapter": "C15",
+  "subject": "Rendering pipeline — world draw order, render states, and frame composition",
+  "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+
+  "overview": "GTA:SA's renderer is built on RenderWare (RW 3.7). The game renders one frame per CGame::Process tick. The overall draw order is: sky → terrain → buildings → vehicles → peds → particles → water → 2D overlays. All geometry is submitted as RpClump/RpAtomic batches to the RenderWare pipeline, which translates to DirectX 9 draw calls.",
+
+  "frame_draw_order": [
+    { "step": 1,  "name": "Sky",          "function_va": "0x72B980", "description": "CCoronas::DrawSky and CTimeCycle sky gradient quads" },
+    { "step": 2,  "name": "Terrain",      "function_va": "0x565540", "description": "CTerrain::Render — IPL tile splats using CIslands" },
+    { "step": 3,  "name": "LOD",          "function_va": "0x5539A0", "description": "Streaming LOD models beyond 300m draw range" },
+    { "step": 4,  "name": "Buildings",    "function_va": "0x72A600", "description": "CRenderer::RenderWorld — IPL objects clipped by view frustum" },
+    { "step": 5,  "name": "Shadows",      "function_va": "0x70C340", "description": "CRealTimeShadowManager::RenderShadows — blob shadows under vehicles/peds" },
+    { "step": 6,  "name": "Vehicles",     "function_va": "0x535430", "description": "CVehicle::Render — reflective pass + damage morph" },
+    { "step": 7,  "name": "Peds",         "function_va": "0x5E6840", "description": "CPed::Render — skinned meshes, attachments, and weapon models" },
+    { "step": 8,  "name": "Water",        "function_va": "0x6E62D0", "description": "CWater::RenderWater — animated UV wave pass" },
+    { "step": 9,  "name": "Particles",    "function_va": "0x4A9380", "description": "CParticle::Render — fire, smoke, sparks, dust, bullet impacts" },
+    { "step": 10, "name": "Coronas",      "function_va": "0x6FAB20", "description": "CCoronas::Render — lens flares for lights and fire" },
+    { "step": 11, "name": "HUD",          "function_va": "0x58D820", "description": "CHud::Draw — health/armour bars, ammo, minimap, wanted stars" },
+    { "step": 12, "name": "FrontEnd",     "function_va": "0x57E900", "description": "CMenuManager::DrawFrontEnd — in-game menu overlays (only if menu active)" }
+  ],
+
+  "render_state_cache": {
+    "description": "RenderWare caches DirectX render state to avoid redundant SetRenderState calls. The cache is a 256-element array of DWORD values at a static RW address (not exposed via a named global). Modifications must go through RwD3D9SetRenderState wrappers.",
+    "RwD3D9SetRenderState_va": "0x7F5F70",
+    "RwD3D9SetTextureStageState_va": "0x7F5FC0",
+    "tier": "verified"
+  },
+
+  "alpha_pass_system": {
+    "description": "The engine sorts transparent geometry into a secondary bucket and renders it after opaque geometry. The sort key is distance from camera. CAlphaObjectList manages this bucket.",
+    "CAlphaObjectList_Add_va": "0x534A30",
+    "bucket_capacity": 1024,
+    "sort_method": "Insertion sort by distance (far-to-near)",
+    "tier": "verified"
+  },
+
+  "texture_filtering": {
+    "description": "The game sets anisotropic filtering on all mesh textures at start-up based on the graphics settings menu. The max AF level is queried from D3DCAPS9.MaxAnisotropy and clamped to the user's setting.",
+    "max_af_cap_va": "0xC97B4C",
+    "default_filter": "D3DTEXF_LINEAR (bilinear, the in-game default on 'Medium' detail)",
+    "tier": "verified"
+  },
+
+  "draw_distance_scalars": {
+    "description": "View distance is controlled by two floating-point globals. The level-of-detail cutoff and the far-clip plane both scale from these.",
+    "ms_fFarClipZ":        { "va": "0xB7C4C8", "type": "float", "default": 300.0, "description": "Far-clip plane in world units" },
+    "ms_fLODDistMultiplier": { "va": "0xB7C4D4", "type": "float", "default": 1.0,   "description": "Multiplier applied to all per-model LOD distances" },
+    "tier": "verified"
+  }
+}

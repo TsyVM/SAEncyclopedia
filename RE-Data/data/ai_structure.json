@@ -1,0 +1,73 @@
+{
+  "chapter": "C41",
+  "subject": "Ped AI: task tree, wanted/pursuit, dispatch",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+  "task_manager": {
+    "constructor": "0x6816a0",
+    "size": "0x30",
+    "m_aPrimaryTasks": {
+      "offset": "0x0",
+      "count": 5,
+      "slots": [
+        "PHYSICAL_RESPONSE",
+        "EVENT_RESPONSE_TEMP",
+        "EVENT_RESPONSE_NONTEMP",
+        "PRIMARY",
+        "DEFAULT"
+      ]
+    },
+    "m_aSecondaryTasks": {
+      "offset": "0x14",
+      "count": 6,
+      "slots": [
+        "ATTACK",
+        "DUCK",
+        "SAY",
+        "FACIAL_COMPLEX",
+        "PARTIAL_ANIM",
+        "IK"
+      ]
+    },
+    "m_pPed": "0x2c"
+  },
+  "wanted": {
+    "class_size_reversed": "0x29C",
+    "update_wanted_level": "0x561C90",
+    "ladder_chaos_to_stars": {
+      "4600": 6,
+      "2400": 5,
+      "1200": 4,
+      "550": 3,
+      "180": 2,
+      "50": 1
+    },
+    "max_chaos_level": 9200,
+    "max_chaos_global": "0x8cdee8",
+    "max_wanted_level": 6,
+    "wanted_levels": 7,
+    "max_cops_in_pursuit": 10,
+    "crimes_being_queued": 16
+  },
+  "dispatch": {
+    "tiers": {
+      "AreMiamiViceRequired": "0x561f30",
+      "AreSwatRequired": "0x561f40",
+      "AreFbiRequired": "0x561f60",
+      "AreArmyRequired": "0x561f80",
+      "NumOfHelisRequired": "0x561fa0"
+    },
+    "roadblocks": {
+      "max": 325,
+      "max_script": 16,
+      "script_record_bytes": "0x1C",
+      "globals": {
+        "InOrOut": "0xa43438",
+        "RoadBlockNodes": "0xa435a0",
+        "aScriptRoadBlocks": "0xa43ab8",
+        "NumRoadBlocks": "0xa43580"
+      }
+    }
+  },
+  "checks_passed": 6,
+  "checks_total": 6
+}

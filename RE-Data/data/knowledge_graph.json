@@ -1,0 +1,2257 @@
+{
+  "$schema": "knowledge_graph.v1",
+  "generated_by": "tools/derive_graph.py",
+  "metrics": {
+    "chapters": 53,
+    "cross_chapter_edges": 404,
+    "avg_degree": 15.25,
+    "weakly_linked": [],
+    "top_hubs": [
+      "C28",
+      "C0",
+      "C6",
+      "C51",
+      "C18",
+      "C40",
+      "C1",
+      "C11"
+    ]
+  },
+  "subsystems": {
+    "Executable & RE method": [
+      "C0",
+      "C27",
+      "C28",
+      "C33",
+      "C37",
+      "X1"
+    ],
+    "Streaming & memory": [
+      "C1",
+      "C2",
+      "C3",
+      "C4",
+      "C31"
+    ],
+    "World & map": [
+      "C5",
+      "C10",
+      "C11",
+      "C12",
+      "C22"
+    ],
+    "Rendering (RenderWare/D3D9)": [
+      "C7",
+      "C8",
+      "C9",
+      "C23",
+      "C38",
+      "C39",
+      "C40",
+      "C44",
+      "C15",
+      "C21"
+    ],
+    "Physics & collision": [
+      "C6",
+      "C13",
+      "C24",
+      "C25",
+      "C42",
+      "C47"
+    ],
+    "AI & gameplay": [
+      "C26",
+      "C29",
+      "C30",
+      "C34",
+      "C35",
+      "C36",
+      "C41",
+      "C45"
+    ],
+    "Script (SCM/GXT)": [
+      "C18",
+      "C19",
+      "C32"
+    ],
+    "Animation": [
+      "C17"
+    ],
+    "Audio": [
+      "C20"
+    ],
+    "Peds & weapons": [
+      "C14"
+    ],
+    "Input & UI": [
+      "C43",
+      "C46"
+    ],
+    "Water/weather cycle": [
+      "C16"
+    ],
+    "Data files": [
+      "C48"
+    ],
+    "Executable lifecycle": [
+      "C51"
+    ],
+    "RenderWare reference": [
+      "C50"
+    ],
+    "Third-party (SA:MP)": [
+      "C49"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "C0",
+      "dir": "C0-Binary-Identity",
+      "title": "Chapter 0 \u2014 Binary Identity: What `gta_sa.exe` Actually Is",
+      "subsystem": "Executable & RE method",
+      "pages": 4,
+      "out_degree": 8,
+      "in_degree": 20,
+      "degree": 28
+    },
+    {
+      "id": "C1",
+      "dir": "C1-Streaming",
+      "title": "Chapter 1 \u2014 Streaming: the IMG Model & the CdStream Layer",
+      "subsystem": "Streaming & memory",
+      "pages": 3,
+      "out_degree": 5,
+      "in_degree": 17,
+      "degree": 22
+    },
+    {
+      "id": "C2",
+      "dir": "C2-CStreaming",
+      "title": "Chapter 2 \u2014 CStreaming & the Model-ID Space",
+      "subsystem": "Streaming & memory",
+      "pages": 5,
+      "out_degree": 5,
+      "in_degree": 13,
+      "degree": 18
+    },
+    {
+      "id": "C3",
+      "dir": "C3-Model-Stores",
+      "title": "Chapter 3 \u2014 The Model Stores & the ID Partition",
+      "subsystem": "Streaming & memory",
+      "pages": 5,
+      "out_degree": 5,
+      "in_degree": 12,
+      "degree": 17
+    },
+    {
+      "id": "C4",
+      "dir": "C4-Entities-And-Pools",
+      "title": "Chapter 4 \u2014 Entities & the Pool Allocator",
+      "subsystem": "Streaming & memory",
+      "pages": 6,
+      "out_degree": 5,
+      "in_degree": 16,
+      "degree": 21
+    },
+    {
+      "id": "C5",
+      "dir": "C5-CWorld",
+      "title": "Chapter 5 \u2014 CWorld & Spatial Partitioning",
+      "subsystem": "World & map",
+      "pages": 7,
+      "out_degree": 6,
+      "in_degree": 13,
+      "degree": 19
+    },
+    {
+      "id": "C6",
+      "dir": "C6-Collision",
+      "title": "Chapter 6 \u2014 Collision & the COL Model",
+      "subsystem": "Physics & collision",
+      "pages": 4,
+      "out_degree": 8,
+      "in_degree": 18,
+      "degree": 26
+    },
+    {
+      "id": "C7",
+      "dir": "C7-RenderWare-Stream",
+      "title": "Chapter 7 \u2014 RenderWare: the Stream Format",
+      "subsystem": "Rendering (RenderWare/D3D9)",
+      "pages": 4,
+      "out_degree": 7,
+      "in_degree": 13,
+      "degree": 20
+    },
+    {
+      "id": "C8",
+      "dir": "C8-Geometry",
+      "title": "Chapter 8 \u2014 Geometry & the Binary Mesh",
+      "subsystem": "Rendering (RenderWare/D3D9)",
+      "pages": 4,
+      "out_degree": 7,
+      "in_degree": 6,
+      "degree": 13
+    },
+    {
+      "id": "C9",
+      "dir": "C9-Materials-And-Textures",
+      "title": "Chapter 9 \u2014 Materials & Texture Payloads",
+      "subsystem": "Rendering (RenderWare/D3D9)",
+      "pages": 4,
+      "out_degree": 6,
+      "in_degree": 11,
+      "degree": 17
+    },
+    {
+      "id": "C10",
+      "dir": "C10-2dEffect",
+      "title": "Chapter 10 \u2014 2dEffect & the Map's Lighting",
+      "subsystem": "World & map",
+      "pages": 4,
+      "out_degree": 7,
+      "in_degree": 11,
+      "degree": 18
+    },
+    {
+      "id": "C11",
+      "dir": "C11-IDE-And-IPL",
+      "title": "Chapter 11 \u2014 IDE & IPL: the World's Data Model",
+      "subsystem": "World & map",
+      "pages": 4,
+      "out_degree": 8,
+      "in_degree": 14,
+      "degree": 22
+    },
+    {
+      "id": "C12",
+      "dir": "C12-Path-Network",
+      "title": "Chapter 12 \u2014 The Path Network",
+      "subsystem": "World & map",
+      "pages": 4,
+      "out_degree": 7,
+      "in_degree": 8,
+      "degree": 15
+    },
+    {
+      "id": "C13",
+      "dir": "C13-Vehicle-Data",
+      "title": "Chapter 13 \u2014 Handling & Vehicle Data",
+      "subsystem": "Physics & collision",
+      "pages": 4,
+      "out_degree": 5,
+      "in_degree": 10,
+      "degree": 15
+    },
+    {
+      "id": "C14",
+      "dir": "C14-Peds-And-Weapons",
+      "title": "Chapter 14 \u2014 Peds, Weapons & Stats",
+      "subsystem": "Peds & weapons",
+      "pages": 5,
+      "out_degree": 8,
+      "in_degree": 8,
+      "degree": 16
+    },
+    {
+      "id": "C15",
+      "dir": "C15-Timecycle",
+      "title": "Chapter 15 \u2014 The Timecycle",
+      "subsystem": "Rendering (RenderWare/D3D9)",
+      "pages": 4,
+      "out_degree": 5,
+      "in_degree": 5,
+      "degree": 10
+    },
+    {
+      "id": "C16",
+      "dir": "C16-Popcycle-And-Water",
+      "title": "Chapter 16 \u2014 popcycle & water",
+      "subsystem": "Water/weather cycle",
+      "pages": 3,
+      "out_degree": 7,
+      "in_degree": 4,
+      "degree": 11
+    },
+    {
+      "id": "C17",
+      "dir": "C17-IFP-Animation",
+      "title": "Chapter 17 \u2014 IFP: the Animation Format",
+      "subsystem": "Animation",
+      "pages": 5,
+      "out_degree": 9,
+      "in_degree": 5,
+      "degree": 14
+    },
+    {
+      "id": "C18",
+      "dir": "C18-SCM-Script",
+      "title": "Chapter 18 \u2014 SCM: the Mission Script Format",
+      "subsystem": "Script (SCM/GXT)",
+      "pages": 8,
+      "out_degree": 11,
+      "in_degree": 12,
+      "degree": 23
+    },
+    {
+      "id": "C19",
+      "dir": "C19-GXT-Text",
+      "title": "Chapter 19 \u2014 GXT: the Text & Localization Format",
+      "subsystem": "Script (SCM/GXT)",
+      "pages": 4,
+      "out_degree": 9,
+      "in_degree": 9,
+      "degree": 18
+    },
+    {
+      "id": "C20",
+      "dir": "C20-Audio",
+      "title": "Chapter 20 \u2014 Audio: Banks, Streams and the Tables That Index Them",
+      "subsystem": "Audio",
+      "pages": 7,
+      "out_degree": 4,
+      "in_degree": 8,
+      "degree": 12
+    },
+    {
+      "id": "C21",
+      "dir": "C21-Particles",
+      "title": "Chapter 21 \u2014 Particles: the `effects.fxp` Effect Library",
+      "subsystem": "Rendering (RenderWare/D3D9)",
+      "pages": 4,
+      "out_degree": 4,
+      "in_degree": 7,
+      "degree": 11
+    },
+    {
+      "id": "C22",
+      "dir": "C22-Map-Zones",
+      "title": "Chapter 22 \u2014 Zones, the Radar Grid and the Map Gridref",
+      "subsystem": "World & map",
+      "pages": 4,
+      "out_degree": 6,
+      "in_degree": 7,
+      "degree": 13
+    },
+    {
+      "id": "C23",
+      "dir": "C23-Fonts-HUD",
+      "title": "Chapter 23 \u2014 Fonts, the Glyph Atlas and the HUD",
+      "subsystem": "Rendering (RenderWare/D3D9)",
+      "pages": 4,
+      "out_degree": 5,
+      "in_degree": 8,
+      "degree": 13
+    },
+    {
+      "id": "C24",
+      "dir": "C24-Surfaces",
+      "title": "Chapter 24 \u2014 Surface Materials: Friction, Physics and Audio",
+      "subsystem": "Physics & collision",
+      "pages": 4,
+      "out_degree": 5,
+      "in_degree": 6,
+      "degree": 11
+    },
+    {
+      "id": "C25",
+      "dir": "C25-Object-Physics",
+      "title": "Chapter 25 \u2014 `object.dat`: Dynamic Object Physics",
+      "subsystem": "Physics & collision",
+      "pages": 3,
+      "out_degree": 7,
+      "in_degree": 3,
+      "degree": 10
+    },
+    {
+      "id": "C26",
+      "dir": "C26-Ped-Tables",
+      "title": "Chapter 26 \u2014 The Ped Behaviour Tables: Acquaintances and Population Groups",
+      "subsystem": "AI & gameplay",
+      "pages": 3,
+      "out_degree": 8,
+      "in_degree": 3,
+      "degree": 11
+    },
+    {
+      "id": "C27",
+      "dir": "C27-Function-Catalogue",
+      "title": "Chapter 27 \u2014 The Function Catalogue: Naming the 492",
+      "subsystem": "Executable & RE method",
+      "pages": 4,
+      "out_degree": 5,
+      "in_degree": 12,
+      "degree": 17
+    },
+    {
+      "id": "C28",
+      "dir": "C28-Class-Catalogue",
+      "title": "Chapter 28 \u2014 The Class Catalogue: from Named Functions to Subsystem Structure",
+      "subsystem": "Executable & RE method",
+      "pages": 5,
+      "out_degree": 15,
+      "in_degree": 19,
+      "degree": 34
+    },
+    {
+      "id": "C29",
+      "dir": "C29-Gameplay-Object-Pools",
+      "title": "Chapter 29 \u2014 Gameplay Object Pools: Pickups and Garages",
+      "subsystem": "AI & gameplay",
+      "pages": 3,
+      "out_degree": 6,
+      "in_degree": 5,
+      "degree": 11
+    },
+    {
+      "id": "C30",
+      "dir": "C30-Gameplay-Managers",
+      "title": "Chapter 30 \u2014 Gameplay Managers: Entry/Exits, Replay, Shopping",
+      "subsystem": "AI & gameplay",
+      "pages": 4,
+      "out_degree": 6,
+      "in_degree": 6,
+      "degree": 12
+    },
+    {
+      "id": "C31",
+      "dir": "C31-Streaming-Slot-Tables",
+      "title": "Chapter 31 \u2014 Streaming Slot Tables: Collision, IPL and Streamed Scripts",
+      "subsystem": "Streaming & memory",
+      "pages": 4,
+      "out_degree": 8,
+      "in_degree": 7,
+      "degree": 15
+    },
+    {
+      "id": "C32",
+      "dir": "C32-CRunningScript-Object",
+      "title": "Chapter 32 \u2014 The CRunningScript Object: the SCM VM's Per-Thread State",
+      "subsystem": "Script (SCM/GXT)",
+      "pages": 3,
+      "out_degree": 5,
+      "in_degree": 2,
+      "degree": 7
+    },
+    {
+      "id": "C33",
+      "dir": "C33-Attributing-The-Unnamed",
+      "title": "Chapter 33 \u2014 Attributing the Unnamed by Data Reference",
+      "subsystem": "Executable & RE method",
+      "pages": 3,
+      "out_degree": 7,
+      "in_degree": 5,
+      "degree": 12
+    },
+    {
+      "id": "C34",
+      "dir": "C34-Vehicle-Recording",
+      "title": "Chapter 34 \u2014 CVehicleRecording: Recorded-Vehicle Playback",
+      "subsystem": "AI & gameplay",
+      "pages": 3,
+      "out_degree": 6,
+      "in_degree": 4,
+      "degree": 10
+    },
+    {
+      "id": "C35",
+      "dir": "C35-Conversations",
+      "title": "Chapter 35 \u2014 CConversations: the Ambient-Dialogue System",
+      "subsystem": "AI & gameplay",
+      "pages": 3,
+      "out_degree": 8,
+      "in_degree": 1,
+      "degree": 9
+    },
+    {
+      "id": "C36",
+      "dir": "C36-Script-Brains",
+      "title": "Chapter 36 \u2014 CScriptsForBrains: the Attractor-Brain Table",
+      "subsystem": "AI & gameplay",
+      "pages": 3,
+      "out_degree": 8,
+      "in_degree": 3,
+      "degree": 11
+    },
+    {
+      "id": "C37",
+      "dir": "C37-Verifying-The-Catalogue",
+      "title": "Chapter 37 \u2014 Verifying the Catalogue by Structure",
+      "subsystem": "Executable & RE method",
+      "pages": 3,
+      "out_degree": 7,
+      "in_degree": 2,
+      "degree": 9
+    },
+    {
+      "id": "C38",
+      "dir": "C38-Skybox-And-Clouds",
+      "title": "Chapter 38 \u2014 The Skybox That Isn't: Sky Rendering, Clouds, Moon and Stars",
+      "subsystem": "Rendering (RenderWare/D3D9)",
+      "pages": 4,
+      "out_degree": 8,
+      "in_degree": 5,
+      "degree": 13
+    },
+    {
+      "id": "C39",
+      "dir": "C39-Camera",
+      "title": "Chapter 39 \u2014 The Camera: `CCamera`, the Three-Cam Array, and Sixty-Six Modes",
+      "subsystem": "Rendering (RenderWare/D3D9)",
+      "pages": 4,
+      "out_degree": 7,
+      "in_degree": 7,
+      "degree": 14
+    },
+    {
+      "id": "C40",
+      "dir": "C40-Render-Pipeline",
+      "title": "Chapter 40 \u2014 The Render Pipeline: `CRenderer`, the Four Visible-Entity Lists, and the Pass Order",
+      "subsystem": "Rendering (RenderWare/D3D9)",
+      "pages": 4,
+      "out_degree": 11,
+      "in_degree": 12,
+      "degree": 23
+    },
+    {
+      "id": "C41",
+      "dir": "C41-Ped-AI-Tasks-Wanted",
+      "title": "Chapter 41 \u2014 Ped AI: The Task Tree, the Wanted System, and Dispatch",
+      "subsystem": "AI & gameplay",
+      "pages": 4,
+      "out_degree": 7,
+      "in_degree": 5,
+      "degree": 12
+    },
+    {
+      "id": "C42",
+      "dir": "C42-Vehicle-Physics",
+      "title": "Chapter 42 \u2014 Vehicle Physics: The Handling Manager and the CPhysical Rigid Body",
+      "subsystem": "Physics & collision",
+      "pages": 4,
+      "out_degree": 9,
+      "in_degree": 8,
+      "degree": 17
+    },
+    {
+      "id": "C43",
+      "dir": "C43-Front-End-Menu",
+      "title": "Chapter 43 \u2014 The Front-End: The Pause Menu as a Hardcoded Table",
+      "subsystem": "Input & UI",
+      "pages": 4,
+      "out_degree": 5,
+      "in_degree": 3,
+      "degree": 8
+    },
+    {
+      "id": "C44",
+      "dir": "C44-Shaders",
+      "title": "Chapter 44 \u2014 Shaders: The RenderWare D3D9 Vertex-Shader Pipelines",
+      "subsystem": "Rendering (RenderWare/D3D9)",
+      "pages": 4,
+      "out_degree": 7,
+      "in_degree": 7,
+      "degree": 14
+    },
+    {
+      "id": "C45",
+      "dir": "C45-Damage",
+      "title": "Chapter 45 \u2014 Damage: How Health Drains, and Why Everything Is a \"Weapon\"",
+      "subsystem": "AI & gameplay",
+      "pages": 5,
+      "out_degree": 6,
+      "in_degree": 5,
+      "degree": 11
+    },
+    {
+      "id": "C46",
+      "dir": "C46-Input-Devices",
+      "title": "Chapter 46 \u2014 Input Devices: The Pad, the Controller State, and Two Players",
+      "subsystem": "Input & UI",
+      "pages": 5,
+      "out_degree": 6,
+      "in_degree": 3,
+      "degree": 9
+    },
+    {
+      "id": "C47",
+      "dir": "C47-Vehicle-Dynamics",
+      "title": "Chapter 47 \u2014 Vehicle Dynamics: Suspension, Tyres and Damage",
+      "subsystem": "Physics & collision",
+      "pages": 4,
+      "out_degree": 5,
+      "in_degree": 4,
+      "degree": 9
+    },
+    {
+      "id": "C48",
+      "dir": "C48-Data-Folder-Sweep",
+      "title": "Chapter 48 \u2014 Combing the Data Folder: The Files Every Other Chapter Skipped",
+      "subsystem": "Data files",
+      "pages": 4,
+      "out_degree": 15,
+      "in_degree": 2,
+      "degree": 17
+    },
+    {
+      "id": "C49",
+      "dir": "C49-SAMP-Multiplayer",
+      "title": "Chapter 49 \u2014 SA:MP: San Andreas Multiplayer, the Client in the Tree",
+      "subsystem": "Third-party (SA:MP)",
+      "pages": 3,
+      "out_degree": 12,
+      "in_degree": 0,
+      "degree": 12
+    },
+    {
+      "id": "C50",
+      "dir": "C50-RenderWare-Reference",
+      "title": "Chapter 50 \u2014 RenderWare 3.6: The Engine Under the Engine",
+      "subsystem": "RenderWare reference",
+      "pages": 3,
+      "out_degree": 12,
+      "in_degree": 1,
+      "degree": 13
+    },
+    {
+      "id": "C51",
+      "dir": "C51-Executable-Lifecycle",
+      "title": "Chapter 51 \u2014 The Executable Lifecycle: Entry, Init, Frame Loop, Shutdown",
+      "subsystem": "Executable lifecycle",
+      "pages": 3,
+      "out_degree": 24,
+      "in_degree": 1,
+      "degree": 25
+    },
+    {
+      "id": "X1",
+      "dir": "X1-SDK-Cross-Reference",
+      "title": "X1 \u2014 SDK Cross-Reference: Closing the Open Items",
+      "subsystem": "Executable & RE method",
+      "pages": 1,
+      "out_degree": 12,
+      "in_degree": 8,
+      "degree": 20
+    }
+  ],
+  "edges": [
+    {
+      "from": "C0",
+      "to": "C1"
+    },
+    {
+      "from": "C0",
+      "to": "C27"
+    },
+    {
+      "from": "C0",
+      "to": "C28"
+    },
+    {
+      "from": "C0",
+      "to": "C33"
+    },
+    {
+      "from": "C0",
+      "to": "C37"
+    },
+    {
+      "from": "C0",
+      "to": "C44"
+    },
+    {
+      "from": "C0",
+      "to": "C46"
+    },
+    {
+      "from": "C0",
+      "to": "X1"
+    },
+    {
+      "from": "C1",
+      "to": "C0"
+    },
+    {
+      "from": "C1",
+      "to": "C2"
+    },
+    {
+      "from": "C1",
+      "to": "C3"
+    },
+    {
+      "from": "C1",
+      "to": "C31"
+    },
+    {
+      "from": "C1",
+      "to": "C40"
+    },
+    {
+      "from": "C2",
+      "to": "C0"
+    },
+    {
+      "from": "C2",
+      "to": "C1"
+    },
+    {
+      "from": "C2",
+      "to": "C3"
+    },
+    {
+      "from": "C2",
+      "to": "C4"
+    },
+    {
+      "from": "C2",
+      "to": "X1"
+    },
+    {
+      "from": "C3",
+      "to": "C0"
+    },
+    {
+      "from": "C3",
+      "to": "C2"
+    },
+    {
+      "from": "C3",
+      "to": "C4"
+    },
+    {
+      "from": "C3",
+      "to": "C31"
+    },
+    {
+      "from": "C3",
+      "to": "C40"
+    },
+    {
+      "from": "C4",
+      "to": "C0"
+    },
+    {
+      "from": "C4",
+      "to": "C2"
+    },
+    {
+      "from": "C4",
+      "to": "C3"
+    },
+    {
+      "from": "C4",
+      "to": "C5"
+    },
+    {
+      "from": "C4",
+      "to": "X1"
+    },
+    {
+      "from": "C5",
+      "to": "C0"
+    },
+    {
+      "from": "C5",
+      "to": "C1"
+    },
+    {
+      "from": "C5",
+      "to": "C2"
+    },
+    {
+      "from": "C5",
+      "to": "C4"
+    },
+    {
+      "from": "C5",
+      "to": "C11"
+    },
+    {
+      "from": "C5",
+      "to": "X1"
+    },
+    {
+      "from": "C6",
+      "to": "C1"
+    },
+    {
+      "from": "C6",
+      "to": "C3"
+    },
+    {
+      "from": "C6",
+      "to": "C4"
+    },
+    {
+      "from": "C6",
+      "to": "C31"
+    },
+    {
+      "from": "C6",
+      "to": "C42"
+    },
+    {
+      "from": "C6",
+      "to": "C45"
+    },
+    {
+      "from": "C6",
+      "to": "C47"
+    },
+    {
+      "from": "C6",
+      "to": "X1"
+    },
+    {
+      "from": "C7",
+      "to": "C0"
+    },
+    {
+      "from": "C7",
+      "to": "C1"
+    },
+    {
+      "from": "C7",
+      "to": "C3"
+    },
+    {
+      "from": "C7",
+      "to": "C5"
+    },
+    {
+      "from": "C7",
+      "to": "C6"
+    },
+    {
+      "from": "C7",
+      "to": "C9"
+    },
+    {
+      "from": "C7",
+      "to": "C10"
+    },
+    {
+      "from": "C8",
+      "to": "C1"
+    },
+    {
+      "from": "C8",
+      "to": "C2"
+    },
+    {
+      "from": "C8",
+      "to": "C5"
+    },
+    {
+      "from": "C8",
+      "to": "C6"
+    },
+    {
+      "from": "C8",
+      "to": "C7"
+    },
+    {
+      "from": "C8",
+      "to": "C9"
+    },
+    {
+      "from": "C8",
+      "to": "C10"
+    },
+    {
+      "from": "C9",
+      "to": "C3"
+    },
+    {
+      "from": "C9",
+      "to": "C5"
+    },
+    {
+      "from": "C9",
+      "to": "C6"
+    },
+    {
+      "from": "C9",
+      "to": "C7"
+    },
+    {
+      "from": "C9",
+      "to": "C8"
+    },
+    {
+      "from": "C9",
+      "to": "C10"
+    },
+    {
+      "from": "C10",
+      "to": "C0"
+    },
+    {
+      "from": "C10",
+      "to": "C3"
+    },
+    {
+      "from": "C10",
+      "to": "C5"
+    },
+    {
+      "from": "C10",
+      "to": "C6"
+    },
+    {
+      "from": "C10",
+      "to": "C7"
+    },
+    {
+      "from": "C10",
+      "to": "C8"
+    },
+    {
+      "from": "C10",
+      "to": "C9"
+    },
+    {
+      "from": "C11",
+      "to": "C1"
+    },
+    {
+      "from": "C11",
+      "to": "C2"
+    },
+    {
+      "from": "C11",
+      "to": "C3"
+    },
+    {
+      "from": "C11",
+      "to": "C5"
+    },
+    {
+      "from": "C11",
+      "to": "C6"
+    },
+    {
+      "from": "C11",
+      "to": "C9"
+    },
+    {
+      "from": "C11",
+      "to": "C10"
+    },
+    {
+      "from": "C11",
+      "to": "X1"
+    },
+    {
+      "from": "C12",
+      "to": "C4"
+    },
+    {
+      "from": "C12",
+      "to": "C5"
+    },
+    {
+      "from": "C12",
+      "to": "C6"
+    },
+    {
+      "from": "C12",
+      "to": "C7"
+    },
+    {
+      "from": "C12",
+      "to": "C9"
+    },
+    {
+      "from": "C12",
+      "to": "C10"
+    },
+    {
+      "from": "C12",
+      "to": "C11"
+    },
+    {
+      "from": "C13",
+      "to": "C10"
+    },
+    {
+      "from": "C13",
+      "to": "C11"
+    },
+    {
+      "from": "C13",
+      "to": "C12"
+    },
+    {
+      "from": "C13",
+      "to": "C42"
+    },
+    {
+      "from": "C13",
+      "to": "C47"
+    },
+    {
+      "from": "C14",
+      "to": "C3"
+    },
+    {
+      "from": "C14",
+      "to": "C6"
+    },
+    {
+      "from": "C14",
+      "to": "C7"
+    },
+    {
+      "from": "C14",
+      "to": "C10"
+    },
+    {
+      "from": "C14",
+      "to": "C11"
+    },
+    {
+      "from": "C14",
+      "to": "C13"
+    },
+    {
+      "from": "C14",
+      "to": "C16"
+    },
+    {
+      "from": "C14",
+      "to": "C25"
+    },
+    {
+      "from": "C15",
+      "to": "C10"
+    },
+    {
+      "from": "C15",
+      "to": "C11"
+    },
+    {
+      "from": "C15",
+      "to": "C13"
+    },
+    {
+      "from": "C15",
+      "to": "C14"
+    },
+    {
+      "from": "C15",
+      "to": "X1"
+    },
+    {
+      "from": "C16",
+      "to": "C5"
+    },
+    {
+      "from": "C16",
+      "to": "C8"
+    },
+    {
+      "from": "C16",
+      "to": "C11"
+    },
+    {
+      "from": "C16",
+      "to": "C12"
+    },
+    {
+      "from": "C16",
+      "to": "C13"
+    },
+    {
+      "from": "C16",
+      "to": "C14"
+    },
+    {
+      "from": "C16",
+      "to": "C15"
+    },
+    {
+      "from": "C17",
+      "to": "C1"
+    },
+    {
+      "from": "C17",
+      "to": "C4"
+    },
+    {
+      "from": "C17",
+      "to": "C10"
+    },
+    {
+      "from": "C17",
+      "to": "C11"
+    },
+    {
+      "from": "C17",
+      "to": "C12"
+    },
+    {
+      "from": "C17",
+      "to": "C13"
+    },
+    {
+      "from": "C17",
+      "to": "C14"
+    },
+    {
+      "from": "C17",
+      "to": "C15"
+    },
+    {
+      "from": "C17",
+      "to": "C18"
+    },
+    {
+      "from": "C18",
+      "to": "C0"
+    },
+    {
+      "from": "C18",
+      "to": "C1"
+    },
+    {
+      "from": "C18",
+      "to": "C2"
+    },
+    {
+      "from": "C18",
+      "to": "C4"
+    },
+    {
+      "from": "C18",
+      "to": "C7"
+    },
+    {
+      "from": "C18",
+      "to": "C10"
+    },
+    {
+      "from": "C18",
+      "to": "C11"
+    },
+    {
+      "from": "C18",
+      "to": "C12"
+    },
+    {
+      "from": "C18",
+      "to": "C17"
+    },
+    {
+      "from": "C18",
+      "to": "C19"
+    },
+    {
+      "from": "C18",
+      "to": "C20"
+    },
+    {
+      "from": "C19",
+      "to": "C1"
+    },
+    {
+      "from": "C19",
+      "to": "C4"
+    },
+    {
+      "from": "C19",
+      "to": "C10"
+    },
+    {
+      "from": "C19",
+      "to": "C11"
+    },
+    {
+      "from": "C19",
+      "to": "C12"
+    },
+    {
+      "from": "C19",
+      "to": "C17"
+    },
+    {
+      "from": "C19",
+      "to": "C18"
+    },
+    {
+      "from": "C19",
+      "to": "C21"
+    },
+    {
+      "from": "C19",
+      "to": "C22"
+    },
+    {
+      "from": "C20",
+      "to": "C0"
+    },
+    {
+      "from": "C20",
+      "to": "C18"
+    },
+    {
+      "from": "C20",
+      "to": "C41"
+    },
+    {
+      "from": "C20",
+      "to": "C45"
+    },
+    {
+      "from": "C21",
+      "to": "C0"
+    },
+    {
+      "from": "C21",
+      "to": "C38"
+    },
+    {
+      "from": "C21",
+      "to": "C40"
+    },
+    {
+      "from": "C21",
+      "to": "C44"
+    },
+    {
+      "from": "C22",
+      "to": "C1"
+    },
+    {
+      "from": "C22",
+      "to": "C9"
+    },
+    {
+      "from": "C22",
+      "to": "C11"
+    },
+    {
+      "from": "C22",
+      "to": "C18"
+    },
+    {
+      "from": "C22",
+      "to": "C19"
+    },
+    {
+      "from": "C22",
+      "to": "C20"
+    },
+    {
+      "from": "C23",
+      "to": "C9"
+    },
+    {
+      "from": "C23",
+      "to": "C19"
+    },
+    {
+      "from": "C23",
+      "to": "C20"
+    },
+    {
+      "from": "C23",
+      "to": "C21"
+    },
+    {
+      "from": "C23",
+      "to": "C22"
+    },
+    {
+      "from": "C24",
+      "to": "C6"
+    },
+    {
+      "from": "C24",
+      "to": "C13"
+    },
+    {
+      "from": "C24",
+      "to": "C20"
+    },
+    {
+      "from": "C24",
+      "to": "C21"
+    },
+    {
+      "from": "C24",
+      "to": "C22"
+    },
+    {
+      "from": "C25",
+      "to": "C6"
+    },
+    {
+      "from": "C25",
+      "to": "C13"
+    },
+    {
+      "from": "C25",
+      "to": "C21"
+    },
+    {
+      "from": "C25",
+      "to": "C24"
+    },
+    {
+      "from": "C25",
+      "to": "C42"
+    },
+    {
+      "from": "C25",
+      "to": "C45"
+    },
+    {
+      "from": "C25",
+      "to": "C47"
+    },
+    {
+      "from": "C26",
+      "to": "C13"
+    },
+    {
+      "from": "C26",
+      "to": "C14"
+    },
+    {
+      "from": "C26",
+      "to": "C16"
+    },
+    {
+      "from": "C26",
+      "to": "C19"
+    },
+    {
+      "from": "C26",
+      "to": "C21"
+    },
+    {
+      "from": "C26",
+      "to": "C23"
+    },
+    {
+      "from": "C26",
+      "to": "C24"
+    },
+    {
+      "from": "C26",
+      "to": "C25"
+    },
+    {
+      "from": "C27",
+      "to": "C0"
+    },
+    {
+      "from": "C27",
+      "to": "C28"
+    },
+    {
+      "from": "C27",
+      "to": "C33"
+    },
+    {
+      "from": "C27",
+      "to": "C37"
+    },
+    {
+      "from": "C27",
+      "to": "X1"
+    },
+    {
+      "from": "C28",
+      "to": "C0"
+    },
+    {
+      "from": "C28",
+      "to": "C1"
+    },
+    {
+      "from": "C28",
+      "to": "C2"
+    },
+    {
+      "from": "C28",
+      "to": "C3"
+    },
+    {
+      "from": "C28",
+      "to": "C4"
+    },
+    {
+      "from": "C28",
+      "to": "C5"
+    },
+    {
+      "from": "C28",
+      "to": "C6"
+    },
+    {
+      "from": "C28",
+      "to": "C8"
+    },
+    {
+      "from": "C28",
+      "to": "C12"
+    },
+    {
+      "from": "C28",
+      "to": "C13"
+    },
+    {
+      "from": "C28",
+      "to": "C14"
+    },
+    {
+      "from": "C28",
+      "to": "C18"
+    },
+    {
+      "from": "C28",
+      "to": "C19"
+    },
+    {
+      "from": "C28",
+      "to": "C20"
+    },
+    {
+      "from": "C28",
+      "to": "C27"
+    },
+    {
+      "from": "C29",
+      "to": "C0"
+    },
+    {
+      "from": "C29",
+      "to": "C4"
+    },
+    {
+      "from": "C29",
+      "to": "C27"
+    },
+    {
+      "from": "C29",
+      "to": "C28"
+    },
+    {
+      "from": "C29",
+      "to": "C30"
+    },
+    {
+      "from": "C29",
+      "to": "C31"
+    },
+    {
+      "from": "C30",
+      "to": "C0"
+    },
+    {
+      "from": "C30",
+      "to": "C27"
+    },
+    {
+      "from": "C30",
+      "to": "C28"
+    },
+    {
+      "from": "C30",
+      "to": "C29"
+    },
+    {
+      "from": "C30",
+      "to": "C34"
+    },
+    {
+      "from": "C30",
+      "to": "C48"
+    },
+    {
+      "from": "C31",
+      "to": "C1"
+    },
+    {
+      "from": "C31",
+      "to": "C2"
+    },
+    {
+      "from": "C31",
+      "to": "C3"
+    },
+    {
+      "from": "C31",
+      "to": "C6"
+    },
+    {
+      "from": "C31",
+      "to": "C11"
+    },
+    {
+      "from": "C31",
+      "to": "C18"
+    },
+    {
+      "from": "C31",
+      "to": "C27"
+    },
+    {
+      "from": "C31",
+      "to": "C28"
+    },
+    {
+      "from": "C32",
+      "to": "C18"
+    },
+    {
+      "from": "C32",
+      "to": "C19"
+    },
+    {
+      "from": "C32",
+      "to": "C28"
+    },
+    {
+      "from": "C32",
+      "to": "C31"
+    },
+    {
+      "from": "C32",
+      "to": "C36"
+    },
+    {
+      "from": "C33",
+      "to": "C0"
+    },
+    {
+      "from": "C33",
+      "to": "C27"
+    },
+    {
+      "from": "C33",
+      "to": "C28"
+    },
+    {
+      "from": "C33",
+      "to": "C29"
+    },
+    {
+      "from": "C33",
+      "to": "C30"
+    },
+    {
+      "from": "C33",
+      "to": "C31"
+    },
+    {
+      "from": "C33",
+      "to": "C32"
+    },
+    {
+      "from": "C34",
+      "to": "C1"
+    },
+    {
+      "from": "C34",
+      "to": "C2"
+    },
+    {
+      "from": "C34",
+      "to": "C13"
+    },
+    {
+      "from": "C34",
+      "to": "C27"
+    },
+    {
+      "from": "C34",
+      "to": "C28"
+    },
+    {
+      "from": "C34",
+      "to": "C30"
+    },
+    {
+      "from": "C35",
+      "to": "C18"
+    },
+    {
+      "from": "C35",
+      "to": "C19"
+    },
+    {
+      "from": "C35",
+      "to": "C20"
+    },
+    {
+      "from": "C35",
+      "to": "C22"
+    },
+    {
+      "from": "C35",
+      "to": "C27"
+    },
+    {
+      "from": "C35",
+      "to": "C28"
+    },
+    {
+      "from": "C35",
+      "to": "C33"
+    },
+    {
+      "from": "C35",
+      "to": "C34"
+    },
+    {
+      "from": "C36",
+      "to": "C18"
+    },
+    {
+      "from": "C36",
+      "to": "C27"
+    },
+    {
+      "from": "C36",
+      "to": "C28"
+    },
+    {
+      "from": "C36",
+      "to": "C29"
+    },
+    {
+      "from": "C36",
+      "to": "C31"
+    },
+    {
+      "from": "C36",
+      "to": "C32"
+    },
+    {
+      "from": "C36",
+      "to": "C33"
+    },
+    {
+      "from": "C36",
+      "to": "C35"
+    },
+    {
+      "from": "C37",
+      "to": "C0"
+    },
+    {
+      "from": "C37",
+      "to": "C27"
+    },
+    {
+      "from": "C37",
+      "to": "C28"
+    },
+    {
+      "from": "C37",
+      "to": "C29"
+    },
+    {
+      "from": "C37",
+      "to": "C33"
+    },
+    {
+      "from": "C37",
+      "to": "C34"
+    },
+    {
+      "from": "C37",
+      "to": "C36"
+    },
+    {
+      "from": "C38",
+      "to": "C15"
+    },
+    {
+      "from": "C38",
+      "to": "C21"
+    },
+    {
+      "from": "C38",
+      "to": "C23"
+    },
+    {
+      "from": "C38",
+      "to": "C27"
+    },
+    {
+      "from": "C38",
+      "to": "C28"
+    },
+    {
+      "from": "C38",
+      "to": "C39"
+    },
+    {
+      "from": "C38",
+      "to": "C40"
+    },
+    {
+      "from": "C38",
+      "to": "C44"
+    },
+    {
+      "from": "C39",
+      "to": "C12"
+    },
+    {
+      "from": "C39",
+      "to": "C14"
+    },
+    {
+      "from": "C39",
+      "to": "C18"
+    },
+    {
+      "from": "C39",
+      "to": "C28"
+    },
+    {
+      "from": "C39",
+      "to": "C30"
+    },
+    {
+      "from": "C39",
+      "to": "C34"
+    },
+    {
+      "from": "C39",
+      "to": "C38"
+    },
+    {
+      "from": "C40",
+      "to": "C1"
+    },
+    {
+      "from": "C40",
+      "to": "C2"
+    },
+    {
+      "from": "C40",
+      "to": "C4"
+    },
+    {
+      "from": "C40",
+      "to": "C5"
+    },
+    {
+      "from": "C40",
+      "to": "C7"
+    },
+    {
+      "from": "C40",
+      "to": "C21"
+    },
+    {
+      "from": "C40",
+      "to": "C23"
+    },
+    {
+      "from": "C40",
+      "to": "C28"
+    },
+    {
+      "from": "C40",
+      "to": "C38"
+    },
+    {
+      "from": "C40",
+      "to": "C39"
+    },
+    {
+      "from": "C40",
+      "to": "C44"
+    },
+    {
+      "from": "C41",
+      "to": "C4"
+    },
+    {
+      "from": "C41",
+      "to": "C12"
+    },
+    {
+      "from": "C41",
+      "to": "C23"
+    },
+    {
+      "from": "C41",
+      "to": "C26"
+    },
+    {
+      "from": "C41",
+      "to": "C28"
+    },
+    {
+      "from": "C41",
+      "to": "C36"
+    },
+    {
+      "from": "C41",
+      "to": "C39"
+    },
+    {
+      "from": "C42",
+      "to": "C4"
+    },
+    {
+      "from": "C42",
+      "to": "C6"
+    },
+    {
+      "from": "C42",
+      "to": "C13"
+    },
+    {
+      "from": "C42",
+      "to": "C24"
+    },
+    {
+      "from": "C42",
+      "to": "C25"
+    },
+    {
+      "from": "C42",
+      "to": "C28"
+    },
+    {
+      "from": "C42",
+      "to": "C39"
+    },
+    {
+      "from": "C42",
+      "to": "C40"
+    },
+    {
+      "from": "C42",
+      "to": "C41"
+    },
+    {
+      "from": "C43",
+      "to": "C9"
+    },
+    {
+      "from": "C43",
+      "to": "C19"
+    },
+    {
+      "from": "C43",
+      "to": "C22"
+    },
+    {
+      "from": "C43",
+      "to": "C23"
+    },
+    {
+      "from": "C43",
+      "to": "C28"
+    },
+    {
+      "from": "C44",
+      "to": "C7"
+    },
+    {
+      "from": "C44",
+      "to": "C17"
+    },
+    {
+      "from": "C44",
+      "to": "C23"
+    },
+    {
+      "from": "C44",
+      "to": "C38"
+    },
+    {
+      "from": "C44",
+      "to": "C40"
+    },
+    {
+      "from": "C44",
+      "to": "C42"
+    },
+    {
+      "from": "C44",
+      "to": "C43"
+    },
+    {
+      "from": "C45",
+      "to": "C6"
+    },
+    {
+      "from": "C45",
+      "to": "C14"
+    },
+    {
+      "from": "C45",
+      "to": "C16"
+    },
+    {
+      "from": "C45",
+      "to": "C41"
+    },
+    {
+      "from": "C45",
+      "to": "C42"
+    },
+    {
+      "from": "C45",
+      "to": "C47"
+    },
+    {
+      "from": "C46",
+      "to": "C28"
+    },
+    {
+      "from": "C46",
+      "to": "C39"
+    },
+    {
+      "from": "C46",
+      "to": "C40"
+    },
+    {
+      "from": "C46",
+      "to": "C42"
+    },
+    {
+      "from": "C46",
+      "to": "C43"
+    },
+    {
+      "from": "C46",
+      "to": "C45"
+    },
+    {
+      "from": "C47",
+      "to": "C6"
+    },
+    {
+      "from": "C47",
+      "to": "C24"
+    },
+    {
+      "from": "C47",
+      "to": "C40"
+    },
+    {
+      "from": "C47",
+      "to": "C42"
+    },
+    {
+      "from": "C47",
+      "to": "C45"
+    },
+    {
+      "from": "C48",
+      "to": "C6"
+    },
+    {
+      "from": "C48",
+      "to": "C7"
+    },
+    {
+      "from": "C48",
+      "to": "C9"
+    },
+    {
+      "from": "C48",
+      "to": "C11"
+    },
+    {
+      "from": "C48",
+      "to": "C15"
+    },
+    {
+      "from": "C48",
+      "to": "C16"
+    },
+    {
+      "from": "C48",
+      "to": "C17"
+    },
+    {
+      "from": "C48",
+      "to": "C19"
+    },
+    {
+      "from": "C48",
+      "to": "C22"
+    },
+    {
+      "from": "C48",
+      "to": "C23"
+    },
+    {
+      "from": "C48",
+      "to": "C24"
+    },
+    {
+      "from": "C48",
+      "to": "C26"
+    },
+    {
+      "from": "C48",
+      "to": "C30"
+    },
+    {
+      "from": "C48",
+      "to": "C40"
+    },
+    {
+      "from": "C48",
+      "to": "C44"
+    },
+    {
+      "from": "C49",
+      "to": "C0"
+    },
+    {
+      "from": "C49",
+      "to": "C2"
+    },
+    {
+      "from": "C49",
+      "to": "C4"
+    },
+    {
+      "from": "C49",
+      "to": "C6"
+    },
+    {
+      "from": "C49",
+      "to": "C7"
+    },
+    {
+      "from": "C49",
+      "to": "C9"
+    },
+    {
+      "from": "C49",
+      "to": "C11"
+    },
+    {
+      "from": "C49",
+      "to": "C20"
+    },
+    {
+      "from": "C49",
+      "to": "C40"
+    },
+    {
+      "from": "C49",
+      "to": "C41"
+    },
+    {
+      "from": "C49",
+      "to": "C44"
+    },
+    {
+      "from": "C49",
+      "to": "C46"
+    },
+    {
+      "from": "C50",
+      "to": "C0"
+    },
+    {
+      "from": "C50",
+      "to": "C5"
+    },
+    {
+      "from": "C50",
+      "to": "C7"
+    },
+    {
+      "from": "C50",
+      "to": "C8"
+    },
+    {
+      "from": "C50",
+      "to": "C9"
+    },
+    {
+      "from": "C50",
+      "to": "C17"
+    },
+    {
+      "from": "C50",
+      "to": "C23"
+    },
+    {
+      "from": "C50",
+      "to": "C38"
+    },
+    {
+      "from": "C50",
+      "to": "C39"
+    },
+    {
+      "from": "C50",
+      "to": "C40"
+    },
+    {
+      "from": "C50",
+      "to": "C44"
+    },
+    {
+      "from": "C50",
+      "to": "C51"
+    },
+    {
+      "from": "C51",
+      "to": "C0"
+    },
+    {
+      "from": "C51",
+      "to": "C1"
+    },
+    {
+      "from": "C51",
+      "to": "C4"
+    },
+    {
+      "from": "C51",
+      "to": "C5"
+    },
+    {
+      "from": "C51",
+      "to": "C6"
+    },
+    {
+      "from": "C51",
+      "to": "C7"
+    },
+    {
+      "from": "C51",
+      "to": "C11"
+    },
+    {
+      "from": "C51",
+      "to": "C14"
+    },
+    {
+      "from": "C51",
+      "to": "C15"
+    },
+    {
+      "from": "C51",
+      "to": "C18"
+    },
+    {
+      "from": "C51",
+      "to": "C20"
+    },
+    {
+      "from": "C51",
+      "to": "C22"
+    },
+    {
+      "from": "C51",
+      "to": "C24"
+    },
+    {
+      "from": "C51",
+      "to": "C26"
+    },
+    {
+      "from": "C51",
+      "to": "C29"
+    },
+    {
+      "from": "C51",
+      "to": "C30"
+    },
+    {
+      "from": "C51",
+      "to": "C39"
+    },
+    {
+      "from": "C51",
+      "to": "C40"
+    },
+    {
+      "from": "C51",
+      "to": "C41"
+    },
+    {
+      "from": "C51",
+      "to": "C42"
+    },
+    {
+      "from": "C51",
+      "to": "C43"
+    },
+    {
+      "from": "C51",
+      "to": "C46"
+    },
+    {
+      "from": "C51",
+      "to": "C48"
+    },
+    {
+      "from": "C51",
+      "to": "C50"
+    },
+    {
+      "from": "X1",
+      "to": "C0"
+    },
+    {
+      "from": "X1",
+      "to": "C1"
+    },
+    {
+      "from": "X1",
+      "to": "C2"
+    },
+    {
+      "from": "X1",
+      "to": "C3"
+    },
+    {
+      "from": "X1",
+      "to": "C4"
+    },
+    {
+      "from": "X1",
+      "to": "C5"
+    },
+    {
+      "from": "X1",
+      "to": "C6"
+    },
+    {
+      "from": "X1",
+      "to": "C7"
+    },
+    {
+      "from": "X1",
+      "to": "C8"
+    },
+    {
+      "from": "X1",
+      "to": "C18"
+    },
+    {
+      "from": "X1",
+      "to": "C27"
+    },
+    {
+      "from": "X1",
+      "to": "C28"
+    }
+  ]
+}

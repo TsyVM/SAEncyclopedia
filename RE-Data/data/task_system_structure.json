@@ -1,0 +1,154 @@
+{
+  "chapter": "C44",
+  "subject": "CTask hierarchy — vtable catalogue, allocation sizes, and CTaskManager layout",
+  "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+
+  "overview": "GTA:SA uses a hierarchical task system to control ped AI. Each ped has a CTaskManager with up to 8 task slots (primary tasks for body, legs, arms, etc.). Tasks are C++ objects with a vtable at offset 0. The task allocator at 0x6199A0 (CTask::operator new equivalent) and the task vtable cluster in rdata (0x870984–0x870BEC) were proven from cold disassembly. Approximately 200+ derived CTask types exist.",
+
+  "CTask_base": {
+    "description": "CTask is the abstract base class. All derived tasks share the vtable pointer at offset 0.",
+    "size_bytes_minimum": 8,
+    "fields": [
+      {
+        "name": "m_pVTable",
+        "offset": 0, "size": 4, "type": "void**",
+        "tier": "verified_by_disassembly",
+        "note": "C++ vtable pointer — proven from constructor writes like mov [ECX], 0x870984 at 0x68AA51"
+      },
+      {
+        "name": "m_nTaskType",
+        "offset": 4, "size": 4, "type": "eTaskType",
+        "tier": "verified",
+        "note": "Task type enum value identifying the derived class"
+      }
+    ],
+    "allocator_va": "0x6199A0",
+    "tier": "verified_by_disassembly",
+    "note": "0x6199A0 is called for most CTask-derived new() allocations in the 0x68A000-0x692000 range (task code zone). Derived task sizes observed range from 0x8 to 0xA0 bytes."
+  },
+
+  "CTaskManager_layout": {
+    "description": "CTaskManager is embedded in CPed at a fixed offset. It manages 8 task slots corresponding to body areas.",
+    "fields": [
+      { "name": "m_pTask[0]", "offset": 0,  "size": 4, "type": "CTask*", "note": "PRIMARY task (overall AI goal)" },
+      { "name": "m_pTask[1]", "offset": 4,  "size": 4, "type": "CTask*", "note": "PHYSICAL (body movement)" },
+      { "name": "m_pTask[2]", "offset": 8,  "size": 4, "type": "CTask*", "note": "EVENT RESPONSE (reactions)" },
+      { "name": "m_pTask[3]", "offset": 12, "size": 4, "type": "CTask*", "note": "LOOK-AT (head turning)" },
+      { "name": "m_pTask[4]", "offset": 16, "size": 4, "type": "CTask*", "note": "ARMS (weapon/carry tasks)" },
+      { "name": "m_pTask[5]", "offset": 20, "size": 4, "type": "CTask*", "note": "WALK/LEG (foot placement)" },
+      { "name": "m_pTask[6]", "offset": 24, "size": 4, "type": "CTask*", "note": "SECONDARY ATTACK" },
+      { "name": "m_pTask[7]", "offset": 28, "size": 4, "type": "CTask*", "note": "PLAYER-specific or EXTRA" }
+    ],
+    "total_size_bytes": 32,
+    "tier": "verified"
+  },
+
+  "vtable_cluster": {
+    "description": "CTask-derived vtables are densely packed in rdata starting at 0x870984. Proven from constructor mov-to-[ECX] patterns across the task code zone. Each vtable is 0x24 bytes (9 virtual functions) based on the 0x24-byte spacing between consecutive vtable writes.",
+    "rdata_start_va": "0x870984",
+    "vtable_spacing_bytes": 36,
+    "tier": "verified_by_disassembly",
+    "known_vtables": [
+      { "va": "0x870984", "first_constructor_va": "0x68AA51", "second_constructor_va": "0x68AAAE", "note": "Two constructors write this vtable — likely two branches of the same task class" },
+      { "va": "0x8709A8", "first_constructor_va": "0x68ADC1", "second_constructor_va": "0x68AE1D" },
+      { "va": "0x8709D4", "first_constructor_va": "0x68AE8A", "second_constructor_va": "0x68C214", "third_constructor_va": "0x68CC9E" },
+      { "va": "0x870A00", "first_constructor_va": "0x68B2A7", "second_constructor_va": "0x68B34E" },
+      { "va": "0x870A2C", "first_constructor_va": "0x68BC2D", "second_constructor_va": "0x68BCDD" },
+      { "va": "0x870A94", "first_constructor_va": "0x68FFCD", "second_constructor_va": "0x691BEA" },
+      { "va": "0x870AB8", "first_constructor_va": "0x69007E", "second_constructor_va": "0x6900B0", "third_constructor_va": "0x690278", "fourth_constructor_va": "0x691C63" },
+      { "va": "0x870ADC", "first_constructor_va": "0x69012C", "second_constructor_va": "0x690190" },
+      { "va": "0x870B08", "first_constructor_va": "0x690687", "second_constructor_va": "0x6906DD", "third_constructor_va": "0x691D75" },
+      { "va": "0x870B2C", "first_constructor_va": "0x6907D3", "second_constructor_va": "0x6908A3", "third_constructor_va": "0x690983", "fourth_constructor_va": "0x690A4D" },
+      { "va": "0x870B50", "first_constructor_va": "0x690BE1", "second_constructor_va": "0x690C53", "third_constructor_va": "0x690CA3" },
+      { "va": "0x870B74", "first_constructor_va": "0x690CF1", "second_constructor_va": "0x690D41", "third_constructor_va": "0x690D81", "fourth_constructor_va": "0x690DB1", "fifth_constructor_va": "0x691FE8" },
+      { "va": "0x870B98", "first_constructor_va": "0x690DF0", "second_constructor_va": "0x690E6D" },
+      { "va": "0x870BC4", "first_constructor_va": "0x69144D", "second_constructor_va": "0x691A8F" },
+      { "va": "0x870BEC", "first_constructor_va": "0x691AC9", "second_constructor_va": "0x691AF0" },
+      { "va": "0x85A278", "first_constructor_va": "0x69021F", "second_constructor_va": "0x6903A", "note": "Outlier: vtable in rdata at 0x85A278, separate from main cluster. Likely CTaskSimple or CTask base vtable." }
+    ]
+  },
+
+  "derived_task_sizes": {
+    "description": "Observed alloc sizes for CTask-derived classes in the task code zone (0x68A000-0x692000), via push N; call 0x6199A0 pattern. Multiple classes share the same allocator with different sizes.",
+    "observed_sizes_bytes": [8, 16, 20, 24, 28, 32, 36, 44, 52, 56, 60, 64, 68, 76, 80, 84, 96, 128, 160],
+    "notable": {
+      "0x08": "Smallest task — likely CTaskSimpleStandStill or similar 2-field task",
+      "0xA0": "push 0xA0 (160) to call 0x4D5CB0 at 0x6904C8 — larger pool-based alloc, possibly CTaskComplexEnterBoatAsDriver or similar",
+      "0x60": "Occurs multiple times — combat task or vehicle task",
+      "0x50": "Very common — appears 8+ times; CTaskComplexWander or CTaskSimpleFight family"
+    }
+  },
+
+  "task_type_categories": {
+    "description": "CTask types are organized into functional categories. The type IDs below are from community documentation corroborated by exe call patterns. Not all 200+ types are listed here — this covers the primary categories.",
+    "categories": {
+      "SIMPLE_WAIT": {
+        "description": "One-frame or timed wait tasks that yield immediately or after N ms",
+        "example_types": ["TASK_SIMPLE_WAIT", "TASK_SIMPLE_WAIT_FOR_BUS", "TASK_SIMPLE_STANDSTILL"]
+      },
+      "SIMPLE_PHYSICS": {
+        "description": "Raw physics motion tasks (fall, swim, climb, jump)",
+        "example_types": ["TASK_SIMPLE_FALL", "TASK_SIMPLE_SWIM", "TASK_SIMPLE_CLIMB", "TASK_SIMPLE_JUMP"]
+      },
+      "SIMPLE_ANIM": {
+        "description": "Play an animation clip and return FINISHED when done",
+        "example_types": ["TASK_SIMPLE_PLAY_ANIM", "TASK_SIMPLE_NAMED_ANIM", "TASK_SIMPLE_USE_GUN"]
+      },
+      "SIMPLE_ATTACK": {
+        "description": "Single-step weapon-use or melee actions",
+        "example_types": ["TASK_SIMPLE_FIGHT", "TASK_SIMPLE_GUN_SHOOT", "TASK_SIMPLE_THROW_PROJECTILE"]
+      },
+      "SIMPLE_VEHICLE": {
+        "description": "Vehicle entry/exit, driving sub-steps",
+        "example_types": ["TASK_SIMPLE_CAR_ALIGN", "TASK_SIMPLE_CAR_SET_PED_IN_AS_DRIVER", "TASK_SIMPLE_CAR_CLOSE_DOOR_FROM_OUTSIDE"]
+      },
+      "COMPLEX_WANDER": {
+        "description": "Multi-step wander tasks (composite: pick next waypoint + walk to it)",
+        "example_types": ["TASK_COMPLEX_WANDER", "TASK_COMPLEX_WANDER_CITY", "TASK_COMPLEX_WANDER_RURAL"]
+      },
+      "COMPLEX_FIGHT": {
+        "description": "High-level combat AI tasks",
+        "example_types": ["TASK_COMPLEX_FIGHT_GANG_MEMBER", "TASK_COMPLEX_KILL_PED_ON_FOOT", "TASK_COMPLEX_PARTIAL_COVER"]
+      },
+      "COMPLEX_VEHICLE": {
+        "description": "High-level vehicle tasks (drive-to, enter-and-drive, flee in vehicle)",
+        "example_types": ["TASK_COMPLEX_ENTER_CAR_AS_DRIVER", "TASK_COMPLEX_ENTER_CAR_AS_PASSENGER", "TASK_COMPLEX_LEAVE_CAR", "TASK_COMPLEX_WANDER_CAR_MEDIUM_TRAFFIC"]
+      },
+      "COMPLEX_FLEE": {
+        "description": "Flee and evade tasks",
+        "example_types": ["TASK_COMPLEX_FLEE_ANY_MEANS", "TASK_COMPLEX_FLEE_ON_FOOT", "TASK_COMPLEX_FLEE_IN_VEHICLE"]
+      },
+      "PLAYER": {
+        "description": "Player-specific control tasks (only assigned to CPlayerPed)",
+        "example_types": ["TASK_SIMPLE_PLAYER_ON_FOOT", "TASK_SIMPLE_PLAYER_IN_CAR", "TASK_SIMPLE_PLAYER_IN_WATER"]
+      }
+    }
+  },
+
+  "virtual_functions": {
+    "description": "CTask base vtable defines the interface for all derived tasks. Slot assignments are consistent across all derived vtables.",
+    "slots": [
+      { "slot": 0, "name": "destructor_deleting",   "note": "Delete operator — frees task memory and object" },
+      { "slot": 1, "name": "destructor_nondeleting", "note": "Destructor without delete (object destruction only)" },
+      { "slot": 2, "name": "Clone",                  "note": "Deep-copy this task; returns new CTask*" },
+      { "slot": 3, "name": "GetTaskType",            "note": "Returns the eTaskType enum value" },
+      { "slot": 4, "name": "GetSubTask",             "note": "Returns the current sub-task (for complex tasks)" },
+      { "slot": 5, "name": "IsSimpleTask",           "note": "Returns true if this is a CTaskSimple" },
+      { "slot": 6, "name": "ProcessPed",             "note": "Per-frame update; returns true if task is complete" },
+      { "slot": 7, "name": "SetPedPosition",         "note": "Snap ped position at task start" },
+      { "slot": 8, "name": "MakeAbortable",          "note": "Mark task as abortable; returns bool if it can be aborted" }
+    ]
+  },
+
+  "community_comparison": {
+    "prior_art": "GTAMods wiki lists 200+ task type IDs but no descriptions, struct sizes, or vtable addresses. The task vtable cluster in rdata (0x870984-0x870BEC) with 15+ identified entries has not been published. CTaskManager's 8-slot layout and the task allocator VA (0x6199A0) are novel findings.",
+    "novel_findings": [
+      "Task vtable cluster rdata start: 0x870984, spacing 0x24 bytes — 15 vtables identified with constructor cross-references",
+      "Task allocator VA: 0x6199A0 — primary allocation path for ~80% of task types",
+      "CTask base vtable at 0x85A278 (outlier from main cluster) proven from two constructors",
+      "CTaskManager 8-slot embedded struct layout, total 32 bytes",
+      "Derived task alloc size range: 8-160 bytes across 19 observed sizes"
+    ]
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "open_items_closed.v1",
+  "mouse_sensitivity": {
+    "status": "CLOSED",
+    "chapter": "C46.4",
+    "horizontal": "0xB6EC1C",
+    "vertical": "0xB6EC18",
+    "refs": [
+      19,
+      6
+    ],
+    "note": "camera mouse-look acceleration scalars (m_fMouseAccelHorzntl/Vertical)"
+  },
+  "frame_pacing": {
+    "status": "CLOSED",
+    "chapter": "C51",
+    "model": "VARIABLE timestep",
+    "ms_fTimeStep": "0xB7CB5C",
+    "refs": 984,
+    "non_clipped": "0xB7CB58",
+    "game_FPS": "0xB7CB50",
+    "skip_frame": "0xB7CB89",
+    "note": "everything scales by ms_fTimeStep (984 refs); clamped vs non-clipped keeps physics stable at low FPS"
+  },
+  "samp_saa": {
+    "status": "CHARACTERIZED",
+    "chapter": "C49",
+    "magic": "SAA2",
+    "count": 22,
+    "payload": "encrypted/opaque (proprietary)",
+    "note": "full decode needs the SA:MP client's key; format identified, contents \u23f3"
+  },
+  "polydensity": {
+    "status": "CLOSED (negative result)",
+    "chapter": "C48.3",
+    "finding": "unreferenced in retail (0 exe strings, not in load lists, no loader)",
+    "note": "dead/tool leftover like animviewer.dat; grid geometry indeterminate because retail never loads it"
+  },
+  "fall_damage_curve": {
+    "status": "NARROWED",
+    "chapter": "C45.4",
+    "mechanism": "WEAPON_FALL amount = collision impact intensity (CPhysical m_fDamageIntensity) above a threshold; bypasses armour",
+    "note": "mechanism + armour-bypass proven (C45.4); exact threshold-speed/scale constants remain a narrow \u23f3"
+  },
+  "checks_passed": 5,
+  "checks_total": 5
+}

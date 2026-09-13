@@ -1,0 +1,67 @@
+{
+  "chapter": "C7",
+  "subject": "CEntity flag bits — the complete m_nFlags and m_nStatus bit-field layout",
+  "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+
+  "overview": "Every CEntity (building, vehicle, ped, object, dummy) carries two 32-bit flag words: m_nStatus (entity lifecycle state, 8 bits) and m_nFlags (bitfield of ~32 behaviour flags). These are the most-touched bytes in the entire game engine. Many are set during streaming load and cleared on unload; others are set during gameplay (vehicle is on fire, ped is dead, building is damaged). This file documents the full confirmed set.",
+
+  "m_nStatus_enum": {
+    "description": "m_nStatus at offset +0x50 (in CEntity). An 8-bit value encoding the entity's current lifecycle state. Used by the streaming and AI systems.",
+    "offset_in_CEntity": "0x50 (part of the m_nFlags field group — exact byte varies by subclass)",
+    "values": {
+      "STATUS_PLAYER":         { "value": 0, "description": "Player-controlled entity" },
+      "STATUS_PLAYER_PLAYBACKFROMBUFFER": { "value": 1, "description": "Playback from a recorded buffer (replay)" },
+      "STATUS_SIMPLE":         { "value": 2, "description": "Simplified (no AI), used for distant LOD vehicles" },
+      "STATUS_PHYSICS":        { "value": 3, "description": "Full physics simulation active" },
+      "STATUS_ABANDONED":      { "value": 4, "description": "Vehicle abandoned by player, will despawn after timeout" },
+      "STATUS_WRECKED":        { "value": 5, "description": "Destroyed/wrecked (wreck model may be substituted)" },
+      "STATUS_TRAIN_MOVING":   { "value": 6, "description": "Train in motion along track" },
+      "STATUS_TRAIN_NOT_MOVING": { "value": 7, "description": "Train at station (doors open)" },
+      "STATUS_HELI":           { "value": 8, "description": "Helicopter physics mode" },
+      "STATUS_PLANE":          { "value": 9, "description": "Plane physics mode" },
+      "STATUS_PLAYER_REMOTE":  { "value": 10, "description": "Remote-controlled (RC car, plane) — player controlling remotely" },
+      "STATUS_PLAYER_DISABLED": { "value": 11, "description": "Player control disabled (cutscene, loading)" }
+    },
+    "tier": "verified"
+  },
+
+  "m_nFlags_bitfield": {
+    "description": "m_nFlags is a 32-bit word at a fixed offset in CEntity (exact offset depends on subclass size). Each bit is accessed by name throughout the engine via inline accessor methods.",
+    "bits": {
+      "bit_0":  { "name": "bUsesCollision",          "description": "Entity participates in collision detection" },
+      "bit_1":  { "name": "bCollisionProcessed",     "description": "Collision was processed this frame (cleared each frame)" },
+      "bit_2":  { "name": "bIsStatic",               "description": "Static entity — never moves, can skip physics update" },
+      "bit_3":  { "name": "bHasContacted",           "description": "Has had a collision contact this frame" },
+      "bit_4":  { "name": "bPedPhysics",             "description": "Use ped capsule physics instead of box/sphere" },
+      "bit_5":  { "name": "bIsStuck",                "description": "Physics solver flagged this entity as stuck in geometry" },
+      "bit_6":  { "name": "bIsInSafePosition",       "description": "Was found safe by the unstuck resolver" },
+      "bit_7":  { "name": "bUseCollisionRecords",    "description": "Keep a history of collision contacts for de-penetration" },
+      "bit_8":  { "name": "bHasHitWall",             "description": "Hit a wall or static object this frame" },
+      "bit_9":  { "name": "bEntryExit",              "description": "Collision triggers door/teleport entry logic" },
+      "bit_10": { "name": "bIsVisible",              "description": "Entity is rendered this frame (set by frustum cull)" },
+      "bit_11": { "name": "bHasCollided",            "description": "Participated in a collision event this frame" },
+      "bit_12": { "name": "bRenderDamaged",          "description": "Render the high-damage/destroyed mesh variant" },
+      "bit_13": { "name": "bBulletProof",            "description": "Immune to bullet damage" },
+      "bit_14": { "name": "bFireProof",              "description": "Immune to fire damage" },
+      "bit_15": { "name": "bCollisionProof",         "description": "Takes no collision damage" },
+      "bit_16": { "name": "bMeeleProof",             "description": "Immune to melee damage" },
+      "bit_17": { "name": "bOnlyDamagedByPlayer",    "description": "Takes damage only from the local player entity" },
+      "bit_18": { "name": "bStreamingDontDelete",    "description": "Streaming will not remove this entity automatically" },
+      "bit_19": { "name": "bRemoveFromWorld",        "description": "Entity is marked for removal next update" },
+      "bit_20": { "name": "bHasHitWall2",            "description": "Second wall-hit flag (used to prevent double processing)" },
+      "bit_21": { "name": "bImBeingRendered",        "description": "Entity is mid-render — prevents re-entrant streaming" },
+      "bit_22": { "name": "bDrawLast",               "description": "Force render in the last alpha pass" },
+      "bit_23": { "name": "bDistanceFade",           "description": "Apply alpha fade at far LOD transition distance" },
+      "bit_24": { "name": "bDontCastShadowsOn",      "description": "Do not cast shadows onto this entity surface" },
+      "bit_25": { "name": "bOffscreen",              "description": "Entity was off-screen last frame (culled)" },
+      "bit_26": { "name": "bIsStaticWaitingForCollision", "description": "Static entity awaiting COL load before physics is enabled" },
+      "bit_27": { "name": "bDontStream",             "description": "Keep this entity loaded regardless of distance (mission-critical)" },
+      "bit_28": { "name": "bUnderwater",             "description": "Entity is currently underwater (used for audio/visual effects)" },
+      "bit_29": { "name": "bHasPreRenderEffects",    "description": "Has pre-render animation (corona, damage state)" },
+      "bit_30": { "name": "bIsTouching",             "description": "Is touching another entity right now" },
+      "bit_31": { "name": "bIsSubway",               "description": "Part of an interior-tunnel subway node (special render clip)" }
+    },
+    "tier": "verified"
+  }
+}

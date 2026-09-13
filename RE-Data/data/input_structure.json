@@ -1,0 +1,56 @@
+{
+ "chapter": "C46",
+ "subject": "Input devices: CPad, CControllerState, the two-player Pads array",
+ "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+ "controller_state": {
+  "size": "0x30",
+  "fields": 24,
+  "field_type": "int16",
+  "layout": "LeftStickX/Y, RightStickX/Y, LeftShoulder1/2, RightShoulder1/2, DPadUp/Down/Left/Right, Start, Select, ButtonSquare/Triangle/Cross/Circle, ShockL/R, chat/walk/mouselook/trackskip"
+ },
+ "cpad": {
+  "size": "0x134",
+  "state_buffers": {
+   "count": 5,
+   "names": [
+    "NewState",
+    "OldState",
+    "PCTempKeyState",
+    "PCTempJoyState",
+    "PCTempMouseState"
+   ],
+   "bytes": "0xf0"
+  },
+  "tail_bytes": "0x44",
+  "mode_field": "0x108",
+  "edge_detection": "BUTTON_IS_PRESSED = NewState.btn && !OldState.btn (rising edge from double buffer)"
+ },
+ "pads_array": {
+  "base": "0xb73458",
+  "count": 2,
+  "stride": "0x134",
+  "get_pad": "0x53fb70",
+  "note": "two players; keyboard+mouse reconcile into Pad 0"
+ },
+ "config_manager": {
+  "size": "0x12e4",
+  "bindable_actions": 53,
+  "action_record": "CControllerAction 0x20",
+  "note": "GetControllerKeyAssociatedWithAction(action,type) maps action -> key per input type"
+ },
+ "backend": {
+  "shipped": "DirectInput 8 (DINPUT8.dll / DirectInput8Create)",
+  "reimplementation_note": "disassembly replaces the shipped DirectInput path with SDL — a reimplementation of the input layer, not the original binary"
+ },
+ "mouse": {
+  "temp_buffer": "PCTempMouseState @CPad+0xC0",
+  "invert_x": "0xBA6744",
+  "invert_y": "0xBA6745",
+  "sensitivity": "not pinned to an address this pass (open) - C46.4"
+ },
+ "ties": {
+  "C43": "the double-buffered edge detection drives menu navigation (m_nCurrentScreenItem)"
+ },
+ "checks_passed": 8,
+ "checks_total": 8
+}

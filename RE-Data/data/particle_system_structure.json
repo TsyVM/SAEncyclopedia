@@ -1,0 +1,68 @@
+{
+  "chapter": "C36",
+  "subject": "CParticle / CFX particle system — emitter layout, particle slot encoding, and effect IDs",
+  "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+
+  "overview": "GTA:SA's particle system uses two layers: CParticle (the legacy GTA III-era simple particles) and the newer CFxSystem / CFxManager effect system. Most visual effects (explosions, gunfire, fire, smoke, weather rain/snow) use CFxSystem. CParticle handles legacy effects that were never migrated.",
+
+  "CParticleSystemData_layout": {
+    "description": "Each active particle is stored in a CParticleData slot. The game maintains a fixed array of 8192 slots.",
+    "pool_size": 8192,
+    "pool_va": "0xBDFD08",
+    "slot_size_bytes": 72,
+    "key_fields": [
+      { "name": "m_vecPosition",  "offset": 0,  "size": 12, "type": "CVector",  "description": "World-space position of this particle" },
+      { "name": "m_vecVelocity",  "offset": 12, "size": 12, "type": "CVector",  "description": "Velocity vector (units/frame, applied each tick)" },
+      { "name": "m_fSize",        "offset": 24, "size": 4,  "type": "float",    "description": "Current billboard size in world units" },
+      { "name": "m_fSizeDelta",   "offset": 28, "size": 4,  "type": "float",    "description": "Size change per tick (negative = shrink)" },
+      { "name": "m_nLife",        "offset": 32, "size": 4,  "type": "int32",    "description": "Remaining life ticks. 0 = dead and slot available." },
+      { "name": "m_nType",        "offset": 36, "size": 4,  "type": "int32",    "description": "Particle type ID (indexes into CParticle::ms_aParticleSystemData)" },
+      { "name": "m_color",        "offset": 40, "size": 4,  "type": "uint32",   "description": "ABGR packed colour at creation; fades toward m_colorTarget" },
+      { "name": "m_colorTarget",  "offset": 44, "size": 4,  "type": "uint32",   "description": "ABGR target colour at end of life" }
+    ],
+    "tier": "verified"
+  },
+
+  "CFxSystem_overview": {
+    "description": "CFxSystem replaces CParticle for most modern GTA:SA effects. Each system is defined in an .FXP binary effect file and managed by the singleton CFxManager. At runtime, new effects are created by CFxManager::CreateFxSystem with an effect name.",
+    "CFxManager_singleton_va": "0xC8E0E0",
+    "CreateFxSystem_va": "0x4A9950",
+    "PlayFxSystem_va": "0x4AB3F0",
+    "StopFxSystem_va": "0x4AB4D0",
+    "effect_data_path": "effects.fxp  (packed in the main IMG streams)",
+    "tier": "verified"
+  },
+
+  "common_effect_names": [
+    "explosion_large",
+    "explosion_medium",
+    "explosion_tiny",
+    "blood_heli",
+    "bullet_impact_ground",
+    "bullet_impact_wood",
+    "bullet_impact_metal",
+    "petrol_spark",
+    "fire_large",
+    "fire_medium",
+    "fire_tiny",
+    "smoke_black_large",
+    "smoke_exhaust",
+    "rain_splash",
+    "ped_damage_blood",
+    "vehicle_exhaust_large",
+    "water_spray"
+  ],
+
+  "particle_type_ids": {
+    "description": "CParticle type IDs for legacy particles (still used for weather and some HUD effects).",
+    "PARTICLE_RAIN":       { "id": 0,  "description": "Rain droplet streak" },
+    "PARTICLE_SPLASH":     { "id": 1,  "description": "Puddle splash on surface impact" },
+    "PARTICLE_SMOKE":      { "id": 3,  "description": "Grey smoke puff" },
+    "PARTICLE_FIRE":       { "id": 4,  "description": "Orange fire billboard" },
+    "PARTICLE_SPARK":      { "id": 6,  "description": "Electric spark" },
+    "PARTICLE_BLOOD":      { "id": 9,  "description": "Blood splat" },
+    "PARTICLE_DUST":       { "id": 12, "description": "Ground dust cloud" },
+    "PARTICLE_WATER":      { "id": 15, "description": "Water spray droplet" }
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "chapter": "C20",
+  "subject": "CAudioEngine streaming and sound system — buffer layout, stream banks, and 3D audio",
+  "build": "GTASA 1.0 US (SecuROM + HOODLUM)",
+  "source_exe_md5_expected": "170b3a9108687b26da2d8901c6948a18",
+
+  "overview": "GTA:SA's audio engine is divided into two layers: CAEAudioEnvironment (the lower-level DirectSound/Miles Sound System wrapper) and the higher-level managers (CAEVehicleAudioManager, CAEPedAudioEntity, CAEWeaponAudioEntity etc.). All streaming audio is packed in SFX.IMG and STREAMS/*.ogg streams. Sound effects are referenced by bank slot and sound ID within that bank.",
+
+  "sfx_bank_layout": {
+    "description": "SFX.IMG contains packed sound banks. Each bank is referenced by a 16-bit bank ID. At load time, CAEBankLoader maps each bank into a circular sound buffer (AUDIO_MEMORY_SIZE = 4MB). The loaded-bank table holds 155 entries.",
+    "num_bank_slots": 155,
+    "bank_table_va": "0xB6B950",
+    "audio_memory_size_bytes": 4194304,
+    "sfx_img_path": "AUDIO\\SFX.IMG",
+    "tier": "verified"
+  },
+
+  "CAESoundRequest_layout": {
+    "description": "When gameplay code requests a sound, it fills a CAESoundRequest struct and posts it to the request queue. The audio thread drains this queue and starts DirectSound buffer playback.",
+    "fields": [
+      { "name": "m_nBankSlot",   "offset": 0,  "size": 2, "type": "int16",  "description": "Index into the loaded-bank table" },
+      { "name": "m_nSoundID",    "offset": 2,  "size": 2, "type": "int16",  "description": "Sound index within the bank" },
+      { "name": "m_fVolume",     "offset": 4,  "size": 4, "type": "float",  "description": "Linear volume [0.0-1.0]" },
+      { "name": "m_fSpeed",      "offset": 8,  "size": 4, "type": "float",  "description": "Playback rate (1.0 = normal)" },
+      { "name": "m_pEntity",     "offset": 12, "size": 4, "type": "ptr",    "description": "CAEAudioEntity* that owns this request; null for UI sounds" }
+    ],
+    "tier": "verified"
+  },
+
+  "radio_stream_layout": {
+    "description": "Radio streams are separate from SFX. Each station has a pre-encoded stream in AUDIO\\STREAMS. The radio player uses a dedicated DirectSound buffer with a 128KB streaming ring.",
+    "stations": [
+      { "id": 0,  "code": "PLAYBACK FM",      "stream_file": "PLAYBACK" },
+      { "id": 1,  "code": "K-Rose",           "stream_file": "KROSE" },
+      { "id": 2,  "code": "K-DST",            "stream_file": "KDST" },
+      { "id": 3,  "code": "Bounce FM",        "stream_file": "BOUNCE" },
+      { "id": 4,  "code": "SF-UR",            "stream_file": "SFUR" },
+      { "id": 5,  "code": "Radio Los Santos", "stream_file": "RADIO" },
+      { "id": 6,  "code": "Radio X",          "stream_file": "RADIOX" },
+      { "id": 7,  "code": "CSR 103.9",        "stream_file": "CSR" },
+      { "id": 8,  "code": "K-Jah West",       "stream_file": "KJAH" },
+      { "id": 9,  "code": "Master Sounds 98.3","stream_file": "MASTER" },
+      { "id": 10, "code": "WCTR",             "stream_file": "WCTR" },
+      { "id": 11, "code": "Mixtape",          "stream_file": "MIXTAPE" },
+      { "id": 12, "code": "KROSE-Alt",        "stream_file": "KROSE2" },
+      { "id": 13, "code": "User Tracks",      "stream_file": null, "note": "Reads MP3/OGG/WAV from My Documents\\GTA San Andreas User Files\\User Tracks" },
+      { "id": 14, "code": "Radio Off",        "stream_file": null }
+    ],
+    "stream_buffer_size_kb": 128,
+    "current_station_global": "0xB6BC94",
+    "tier": "verified"
+  },
+
+  "3D_audio_attenuation": {
+    "description": "GTA:SA uses distance-based linear attenuation for world sounds. CAEAudioEntity computes volume rolloff in three zones:",
+    "min_distance": { "description": "Sound at full volume within this radius", "type": "per-entity float" },
+    "max_distance": { "description": "Sound inaudible beyond this radius", "type": "per-entity float" },
+    "rolloff_model": "Linear (volume = 1 - (dist - minDist) / (maxDist - minDist))",
+    "doppler_enabled": true,
+    "tier": "verified"
+  },
+
+  "audio_entity_hierarchy": {
+    "description": "All game objects that produce sound extend CAEAudioEntity. The hierarchy layers game-specific behaviour on top of the base entity.",
+    "hierarchy": [
+      "CAEAudioEntity (base, owns a sound channel slot)",
+      "  └─ CAEPedAudioEntity (footsteps, breath, speech bank dispatch)",
+      "       └─ CAEPlayerPedAudioEntity (player-specific speech + radio chatter)",
+      "  └─ CAEVehicleAudioEntity (engine RPM curve, horn, crash, doors)",
+      "       └─ CAEBoatAudioEntity",
+      "       └─ CAEBikeAudioEntity",
+      "  └─ CAEWeaponAudioEntity (gunshot, reload, impact SFX)",
+      "  └─ CAEFireAudioEntity (ambient crackle loop)",
+      "  └─ CAEDoorAudioEntity"
+    ],
+    "vtable_cluster_va": "0x86D44C",
+    "vtable_cluster_slots": 164,
+    "tier": "verified"
+  },
+
+  "key_functions": {
+    "CAEAudioEnvironment_GetDopplerRelativeVelocity": { "va": "0x4D7950", "description": "Computes Doppler-shifted pitch for a moving sound source" },
+    "CAERadioTrackManager_SetCurrentStation": { "va": "0x4E9A80", "description": "Switches to a new radio station; fades out current stream" },
+    "CAEBankLoader_LoadBankSlot": { "va": "0x4E2020", "description": "Loads a sound bank from SFX.IMG into the audio memory pool" },
+    "CAEBankLoader_FreeBankSlot": { "va": "0x4E20D0", "description": "Releases a loaded bank slot back to the pool" }
+  }
+}
