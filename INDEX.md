@@ -135,5 +135,5 @@
 
 ## Verification
 
-Every chapter's facts are re-derived by a tool in [`tools/`](tools/); the machine-readable outputs live in [`RE-Data/data/`](RE-Data/data/). The full graph (nodes + edges) is [`RE-Data/data/knowledge_graph.json`](RE-Data/data/knowledge_graph.json). See [`handoff.md`](handoff.md) for the working log and [`AUDIT.md`](AUDIT.md) for the audit report.
+Every chapter's facts are re-derived by a tool in [`tools/`](tools/); the machine-readable outputs live in [`RE-Data/data/`](RE-Data/data/). The full graph (nodes + edges) is [`RE-Data/data/knowledge_graph.json`](RE-Data/data/knowledge_graph.json). 
 
