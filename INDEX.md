@@ -126,13 +126,6 @@
 | [C1](C1-Streaming/C1-Streaming.md) | Chapter 1 — Streaming: the IMG Model & the CdStream Layer | 22 |
 | [C11](C11-IDE-And-IPL/C11-IDE-And-IPL.md) | Chapter 11 — IDE & IPL: the World's Data Model | 22 |
 
-## Weakly-linked chapters (interconnection worklist)
-
-*These have ≤ 4 total links and should be back-linked into the graph (audit remediation item #2 — see [`AUDIT.md`](AUDIT.md)).*
-
-| Chapter | Title | Degree |
-|---|---|---:|
-
 ## Verification
 
 Every chapter's facts are re-derived by a tool in [`tools/`](tools/); the machine-readable outputs live in [`RE-Data/data/`](RE-Data/data/). The full graph (nodes + edges) is [`RE-Data/data/knowledge_graph.json`](RE-Data/data/knowledge_graph.json). 
