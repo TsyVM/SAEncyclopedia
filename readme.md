@@ -337,11 +337,6 @@ SAEncyclopedia/
 │   ├── derive_input.py        ← re-checks CPad layout, Pads[] VA, GetPad stride
 │   ├── derive_openitems.py    ← re-checks ms_fTimeStep refs, mouse accel VAs
 │   └── …                     ← one script per chapter that has derived data
-│
-└── references/
-    ├── gta-reversed-master/   ← gta-reversed source (corroborating — not authoritative)
-    ├── plugin-sdk-master/     ← plugin-sdk (🔷 external tier)
-    └── SASDK/ → ../SASDK/     ← companion SDK (verified struct database)
 ```
 
 <img width="100%" src="https://capsule-render.vercel.app/api?type=rect&color=0:000000,50:E07B00,100:000000&height=3"/>
